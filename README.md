@@ -129,3 +129,42 @@ public OutsourcedPart(String companyName, String name, double price, int inv) {
     this.companyName = companyName;
 }
 ```
+**F.  Add a “Buy Now” button to your product list. Your “Buy Now” button must meet each of the following parameters:**
+
+**•   The “Buy Now” button must be next to the buttons that update and delete products.**
+
+mainscreen.html
+```
+// line 84
+<a th:href="@{/showProductFormForBuyNow(productID=${tempProduct.id})}" 
+    class="btn btn-primary btn-sm mb-3">Buy Now</a>
+```
+**•   The button should decrement the inventory of that product by one. It should not affect the inventory of any of the associated parts.**
+
+AddProductController.java
+```
+// line 110-122
+
+@GetMapping("/showProductFormForBuyNow")
+public String showProductFormForBuyNow(@RequestParam("productID") int theId, Model theModel){
+    ProductService productService = context.getBean(ProductServiceImpl.class);
+    Product theProduct = productService.findById(theId);
+    if (theProduct.getInv() > 0) {
+        theProduct.setInv(theProduct.getInv() - 1);
+        productService.save(theProduct);
+        theModel.addAttribute("success", true);
+    } else {
+        theModel.addAttribute("success", false);
+    }
+    return "confirmationbuynowproduct";
+}
+```
+**•   Display a message that indicates the success or failure of a purchase.**
+
+confirmationbuynowproduct.html
+```
+An html page that check to see if the Buy Now process is successful, then
+Display the corresponding messages:
+- If success, 'You have successfully bought this product!'
+- If not success, 'This product is currently out of stock!'
+```

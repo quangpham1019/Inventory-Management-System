@@ -107,6 +107,19 @@ public class AddProductController {
         return "productForm";
     }
 
+    @GetMapping("/showProductFormForBuyNow")
+    public String showProductFormForBuyNow(@RequestParam("productID") int theId, Model theModel){
+        ProductService productService = context.getBean(ProductServiceImpl.class);
+        Product theProduct = productService.findById(theId);
+        if (theProduct.getInv() > 0) {
+            theProduct.setInv(theProduct.getInv() - 1);
+            productService.save(theProduct);
+            theModel.addAttribute("success", true);
+        } else {
+            theModel.addAttribute("success", false);
+        }
+        return "confirmationbuynowproduct";
+    }
     @GetMapping("/deleteproduct")
     public String deleteProduct(@RequestParam("productID") int theId, Model theModel) {
         ProductService productService = context.getBean(ProductServiceImpl.class);
