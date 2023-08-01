@@ -51,3 +51,23 @@ productForm.html
 ...
 </div>
 ```
+**D.  Add an “About” page to the application to describe your chosen customer’s company to web viewers and include navigation to and from the “About” page and the main screen.**
+
+resources/templates/mainscreen.html
+```
+// line 14
+
+<title>Jack's Computer Shop</title>
+
+// line 20
+
+<a href="http://localhost:8080/about.html">About Us</a>
+```
+resources/static/about.html
+```
+An html file with the following:
+- a heading "About Jack's Computer Shop", 
+- a paragraph describing the shop history and store branches, 
+- a contact us section with contact email, phone, and store addresses
+- a link to the main screen 
+```
