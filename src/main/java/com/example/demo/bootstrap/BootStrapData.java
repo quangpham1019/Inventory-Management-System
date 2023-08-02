@@ -72,27 +72,45 @@ public class BootStrapData implements CommandLineRunner {
         */
         if(productRepository.count() == 0 && partRepository.count() == 0) {
 
-            InhousePart laptop_screen = new InhousePart("Laptop Screen", 140.00, 30, 5, 50);
-            InhousePart gaming_case = new InhousePart("Gaming Case", 100.00, 25, 5, 40);
-            InhousePart  pc_fan = new InhousePart("80mm Silent PC Fan", 15.00, 20, 4, 40);
-            OutsourcedPart samsing_ram = new OutsourcedPart("Samsing", "Samsing 16GB DDR4 3200MHz Laptop RAM", 60.00, 30, 5, 50);
-            OutsourcedPart outtel_cpu = new OutsourcedPart("Outtel", "Outtel Core i11 13th Gen CPU", 700.00, 15, 2, 25);
-            inhousePartRepository.save(laptop_screen);
-            inhousePartRepository.save(gaming_case);
-            inhousePartRepository.save(pc_fan);
-            outsourcedPartRepository.save(samsing_ram);
-            outsourcedPartRepository.save(outtel_cpu);
+            InhousePart laptop_screen = new InhousePart("Bucko Laptop Screen", 140.00, 30, 5, 50);
+            InhousePart mini_laptop_screen = new InhousePart("Bucko Mini Laptop Screen", 200.00, 35, 5, 50);
+            InhousePart gaming_case = new InhousePart("Bucko PC Gaming Case", 100.00, 25, 5, 40);
+            InhousePart pc_fan = new InhousePart("80mm Silent PC Fan", 50.00, 20, 4, 40);
+            InhousePart bucko_workstation_case = new InhousePart("Bucko Workstation Case", 300.00, 10, 2, 25);
+            InhousePart bucko_motherboard = new InhousePart("Bucko Ultra-protective Motherboard", 800.00, 15, 5, 30);
+            InhousePart bucko_laptop_body = new InhousePart("Bucko Ultra-thin Shock-dispersing Laptop Body", 50.00, 30, 10, 60);
+            OutsourcedPart macro_keyboard = new OutsourcedPart("Macro Diveback", "Macro Diveback Keyboard", 300.00, 15, 5, 30);
+            OutsourcedPart samsing_motherboard = new OutsourcedPart("Samsing", "Samsing prebuilt Motherboard w/ RAM & CPU", 600.00, 30, 5, 50);
+            OutsourcedPart outtel_motherboard = new OutsourcedPart("Outtel", "Outtel prebuilt Motherboard w/ RAM & CPU", 700.00, 15, 2, 25);
 
-            Product lenivi_laptop = new Product("Lenivi Laptop", 800.00, 30);
-            Product dall_laptop = new Product("Dall Laptop", 900.00, 40);
-            Product buck_gaming_pc = new Product("Buck Gaming PC", 1800.00, 20);
+            Product samsing_laptop = new Product("Samsing Laptop", 800.00, 30);
+            Product outtel_laptop = new Product("Outtel Laptop", 950.00, 40);
+            Product buck_gaming_pc = new Product("Buck Gaming PC", 1500.00, 20);
             Product bucko_workstation = new Product("Bucko Workstation", 3000.00, 10);
             Product macrohard_diveback = new Product("Macrohard Diveback 2-in-1 Laptop", 600.00, 35);
-            productRepository.save(lenivi_laptop);
-            productRepository.save(dall_laptop);
+
+            productRepository.save(macrohard_diveback);
+            productRepository.save(samsing_laptop);
+            productRepository.save(outtel_laptop);
             productRepository.save(buck_gaming_pc);
             productRepository.save(bucko_workstation);
-            productRepository.save(macrohard_diveback);
+
+            setPartToProduct(samsing_laptop, laptop_screen, samsing_motherboard, bucko_laptop_body);
+            setPartToProduct(outtel_laptop, laptop_screen, outtel_motherboard, bucko_laptop_body);
+            setPartToProduct(buck_gaming_pc, gaming_case, pc_fan, bucko_motherboard);
+            setPartToProduct(bucko_workstation, bucko_workstation_case, pc_fan, bucko_motherboard);
+            setPartToProduct(macrohard_diveback, macro_keyboard, mini_laptop_screen);
+
+            partRepository.save(laptop_screen);
+            partRepository.save(mini_laptop_screen);
+            partRepository.save(bucko_laptop_body);
+            partRepository.save(macro_keyboard);
+            partRepository.save(bucko_workstation_case);
+            partRepository.save(gaming_case);
+            partRepository.save(pc_fan);
+            partRepository.save(samsing_motherboard);
+            partRepository.save(outtel_motherboard);
+            partRepository.save(bucko_motherboard);
         }
 
         System.out.println("Started in Bootstrap");
@@ -101,5 +119,10 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Number of Parts"+partRepository.count());
         System.out.println(partRepository.findAll());
 
+    }
+    public void setPartToProduct(Product product, Part... parts) {
+        for (Part p: parts) {
+            p.getProducts().add(product);
+        }
     }
 }
