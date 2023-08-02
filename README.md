@@ -432,3 +432,13 @@ PartTest
         assertEquals(maxInv, partOut.getMaxInv());
     }
 ```
+**J.  Remove the class files for any unused validators in order to clean your code.**
+
+- Removed 2 unused validator files, DeletePartValidator and ValidDeletePart.
+- Validation for deleting parts is implemented via another method.
+
+Part.java
+```
+// line 19 removed
+@ValidDeletePart
+```
