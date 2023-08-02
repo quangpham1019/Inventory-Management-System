@@ -72,11 +72,11 @@ public class BootStrapData implements CommandLineRunner {
         */
         if(productRepository.count() == 0 && partRepository.count() == 0) {
 
-            InhousePart laptop_screen = new InhousePart("Laptop Screen", 140.00, 30);
-            InhousePart gaming_case = new InhousePart("Gaming Case", 100.00, 25);
-            InhousePart  pc_fan = new InhousePart("80mm Silent PC Fan", 15.00, 20);
-            OutsourcedPart samsing_ram = new OutsourcedPart("Samsing", "Samsing 16GB DDR4 3200MHz Laptop RAM", 60.00, 30);
-            OutsourcedPart outtel_cpu = new OutsourcedPart("Outtel", "Outtel Core i11 13th Gen CPU", 700.00, 15);
+            InhousePart laptop_screen = new InhousePart("Laptop Screen", 140.00, 30, 5, 50);
+            InhousePart gaming_case = new InhousePart("Gaming Case", 100.00, 25, 5, 40);
+            InhousePart  pc_fan = new InhousePart("80mm Silent PC Fan", 15.00, 20, 4, 40);
+            OutsourcedPart samsing_ram = new OutsourcedPart("Samsing", "Samsing 16GB DDR4 3200MHz Laptop RAM", 60.00, 30, 5, 50);
+            OutsourcedPart outtel_cpu = new OutsourcedPart("Outtel", "Outtel Core i11 13th Gen CPU", 700.00, 15, 2, 25);
             inhousePartRepository.save(laptop_screen);
             inhousePartRepository.save(gaming_case);
             inhousePartRepository.save(pc_fan);

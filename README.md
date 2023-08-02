@@ -168,3 +168,137 @@ Display the corresponding messages:
 - If success, 'You have successfully bought this product!'
 - If not success, 'This product is currently out of stock!'
 ```
+**G. Modify the parts to track maximum and minimum inventory by doing the following:**
+
+**•   Add additional fields to the part entity for maximum and minimum inventory.**
+
+Part.java
+```
+// line 34-35, 
+int minInv;
+int maxInv;
+
+// line 45-50
+public Part(String name, double price, int inv, int minInv, int maxInv) {
+    this.name = name;
+    this.price = price;
+    this.inv = inv;
+    this.minInv = minInv;
+    this.maxInv = maxInv;
+}
+
+// line 92-107
+adding getters and setters for minInv and maxInv 
+```
+InhousePart.java, OutsourcedPart.java
+```
+// line 20-21
+modify the InhousePart and OutsourcedPart constructors to include minInv and maxInv
+```
+mainscreen.html
+```
+// line 39-40
+<th>Min Inventory</th>
+<th>Max Inventory</th>
+
+// line 49-50
+<td th:text="${tempPart.minInv}">1</td>
+<td th:text="${tempPart.maxInv}">1</td>
+```
+**•   Modify the sample inventory to include the maximum and minimum fields.**
+BootStrapData.java
+```
+// line 75-79
+InhousePart laptop_screen = new InhousePart("Laptop Screen", 140.00, 30, 5, 50);
+InhousePart gaming_case = new InhousePart("Gaming Case", 100.00, 25, 5, 40);
+InhousePart  pc_fan = new InhousePart("80mm Silent PC Fan", 15.00, 20, 4, 40);
+OutsourcedPart samsing_ram = new OutsourcedPart("Samsing", "Samsing 16GB DDR4 3200MHz Laptop RAM", 60.00, 30, 5, 50);
+OutsourcedPart outtel_cpu = new OutsourcedPart("Outtel", "Outtel Core i11 13th Gen CPU", 700.00, 15, 2, 25);
+```
+**•   Add to the InhousePartForm and OutsourcedPartForm forms additional text inputs for the inventory so the user can set the maximum and minimum values.**
+InhousePartForm.html
+```
+// line 28-29
+<p><input type="text" path="minInv" th:field="*{minInv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
+<p><input type="text" path="maxInv" th:field="*{maxInv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
+```
+OutsourcedPartForm.html
+```
+// line 29-30
+<p><input type="text" th:field="*{minInv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
+<p><input type="text" th:field="*{maxInv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
+```
+**•   Rename the file the persistent storage is saved to.**
+application.properties
+```
+// line 7-8
+spring.datasource.generate-unique-name=false
+spring.datasource.name=jackcomputershop
+```
+**•   Modify the code to enforce that the inventory is between or at the minimum and maximum value.**
+
+ValidPartInventory.java
+```
+package com.example.demo.validators;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Constraint(validatedBy = {PartInventoryValidator.class})
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ValidPartInventory {
+    String message() default "Inventory value must be between min inventory and max inventory.";
+    Class<?> [] groups() default {};
+    Class<? extends Payload> [] payload() default {};
+}
+```
+PartInventoryValidator.java
+```
+package com.example.demo.validators;
+
+import com.example.demo.domain.Part;
+import com.example.demo.service.PartService;
+import com.example.demo.service.PartServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class PartInventoryValidator implements ConstraintValidator<ValidPartInventory, Part> {
+    @Autowired
+    private ApplicationContext context;
+
+    public static  ApplicationContext myContext;
+
+    @Override
+    public void initialize(ValidPartInventory constraintAnnotation) {
+        ConstraintValidator.super.initialize(constraintAnnotation);
+    }
+
+    @Override
+    public boolean isValid(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        if (context==null) return true;
+        if (context!=null) myContext = context;
+        if (part.getInv() >= part.getMinInv() && part.getInv() <= part.getMaxInv()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+```
+Part.java
+```
+// line 20
+@ValidPartInventory
+
+--> apply the validation to class Part
+```
