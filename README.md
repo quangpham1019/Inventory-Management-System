@@ -390,4 +390,45 @@ if ((p.getInv()-p.getMinInv())<(product.getInv()-myProduct.getInv()))return fals
 
 *** Update to section E, modify BootStrapData.java to include additional parts and products with associated parts.
 
-*** Changes are recorded in section E 
+*** Changes are recorded in section E
+
+**I.  Add at least two unit tests for the maximum and minimum fields to the PartTest class in the test package.**
+PartTest
+```
+// line 104-138
+    @Test
+    void getMinInv() {
+        int minInv = 1;
+        partIn.setMinInv(minInv);
+        assertEquals(minInv, partIn.getMinInv());
+        partOut.setMinInv(minInv);
+        assertEquals(minInv, partOut.getMinInv());
+    }
+
+    @Test
+    void setMinInv() {
+        int minInv = 1;
+        partIn.setMinInv(minInv);
+        assertEquals(minInv, partIn.getMinInv());
+        partOut.setMinInv(minInv);
+        assertEquals(minInv, partOut.getMinInv());
+    }
+
+    @Test
+    void getMaxInv() {
+        int maxInv = 50;
+        partIn.setMaxInv(maxInv);
+        assertEquals(maxInv, partIn.getMaxInv());
+        partOut.setMaxInv(maxInv);
+        assertEquals(maxInv, partOut.getMaxInv());
+    }
+
+    @Test
+    void setMaxInv() {
+        int maxInv = 50;
+        partIn.setMaxInv(maxInv);
+        assertEquals(maxInv, partIn.getMaxInv());
+        partOut.setMaxInv(maxInv);
+        assertEquals(maxInv, partOut.getMaxInv());
+    }
+```
