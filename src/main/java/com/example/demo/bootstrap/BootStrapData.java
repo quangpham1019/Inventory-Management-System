@@ -1,22 +1,12 @@
 package com.example.demo.bootstrap;
 
-import com.example.demo.domain.InhousePart;
-import com.example.demo.domain.OutsourcedPart;
-import com.example.demo.domain.Part;
-import com.example.demo.domain.Product;
-import com.example.demo.repositories.InhousePartRepository;
-import com.example.demo.repositories.OutsourcedPartRepository;
-import com.example.demo.repositories.PartRepository;
-import com.example.demo.repositories.ProductRepository;
-import com.example.demo.service.OutsourcedPartService;
-import com.example.demo.service.OutsourcedPartServiceImpl;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.ProductServiceImpl;
+import com.example.demo.domain.*;
+import com.example.demo.repositories.*;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -29,13 +19,14 @@ public class BootStrapData implements CommandLineRunner {
 
     private final PartRepository partRepository;
     private final ProductRepository productRepository;
-
+    private final UserRepository userRepository;
     private final InhousePartRepository inhousePartRepository;
     private final OutsourcedPartRepository outsourcedPartRepository;
 
-    public BootStrapData(PartRepository partRepository, ProductRepository productRepository, OutsourcedPartRepository outsourcedPartRepository, InhousePartRepository inhousePartRepository) {
+    public BootStrapData(PartRepository partRepository, ProductRepository productRepository, UserRepository userRepository, OutsourcedPartRepository outsourcedPartRepository, InhousePartRepository inhousePartRepository) {
         this.partRepository = partRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
         this.outsourcedPartRepository=outsourcedPartRepository;
         this.inhousePartRepository = inhousePartRepository;
     }
@@ -113,12 +104,24 @@ public class BootStrapData implements CommandLineRunner {
             partRepository.save(bucko_motherboard);
         }
 
-        System.out.println("Started in Bootstrap");
-        System.out.println("Number of Products"+productRepository.count());
-        System.out.println(productRepository.findAll());
-        System.out.println("Number of Parts"+partRepository.count());
-        System.out.println(partRepository.findAll());
+//        System.out.println("Started in Bootstrap");
+//        System.out.println("Number of Products"+productRepository.count());
+//        System.out.println(productRepository.findAll());
+//        System.out.println("Number of Parts"+partRepository.count());
+//        System.out.println(partRepository.findAll());
 
+        User adminAccount = userRepository.findByRole(Role.ADMIN);
+        if (adminAccount == null) {
+            User user = new User();
+
+            user.setEmail("admin1@gmail.com");
+            user.setFirstName("admin1");
+            user.setLastName("admin1");
+            user.setRole(Role.ADMIN);
+            user.setPassword(new BCryptPasswordEncoder().encode("admin1"));
+
+            userRepository.save(user);
+        }
     }
     public void setPartToProduct(Product product, Part... parts) {
         for (Part p: parts) {
