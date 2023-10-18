@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.domain.Order;
 import com.example.demo.domain.User;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.security.JWTService;
@@ -20,6 +21,8 @@ import java.util.List;
 public class AppController {
 
     @Autowired
+    private Order order;
+    @Autowired
     private User user;
     @Autowired
     private JWTService jwtService;
@@ -34,6 +37,7 @@ public class AppController {
             model.addAttribute("username", jwtService.extractUserName(jwt.toString()));
         }
         user.setEmail("USER_EMAIL");
+        order.setOrderNumber("1");
         List<String> sessionAttr = Collections.list(httpServletRequest.getSession().getAttributeNames());
         List<String> sessionAttrValue = new ArrayList<>();
         for (String attr : sessionAttr) {

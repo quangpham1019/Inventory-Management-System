@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                                 .anyRequest().authenticated();
                 })
 //                .formLogin()
-//                .loginPage("/sign_in")
+//                .loginPage("/api/v1/auth/signin2get")
 //                .and()
                 .sessionManagement(manager -> manager
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
