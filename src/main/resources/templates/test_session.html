@@ -10,11 +10,9 @@
 
     <h3>The current session is for <span th:text="${tokenFromSession}"></span></h3>
 
-    <div>
-        <form th:action="@{/api/v1/auth/destroy}" method="post">
-            <input type="submit" value="DESTROY Session" />
-        </form>
-    </div>
+    <a th:href="@{/api/v1/auth/addItemToOrder}">add item to order</a>
+
+    <a th:href="@{/api/v1/auth/destroy}">Log out</a>
 <!--    <h4><a th:href="@{/api/v1/auth/}">Click here to admin page</a></h4>-->
 </div>
 
