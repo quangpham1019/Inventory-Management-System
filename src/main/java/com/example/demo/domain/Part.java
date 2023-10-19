@@ -19,13 +19,12 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="part_type",discriminatorType = DiscriminatorType.INTEGER)
 @Table(name="Parts")
-public abstract class Part implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
-    String name;
-    @Min(value = 0, message = "Price value must be positive")
-    double price;
+public abstract class Part extends Item implements Serializable {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    long id;
+//    @Min(value = 0, message = "Price value must be positive")
+//    double price;
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
 
@@ -41,27 +40,17 @@ public abstract class Part implements Serializable {
     }
 
     public Part(String name, double price, int inv, int minInv, int maxInv) {
-        this.name = name;
-        this.price = price;
+        super(name, price);
         this.inv = inv;
         this.minInv = minInv;
         this.maxInv = maxInv;
     }
 
-    public Part(long id, String name, double price, int inv) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+    public Part(String name, double price, int inv) {
+        super(name, price);
         this.inv = inv;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -114,18 +103,18 @@ public abstract class Part implements Serializable {
     public String toString(){
         return this.name;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Part part = (Part) o;
-
-        return id == part.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Part part = (Part) o;
+//
+//        return id == part.id;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return (int) (id ^ (id >>> 32));
+//    }
 }

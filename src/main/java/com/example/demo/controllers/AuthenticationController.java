@@ -1,14 +1,12 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domain.Order;
-import com.example.demo.domain.OrderItem;
-import com.example.demo.domain.Product;
-import com.example.demo.domain.User;
+import com.example.demo.domain.*;
 import com.example.demo.dto.JwtAuthenticationResponse;
 import com.example.demo.dto.RefreshTokenRequest;
 import com.example.demo.dto.SignUpRequest;
 import com.example.demo.dto.SigninRequest;
 import com.example.demo.repositories.OrderRepository;
+import com.example.demo.repositories.ServiceRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ProductServiceImpl;
 import com.example.demo.service.security.AuthenticationService;
@@ -42,6 +40,8 @@ public class AuthenticationController {
     private ProductService productService;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
     private final AuthenticationService authenticationService;
 
 //    @PostMapping("/signup")
@@ -93,14 +93,19 @@ public class AuthenticationController {
     @GetMapping("/addItemToOrder")
     public String addItemToOrder() {
 
+        Service service = new Service();
+        serviceRepository.save(service);
         Set<OrderItem> orderItemSet = new HashSet<>();
         OrderItem orderItem = new OrderItem();
-        orderItem.setProduct(productService.findById(2));
+        orderItem.setItem(productService.findById(2));
         OrderItem orderItem1 = new OrderItem();
-        orderItem1.setProduct(productService.findById(1));
+        orderItem1.setItem(productService.findById(1));
 //        orderItem.setOrder(order);
+        OrderItem orderItem2 = new OrderItem();
+        orderItem2.setItem(service);
         orderItemSet.add(orderItem);
         orderItemSet.add(orderItem1);
+        orderItemSet.add(orderItem2);
         order.setOrderItemSet(orderItemSet);
         System.out.println(order);
 

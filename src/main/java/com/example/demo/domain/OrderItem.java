@@ -17,12 +17,13 @@ public class OrderItem {
     @Column(name = "order_item_id")
     private Long id;
 
+    private int quantity;
+
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-    private Product product;
+    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
+    private Item item;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-
 }
