@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domain.Order;
+import com.example.demo.domain.OrderItem;
 import com.example.demo.domain.Product;
 import com.example.demo.domain.User;
 import com.example.demo.dto.JwtAuthenticationResponse;
@@ -92,13 +93,16 @@ public class AuthenticationController {
     @GetMapping("/addItemToOrder")
     public String addItemToOrder() {
 
-//        Set<OrderItem> orderItemSet = new HashSet<>();
-//        OrderItem orderItem = new OrderItem();
-//        orderItem.setOrder(orderRepository.getById(order.getId()));
-//        orderItem.setOrderItemGeneral(productService.findById(2));
-//        orderItemSet.add(orderItem);
-//        order.setOrderItemSet(orderItemSet);
-//        System.out.println(order);
+        Set<OrderItem> orderItemSet = new HashSet<>();
+        OrderItem orderItem = new OrderItem();
+        orderItem.setProduct(productService.findById(2));
+        OrderItem orderItem1 = new OrderItem();
+        orderItem1.setProduct(productService.findById(1));
+//        orderItem.setOrder(order);
+        orderItemSet.add(orderItem);
+        orderItemSet.add(orderItem1);
+        order.setOrderItemSet(orderItemSet);
+        System.out.println(order);
 
         return "redirect:/";
     }

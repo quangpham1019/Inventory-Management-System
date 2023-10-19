@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.util.Set;
 @Setter
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Table(name = "orders")
+@ToString
 public class Order {
 
     @Id
@@ -40,9 +42,22 @@ public class Order {
 
         if (orderItem != null) {
             orderItemSet.add(orderItem);
-            System.out.println("Adding order item to order");
+            System.out.println(this + " -- being added to order");
             orderItem.setOrder(this);
-            System.out.println("Setting order for order item");
         }
     }
+
+//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private Set<OrderItem> orderItemSet = new HashSet<>();
+//
+//    public void add(OrderItem orderItem) {
+//
+//        if (orderItem != null) {
+//            orderItemSet.add(orderItem);
+//            System.out.println("Adding order item to order");
+//            orderItem.setOrder(this);
+//            System.out.println("Setting order for order item");
+//        }
+//    }
 }
