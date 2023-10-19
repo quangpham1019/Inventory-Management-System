@@ -19,14 +19,12 @@ import java.util.Set;
 @Table(name="Products")
 @ValidProductPrice
 @ValidEnufParts
-public class Product implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-            @Column(name = "product_id")
-    long id;
-    String name;
-    @Min(value = 0, message = "Price value must be positive")
-    double price;
+public class Product extends Item implements Serializable {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//            @Column(name = "product_id")
+//    long id;
+
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
     @ManyToMany(cascade=CascadeType.ALL, mappedBy = "products")
@@ -36,25 +34,24 @@ public class Product implements Serializable {
     }
 
     public Product(String name, double price, int inv) {
-        this.name = name;
-        this.price = price;
+        super(name, price);
         this.inv = inv;
     }
 
-    public Product(long id, String name, double price, int inv) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.inv = inv;
-    }
+//    public Product(long id, String name, double price, int inv) {
+//        this.id = id;
+//        this.name = name;
+//        this.price = price;
+//        this.inv = inv;
+//    }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -91,18 +88,18 @@ public class Product implements Serializable {
     public String toString(){
         return this.name;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Product product = (Product) o;
-
-        return id == product.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Product product = (Product) o;
+//
+//        return id == product.id;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return (int) (id ^ (id >>> 32));
+//    }
 }
