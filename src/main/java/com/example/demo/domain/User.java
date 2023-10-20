@@ -1,4 +1,5 @@
 package com.example.demo.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @Data
@@ -20,12 +22,18 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
+
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private RoleType roleType;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Report> reports;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
