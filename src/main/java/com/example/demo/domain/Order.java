@@ -29,6 +29,7 @@ public class Order {
     private Long id;
 
     private String orderNumber;
+    private double totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

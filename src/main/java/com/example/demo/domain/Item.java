@@ -45,4 +45,8 @@ public class Item {
         return (int) (id ^ (id >>> 32));
     }
 
+    public String toString() {
+        return name;
+    }
+
 }

@@ -11,7 +11,13 @@
 <body>
 <div class="container text-center">
     <h1>SALES</h1>
-
+    <ul th:each="orderItem : ${order.getOrderItemSet()}">
+        <li>
+            <span th:text="${orderItem}"></span>
+            :
+            <span th:text="${orderItem.quantity}"></span>
+        </li>
+    </ul>
 </div>
 
 </body>

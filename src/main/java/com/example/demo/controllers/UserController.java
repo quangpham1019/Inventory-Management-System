@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.domain.Item;
 import com.example.demo.domain.Order;
 import com.example.demo.domain.OrderItem;
 import com.example.demo.domain.User;
@@ -12,6 +13,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/api/v1/user")
@@ -30,7 +34,14 @@ public class UserController {
         return ResponseEntity.ok("hello user");
     }
     @GetMapping("/sales")
-    public String getSalesPage() {
+    public String getSalesPage(Model model) {
+
+//        Set<Item> itemSet = new HashSet<>();
+//        order.getOrderItemSet().forEach(i ->
+//                itemSet.add(i.getItem())
+//        );
+        model.addAttribute("order", order);
+
         return "sales";
     }
 
@@ -60,6 +71,7 @@ public class UserController {
         // COMPARE orderItem with elements of order.getOrderItemSet()
         if(!order.getOrderItemSet().contains(orderItem)) {
             // orderItem NOT exists in the orderItemSet
+            orderItem.setQuantity(1);
             order.getOrderItemSet().add(orderItem);
         } else {
             // orderItem DOES exists in the orderItemSet

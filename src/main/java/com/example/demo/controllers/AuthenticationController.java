@@ -35,6 +35,8 @@ import java.util.Set;
 public class AuthenticationController {
 
     @Autowired
+    private User user;
+    @Autowired
     private Order order;
     @Autowired
     private ProductService productService;
@@ -117,9 +119,25 @@ public class AuthenticationController {
     public String saveOrder() {
         Order myOrder = new Order();
         myOrder.setOrderNumber(order.getOrderNumber());
+        myOrder.setCustomer(order.getCustomer());
         order.getOrderItemSet().forEach(myOrder::addOrderItem);
         orderRepository.save(myOrder);
+
+        // log user activity to report
+        Report report = new Report();
+        report.setOrder(myOrder);
+        report.setCustomer(order.getCustomer());
+        report.setUser(user);
+        report.setPrice(order.getTotalPrice());
+
         System.out.println("saving order");
+        // reset order("session")
+        order.setOrderItemSet(new HashSet<>());
+        order.setOrderNumber(null);
+        order.setCustomer(null);
+
+
+
         return "redirect:/";
     }
 
