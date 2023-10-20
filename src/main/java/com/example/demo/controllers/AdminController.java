@@ -25,4 +25,13 @@ public class AdminController {
     public String getAdminSession() {
         return "/admin/index";
     }
+
+    @GetMapping("/report")
+    public String getReportPage() {
+        return "report";
+    }
+    @GetMapping("/manageEmployees")
+    public String getManageEmployeesPage() {
+        return "manageEmployees";
+    }
 }

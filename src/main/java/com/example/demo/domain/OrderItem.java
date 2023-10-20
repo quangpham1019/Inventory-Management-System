@@ -30,4 +30,19 @@ public class OrderItem {
     public String toString() {
         return item.getName();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderItem orderItem = (OrderItem) o;
+
+        return item.getId() == orderItem.getItem().getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (item.getId() ^ (item.getId() >>> 32));
+    }
 }
