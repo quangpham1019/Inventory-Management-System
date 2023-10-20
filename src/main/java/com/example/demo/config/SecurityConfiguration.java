@@ -33,6 +33,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+//                .exceptionHandling().authenticationEntryPoint()
                 .authorizeHttpRequests(request -> {
                         request.antMatchers("/", "/api/v1/auth/**")
                                 .permitAll()

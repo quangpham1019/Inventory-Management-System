@@ -89,6 +89,7 @@ public class AuthenticationController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/signin2/session")
     public String testSession(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
