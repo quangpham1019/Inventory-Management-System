@@ -1,6 +1,6 @@
 package com.example.demo.domain;
 
-public enum Role {
+public enum RoleType {
     ADMIN,
     USER
 }

@@ -12,5 +12,6 @@ import javax.persistence.Table;
 @Table(name = "services")
 public class Service extends Item {
 
-    private Status status;
+    private StatusType statusType;
+
 }

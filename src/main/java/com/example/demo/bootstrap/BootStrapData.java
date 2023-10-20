@@ -88,14 +88,14 @@ public class BootStrapData implements CommandLineRunner {
 //        System.out.println("Number of Parts"+partRepository.count());
 //        System.out.println(partRepository.findAll());
 
-        User adminAccount = userRepository.findByRole(Role.ADMIN);
+        User adminAccount = userRepository.findByRoleType(RoleType.ADMIN);
         if (adminAccount == null) {
             User user = new User();
 
             user.setEmail("admin1@gmail.com");
             user.setFirstName("admin1");
             user.setLastName("admin1");
-            user.setRole(Role.ADMIN);
+            user.setRoleType(RoleType.ADMIN);
             user.setPassword(new BCryptPasswordEncoder().encode("admin1"));
 
             userRepository.save(user);

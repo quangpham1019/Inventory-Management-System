@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.example.demo.domain.Role;
 import com.example.demo.service.security.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
