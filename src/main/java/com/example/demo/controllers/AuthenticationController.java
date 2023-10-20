@@ -6,10 +6,13 @@ import com.example.demo.dto.RefreshTokenRequest;
 import com.example.demo.dto.SignUpRequest;
 import com.example.demo.dto.SigninRequest;
 import com.example.demo.repositories.OrderRepository;
+import com.example.demo.repositories.ReportRepository;
 import com.example.demo.repositories.ServiceRepository;
+import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ProductServiceImpl;
 import com.example.demo.service.security.AuthenticationService;
+import com.example.demo.service.security.JWTService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,8 @@ import java.util.Set;
 public class AuthenticationController {
 
     @Autowired
+    private ReportRepository reportRepository;
+    @Autowired
     private User user;
     @Autowired
     private Order order;
@@ -44,6 +49,10 @@ public class AuthenticationController {
     private OrderRepository orderRepository;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private JWTService jwtService;
+    @Autowired
+    private UserRepository userRepository;
     private final AuthenticationService authenticationService;
 
 //    @PostMapping("/signup")
@@ -69,11 +78,12 @@ public class AuthenticationController {
             return "sign_in";
         }
 
-
-
         JwtAuthenticationResponse jwtAuthenticationResponse = authenticationService.signin(signinRequest);
         String token = jwtAuthenticationResponse.getToken();
 
+        User user1 = userRepository.findByEmail(jwtService.extractUserName(token.toString())).get();
+        user.setFirstName(user1.getFirstName());
+        user.setLastName(user1.getLastName());
         httpServletRequest.getSession().setAttribute("token", token);
         model.addAttribute("token", token);
         return "redirect:/";
@@ -120,21 +130,28 @@ public class AuthenticationController {
         Order myOrder = new Order();
         myOrder.setOrderNumber(order.getOrderNumber());
         myOrder.setCustomer(order.getCustomer());
-        order.getOrderItemSet().forEach(myOrder::addOrderItem);
+        order.getOrderItemSet().forEach(o -> {
+            myOrder.addOrderItem(o);
+            order.setTotalPrice(order.getTotalPrice() + o.getItem().getPrice()*o.getQuantity());
+        });
+        myOrder.setTotalPrice(order.getTotalPrice());
         orderRepository.save(myOrder);
 
         // log user activity to report
         Report report = new Report();
         report.setOrder(myOrder);
+        report.setUser(user.getFirstName() + " " + user.getLastName());
         report.setCustomer(order.getCustomer());
-        report.setUser(user);
         report.setPrice(order.getTotalPrice());
+
+        reportRepository.save(report);
 
         System.out.println("saving order");
         // reset order("session")
         order.setOrderItemSet(new HashSet<>());
         order.setOrderNumber(null);
         order.setCustomer(null);
+        order.setTotalPrice(0);
 
 
 
