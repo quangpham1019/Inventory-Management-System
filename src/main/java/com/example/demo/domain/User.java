@@ -1,6 +1,9 @@
 package com.example.demo.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +17,12 @@ import java.util.List;
 import java.util.Set;
 
 @Component
-@Data
+@Getter
+@Setter
 @Entity
 @Scope(value = "session", proxyMode= ScopedProxyMode.TARGET_CLASS)
 @Table(name = "users")
+@ToString
 public class User implements UserDetails {
 
     @Id
@@ -30,10 +35,6 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private RoleType roleType;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Report> reports;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

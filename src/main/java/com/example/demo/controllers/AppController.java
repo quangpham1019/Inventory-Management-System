@@ -36,8 +36,8 @@ public class AppController {
         if (jwt != null) {
             model.addAttribute("username", jwtService.extractUserName(jwt.toString()));
         }
-        user.setEmail("USER_EMAIL");
-        order.setOrderNumber("1");
+//        user.setEmail("USER_EMAIL");
+//        order.setOrderNumber("1");
         List<String> sessionAttr = Collections.list(httpServletRequest.getSession().getAttributeNames());
         List<String> sessionAttrValue = new ArrayList<>();
         for (String attr : sessionAttr) {

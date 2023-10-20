@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "reports")
+@ToString
 public class Report {
 
     @Id
@@ -23,9 +25,7 @@ public class Report {
     @CreationTimestamp
     private Date createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String user;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
