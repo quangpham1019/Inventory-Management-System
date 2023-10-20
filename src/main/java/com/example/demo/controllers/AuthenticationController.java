@@ -117,7 +117,7 @@ public class AuthenticationController {
     public String saveOrder() {
         Order myOrder = new Order();
         myOrder.setOrderNumber(order.getOrderNumber());
-        order.getOrderItemSet().forEach(item -> myOrder.add(item));
+        order.getOrderItemSet().forEach(myOrder::addOrderItem);
         orderRepository.save(myOrder);
         System.out.println("saving order");
         return "redirect:/";

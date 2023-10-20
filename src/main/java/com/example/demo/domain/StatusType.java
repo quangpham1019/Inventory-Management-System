@@ -1,6 +1,6 @@
 package com.example.demo.domain;
 
-public enum Status {
+public enum StatusType {
     PENDING,
     COMPLETED
 }

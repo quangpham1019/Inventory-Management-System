@@ -1,6 +1,6 @@
 package com.example.demo.service.security.Impl;
 
-import com.example.demo.domain.Role;
+import com.example.demo.domain.RoleType;
 import com.example.demo.domain.User;
 import com.example.demo.dto.JwtAuthenticationResponse;
 import com.example.demo.dto.RefreshTokenRequest;
@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setEmail(signUpRequest.getEmail());
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
-        user.setRole(Role.USER);
+        user.setRoleType(RoleType.USER);
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
         return userRepository.save(user);

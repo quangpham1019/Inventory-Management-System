@@ -38,7 +38,8 @@ public class Order {
     @JsonIgnore
     private Set<OrderItem> orderItemSet = new HashSet<>();
 
-    public void add(OrderItem orderItem) {
+
+    public void addOrderItem(OrderItem orderItem) {
 
         if (orderItem != null) {
             orderItemSet.add(orderItem);
