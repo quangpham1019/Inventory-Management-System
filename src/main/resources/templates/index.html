@@ -31,12 +31,15 @@
         <div sec:authorize="hasAuthority('ADMIN')">
             <a th:href="@{/api/v1/admin/}">Admin only</a>
             <a th:href="@{/api/v1/admin/session}">Admin directory</a>
+            <a th:href="@{/api/v1/admin/report}">Report</a>
+            <a th:href="@{/api/v1/admin/manageEmployees}">Manage Employees</a>
         </div>
 
         <!--    Available to authenticated users-->
         <p>For users</p>
         <div>
-            <h3><a th:href="@{/mainscreen}">Go to main screen</a></h3>
+            <h3><a th:href="@{/mainscreen}">Inventory</a></h3>
+            <h3><a th:href="@{/mainscreen}">Sales</a></h3>
             <h3><a th:href="@{/api/v1/user/addItemToCartGet}">Add Item to Cart</a></h3>
             <h3><a th:href="@{/api/v1/user/}">Hello user</a></h3>
             <h3><a th:href="@{/api/v1/auth/signin2/session}">Check Session</a></h3>

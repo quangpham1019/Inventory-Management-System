@@ -57,15 +57,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println("TOKEN PASS NULL CHECK");
+//        System.out.println("TOKEN PASS NULL CHECK");
 
         jwt = request.getSession().getAttribute("token").toString();
-        System.out.println(jwt);
+//        System.out.println(jwt);
 
         try {
             // Extract the username (email) from the token
             userEmail = jwtService.extractUserName(jwt);
-            System.out.println("TOKEN PASS VALIDITY CHECK");
+//            System.out.println("TOKEN PASS VALIDITY CHECK");
         } catch (ExpiredJwtException e) {
             System.out.println(e);
             request.getSession().invalidate();

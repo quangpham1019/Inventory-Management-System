@@ -40,9 +40,9 @@ public class SecurityConfiguration {
         //                        .antMatchers("/api/v1/user/**").hasRole("USER")
                                 .anyRequest().authenticated();
                 })
-//                .formLogin()
-//                .loginPage("/api/v1/auth/signin2get")
-//                .and()
+                .formLogin()
+                .loginPage("/api/v1/auth/signin2get")
+                .and()
                 .sessionManagement(manager -> manager
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 //                        .invalidSessionUrl("/api/v1/auth/signin2get")

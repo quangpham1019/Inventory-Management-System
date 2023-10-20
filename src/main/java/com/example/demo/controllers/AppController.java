@@ -44,10 +44,10 @@ public class AppController {
             sessionAttrValue.add(httpServletRequest.getSession().getAttribute(attr).toString());
         }
 
-        System.out.println(user.getEmail());
+//        System.out.println(user.getEmail());
         model.addAttribute("sessionAttr", sessionAttr);
         model.addAttribute("sessionAttrValue", sessionAttrValue);
-        System.out.println("REDIRECTING TO index");
+//        System.out.println("REDIRECTING TO index");
         return "index";
     }
 
