@@ -33,20 +33,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-//                .exceptionHandling().authenticationEntryPoint()
                 .authorizeHttpRequests(request -> {
-                        request.antMatchers("/", "/api/v1/auth/**")
-                                .permitAll()
-        //                        .antMatchers("/api/v1/admin/").hasRole("ADMIN")
-        //                        .antMatchers("/api/v1/user/**").hasRole("USER")
+                        request.antMatchers("/", "/api/v1/auth/**").permitAll()
                                 .anyRequest().authenticated();
                 })
                 .formLogin()
-                .loginPage("/api/v1/auth/signin2get")
+                .loginPage("/api/v1/auth/signInPage")
                 .and()
                 .sessionManagement(manager -> manager
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-//                        .invalidSessionUrl("/api/v1/auth/signin2get")
                         .maximumSessions(1)
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

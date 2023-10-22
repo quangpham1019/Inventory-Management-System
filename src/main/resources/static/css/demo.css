@@ -1,8 +1,30 @@
-
 body {
-    background-color: antiquewhite;
+    background-color: #eee;
 }
 
-h1 {
-    text-align: center;
+.brand {
+    font-family: Caladea, serif;
+    font-size: xxx-large;
+    padding-left: 20px;
+}
+/* Color of the links BEFORE scroll */
+.navbar-scroll .nav-link,
+.navbar-scroll .fa-bars,
+.navbar-scroll .navar-brand {
+    color: #4f4f4f;
+}
+
+.nav-link:hover {
+    color: #1266f1;
+}
+
+
+/* Color of the navbar AFTER scroll */
+.navbar-scroll,
+.navbar-scrolled {
+    background-color: #fff;
+}
+
+.active {
+    background-color: white;
 }

@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.domain.Order;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.service.PartService;
@@ -31,7 +32,8 @@ public class AddProductController {
     private List<Part> theParts;
     private static Product product1;
     private Product product;
-
+    @Autowired
+    private Order order;
     @GetMapping("/showFormAddProduct")
     public String showFormAddPart(Model theModel) {
         theModel.addAttribute("parts", partService.findAll());
@@ -45,7 +47,7 @@ public class AddProductController {
         }
         theModel.addAttribute("availparts",availParts);
         theModel.addAttribute("assparts",product.getParts());
-        return "productForm";
+        return "product_form";
     }
 
     @PostMapping("/showFormAddProduct")
@@ -62,7 +64,7 @@ public class AddProductController {
             }
             theModel.addAttribute("availparts",availParts);
             theModel.addAttribute("assparts",product2.getParts());
-            return "productForm";
+            return "product_form";
         }
  //       theModel.addAttribute("assparts", assparts);
  //       this.product=product;
@@ -104,26 +106,34 @@ public class AddProductController {
         }
         theModel.addAttribute("availparts",availParts);
         //send over to our form
-        return "productForm";
+        return "product_form";
     }
 
-    @GetMapping("/showProductFormForBuyNow")
-    public String showProductFormForBuyNow(@RequestParam("productID") int theId, Model theModel){
-        ProductService productService = context.getBean(ProductServiceImpl.class);
-        Product theProduct = productService.findById(theId);
-        if (theProduct.getInv() > 0) {
-            theProduct.setInv(theProduct.getInv() - 1);
-            productService.save(theProduct);
-            theModel.addAttribute("success", true);
-        } else {
-            theModel.addAttribute("success", false);
-        }
-        return "confirmationbuynowproduct";
-    }
+//    @GetMapping("/showProductFormForBuyNow")
+//    public String showProductFormForBuyNow(@RequestParam("productID") int theId, Model theModel){
+//        ProductService productService = context.getBean(ProductServiceImpl.class);
+//        Product theProduct = productService.findById(theId);
+//        if (theProduct.getInv() > 0) {
+//            theProduct.setInv(theProduct.getInv() - 1);
+//            productService.save(theProduct);
+//            theModel.addAttribute("success", true);
+//        } else {
+//            theModel.addAttribute("success", false);
+//        }
+//        return "confirmationbuynowproduct";
+//    }
     @GetMapping("/deleteproduct")
     public String deleteProduct(@RequestParam("productID") int theId, Model theModel) {
+
         ProductService productService = context.getBean(ProductServiceImpl.class);
         Product product2=productService.findById(theId);
+        if (order.getOrderItemSet()
+                .stream()
+                .anyMatch(orderItem -> orderItem.getItem().equals(product2))) {
+
+            return "error_product_in_order";
+        }
+
         for(Part part:product2.getParts()){
             part.getProducts().remove(product2);
             partService.save(part);
@@ -145,7 +155,7 @@ public class AddProductController {
     //    theModel.addAttribute("product", product);
     //    Product product1=new Product();
         if (product1.getName()==null) {
-            return "saveproductscreen";
+            return "error_save_product_first";
         }
         else{
         product1.getParts().add(partService.findById(theID));
@@ -160,7 +170,7 @@ public class AddProductController {
             if(!product1.getParts().contains(p))availParts.add(p);
         }
         theModel.addAttribute("availparts",availParts);
-        return "productForm";}
+        return "product_form";}
  //        return "confirmationassocpart";
     }
     @GetMapping("/removepart")
@@ -179,6 +189,6 @@ public class AddProductController {
             if(!product1.getParts().contains(p))availParts.add(p);
         }
         theModel.addAttribute("availparts",availParts);
-        return "productForm";
+        return "product_form";
     }
 }

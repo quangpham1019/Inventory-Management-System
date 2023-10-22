@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<nav class="navbar navbar-expand-lg navbar-scroll" th:fragment="header">
+    <div class="container-fluid justify-content-center justify-content-md-between">
+        <div class="brand">Jack's Computer Shop</div>
+        <button class="navbar-toggler ps-0" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+                aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon d-flex justify-content-start align-items-center">
+        <i class="fas fa-bars"></i>
+      </span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" aria-current="page" th:href="@{/inventory}">Inventory</a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/admin/report}">Report</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/admin/manageUsers}">Manage Users</a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/user/sales}">Sales</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/auth/signOutProcess}">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</html>

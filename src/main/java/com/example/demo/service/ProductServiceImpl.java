@@ -4,6 +4,7 @@ import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.repositories.PartRepository;
 import com.example.demo.repositories.ProductRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,6 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
     @Autowired
-
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -32,21 +32,10 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product findById(int theId) {
-        Long theIdl=(long)theId;
-        Optional<Product> result = productRepository.findById(theIdl);
+    public Product findById(int productId) {
+        Optional<Product> product = productRepository.findById((long) productId);
 
-        Product theProduct = null;
-
-        if (result.isPresent()) {
-            theProduct = result.get();
-        }
-        else {
-            // we didn't find the product id
-            throw new RuntimeException("Did not find part id - " + theId);
-        }
-
-        return theProduct;
+        return product.orElseThrow(() -> new IllegalArgumentException("Could not find product with id: " + productId));
     }
 
     @Override
@@ -60,10 +49,15 @@ public class ProductServiceImpl implements ProductService{
         Long theIdl=(long)theId;
         productRepository.deleteById(theIdl);
     }
+    @Override
     public List<Product> listAll(String keyword){
         if(keyword !=null){
             return productRepository.search(keyword);
         }
         return (List<Product>) productRepository.findAll();
+    }
+    @Override
+    public void saveAll(List<Product> productList) {
+        productRepository.saveAll(productList);
     }
 }

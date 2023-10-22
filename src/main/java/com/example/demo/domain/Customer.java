@@ -2,12 +2,15 @@ package com.example.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "customer")
 public class Customer {
 
@@ -16,10 +19,13 @@ public class Customer {
     @Column(name = "customer_id")
     private Long id;
 
+    private String email;
     private String firstName;
     private String lastName;
     private String address;
-
+    private String city;
+    private String state;
+    private String zipCode;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Order> orders;
@@ -27,4 +33,21 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Report> reports;
+
+    public Customer() {}
+
+    public Customer(String email, String firstName, String lastName, String address, String city, String state, String zipCode) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return this.firstName + " " + this.lastName;
+    }
 }

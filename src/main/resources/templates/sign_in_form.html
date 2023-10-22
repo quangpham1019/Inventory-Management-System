@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Sign In - CodeJava</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <div th:replace="fragments/head :: head"></div>
+    <title>Sign In</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <div class="container text-center">
     <div>
         <h1>User Sign In</h1>
     </div>
-    <form th:action="@{/api/v1/auth/signin2}" th:object="${signInRequest}"
+    <form th:action="@{/api/v1/auth/signInProcess}" th:object="${signInRequest}"
           method="post" style="max-width: 600px; margin: 0 auto;">
         <div class="m-3">
             <div class="form-group row">
@@ -31,10 +29,11 @@
             </div>
 
             <div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <button type="submit" class="btn btn-primary">Sign In</button>
             </div>
         </div>
     </form>
+
 </div>
 </body>
 </html>

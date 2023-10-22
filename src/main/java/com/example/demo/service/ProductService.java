@@ -12,10 +12,10 @@ import java.util.List;
  *
  */
 public interface ProductService {
-    public List<Product> findAll();
-    public Product findById(int theId);
-    public void save (Product theProduct);
-    public void deleteById(int theId);
-    public List<Product> listAll(String keyword);
-
+    List<Product> findAll();
+    Product findById(int theId);
+    void save (Product theProduct);
+    void deleteById(int theId);
+    List<Product> listAll(String keyword);
+    void saveAll(List<Product> productList);
 }

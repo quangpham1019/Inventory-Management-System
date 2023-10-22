@@ -19,12 +19,8 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="part_type",discriminatorType = DiscriminatorType.INTEGER)
 @Table(name="Parts")
-public abstract class Part extends Item implements Serializable {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    long id;
-//    @Min(value = 0, message = "Price value must be positive")
-//    double price;
+public class Part extends Item implements Serializable {
+
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
 
@@ -50,7 +46,6 @@ public abstract class Part extends Item implements Serializable {
         super(name, price);
         this.inv = inv;
     }
-
 
     public String getName() {
         return name;
@@ -103,18 +98,4 @@ public abstract class Part extends Item implements Serializable {
     public String toString(){
         return this.name;
     }
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Part part = (Part) o;
-//
-//        return id == part.id;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return (int) (id ^ (id >>> 32));
-//    }
 }

@@ -1,72 +1,89 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domain.Item;
-import com.example.demo.domain.Order;
-import com.example.demo.domain.OrderItem;
-import com.example.demo.domain.User;
-import com.example.demo.service.PartService;
+import com.example.demo.domain.*;
+import com.example.demo.service.*;
+import com.example.demo.validators.ValidOrderEnufs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private PartService partService;
-    @Autowired
+    @Valid
     private Order order;
-    @Autowired
     private User user;
-//    @PreAuthorize("hasAuthority('USER')")
-    @GetMapping("/")
-    public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("hello user");
+    private ItemService itemService;
+    private PartService partService;
+    private ProductService productService;
+    private OrderService orderService;
+    private ReportService reportService;
+    private CustomerService customerService;
+
+    @Autowired
+    public UserController(ItemService itemService, PartService partService, ProductService productService, Order order, User user, OrderService orderService, ReportService reportService, CustomerService customerService) {
+        this.itemService = itemService;
+        this.partService = partService;
+        this.productService = productService;
+        this.order = order;
+        this.user = user;
+        this.orderService = orderService;
+        this.reportService = reportService;
+        this.customerService = customerService;
     }
+
+    private static Customer currentCustomer;
     @GetMapping("/sales")
-    public String getSalesPage(Model model) {
+    public String getSalesPage(Model model,
+                               @Param("customerKeyword") String customerKeyword,
+                               @ModelAttribute("itemError") String itemError) {
+        List<Customer> customerList = customerService.listAllByKeyword(customerKeyword);
+        if (!itemError.isBlank()) {
+            // string length is less than 12, invalidate int values from range of itemId
+            if (itemError.length()<12) {
 
-//        Set<Item> itemSet = new HashSet<>();
-//        order.getOrderItemSet().forEach(i ->
-//                itemSet.add(i.getItem())
-//        );
+                Product product = productService.findById(Integer.parseInt(itemError));
+                model.addAttribute("errors", "There are not enough products " + product.getName() + " in store.");
+            } else {
+                model.addAttribute("errors", itemError);
+            }
+        }
+
+        model.addAttribute("customerList", customerList);
+        model.addAttribute("customerKeyword", customerKeyword);
         model.addAttribute("order", order);
-
+        model.addAttribute("selectedCustomer", currentCustomer);
         return "sales";
     }
 
-    @GetMapping("/addItemToCartGet")
-    public String getAddCartItemPage(Model model) {
-        model.addAttribute("cartItem", user);
-        return "addingCartItem";
-    }
-
-    @PostMapping("/addItemToCart")
-    public String addCartItem(@ModelAttribute(name = "cartItem") User cartItem) {
-
-        user.setLastName(cartItem.getLastName());
-        user.setFirstName(cartItem.getFirstName());
-        return "redirect:/";
-    }
-
-    @GetMapping("/addItemToOrder")
-    public String addItemToOrder(@RequestParam("partID") int partId) {
+    @PostMapping("/addItemToOrder")
+    public String addItemToOrder(@RequestParam("itemId") int itemId) {
 
         // create new OrderItem orderItem
         // set Item of orderItem to part retrieved from partService.findById(partId)
         OrderItem orderItem = new OrderItem();
-        orderItem.setItem(partService.findById(partId));
-        System.out.println("ADDING ITEM: " + orderItem.getItem().getName());
+        Item currentItem = itemService.findById(itemId);
+        orderItem.setItem(currentItem);
+        System.out.println("ADDING ITEM: " + currentItem.getName());
+
+        if (!currentItem.getClass().equals(Service.class)) {
+            Product product = productService.findById(itemId);
+            product.setInv(product.getInv() - 1);
+            productService.save(product);
+        }
 
         // COMPARE orderItem with elements of order.getOrderItemSet()
         if(!order.getOrderItemSet().contains(orderItem)) {
@@ -76,17 +93,127 @@ public class UserController {
         } else {
             // orderItem DOES exists in the orderItemSet
             System.out.println("duplicate item in order");
-            OrderItem currentItem = order.getOrderItemSet()
+            OrderItem orderItemInOrder = order.getOrderItemSet()
                     .stream()
                     .filter(o -> o.equals(orderItem))
                     .findFirst().get();
-            currentItem.setQuantity(currentItem.getQuantity() + 1);
+            orderItemInOrder.setQuantity(orderItemInOrder.getQuantity() + 1);
         }
-
-//        // VERIFICATION
-//        order.getOrderItemSet().forEach(o ->
-//                System.out.println("QUANTITY OF ITEM " + o.getItem().getName() + ": " + o.getQuantity())
-//        );
+        order.setTotalPrice(order.getTotalPrice() + orderItem.getItem().getPrice());
         return "redirect:/";
     }
+
+    @GetMapping("/changeQuantity")
+    public String changeQuantity(@RequestParam("itemId") int itemId,
+                                 @RequestParam("increase") boolean increaseQuantityInOrder,
+                                 RedirectAttributes redirectAttributes) {
+        int changeAmount = increaseQuantityInOrder? 1:-1;
+
+        Item itemFromRepo = itemService.findById(itemId);
+        if (!itemFromRepo.getClass().equals(Service.class)) {
+            Product product = productService.findById(itemId);
+            if(product.getInv()==0 && increaseQuantityInOrder) {
+                redirectAttributes.addFlashAttribute("itemError", itemId);
+                return "redirect:/api/v1/user/sales";
+            }
+
+            product.setInv(product.getInv() - changeAmount);
+            productService.save(product);
+        }
+
+        OrderItem currentItem = order.getOrderItemSet()
+                .stream()
+                .filter(o -> o.getItem().getId() == (long)itemId)
+                .findFirst().get();
+
+        currentItem.setQuantity(currentItem.getQuantity() + changeAmount);
+        order.setTotalPrice(order.getTotalPrice() + changeAmount * currentItem.getItem().getPrice());
+        order.setOrderItemSet(order.getOrderItemSet().stream().filter(orderItem -> orderItem.getQuantity()!=0).collect(Collectors.toSet()));
+        return "redirect:/api/v1/user/sales";
+    }
+
+
+    @Transactional
+    @PostMapping("/saveOrder")
+    public String saveOrder(
+            @ModelAttribute("customer") int customerId,
+            @ModelAttribute("paymentMethod") String paymentMethod,
+            RedirectAttributes redirectAttributes
+    ) {
+        if(order.getOrderItemSet().isEmpty()) {
+            redirectAttributes.addFlashAttribute("itemError", "Please add item to order before saving.");
+            return "redirect:/api/v1/user/sales";
+        }
+        currentCustomer = customerService.findById(customerId);
+        order.setCustomer(currentCustomer);
+        order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
+
+        Order myOrder = new Order();
+        myOrder.setPaymentMethod(order.getPaymentMethod());
+        myOrder.setCustomer(order.getCustomer());
+        order.getOrderItemSet().forEach(myOrder::addOrderItem);
+        myOrder.setTotalPrice(order.getTotalPrice());
+        orderService.save(myOrder);
+
+        // log user activity to report
+        Report report = new Report();
+        report.setOrder(myOrder);
+        report.setUser(user.getFirstName() + " " + user.getLastName());
+        report.setCustomer(order.getCustomer());
+        report.setPrice(order.getTotalPrice());
+        reportService.save(report);
+
+        // reset order("session")
+        order.setOrderItemSet(new HashSet<>());
+        order.setPaymentMethod(null);
+        order.setCustomer(null);
+        order.setTotalPrice(0);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/addCustomer")
+    public String getNewCustomerForm(Model model) {
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("action", "add");
+        return "customer_form";
+    }
+
+    @PostMapping("/processCustomer")
+    public String processCustomer(@ModelAttribute(name = "customer") Customer customer) {
+        customerService.save(customer);
+        return "redirect:/api/v1/user/sales";
+    }
+//
+    @GetMapping("/manageCustomers")
+    public String getManageCustomersPage(Model model) {
+        List<Customer> customers = customerService.findAll();
+        model.addAttribute("customers", customers);
+        return "customer_list";
+    }
+
+    @GetMapping("/updateCustomer")
+    public String getUpdateUserPage(@RequestParam("customerId") int customerId,
+                                    Model model) {
+
+        Customer updateCustomer = customerService.findById(customerId);
+        model.addAttribute("customer", updateCustomer);
+        model.addAttribute("action", "update");
+        return "customer_form";
+    }
+    @PostMapping("/updateCustomer")
+    public String updateUserProcess(@RequestParam("customerId") int customerId,
+                                    @ModelAttribute("customer") Customer updateCustomer) {
+
+        customerService.deleteById(customerId);
+        customerService.save(updateCustomer);
+        return "redirect:/api/v1/user/manageCustomers";
+    }
+
+    @GetMapping("/deleteCustomer")
+    public String deleteCustomer(@RequestParam("customerId") int customerId) {
+        customerService.deleteById(customerId);
+        return "redirect:/api/v1/user/manageCustomers";
+    }
+
 }
