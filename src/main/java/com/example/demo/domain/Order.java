@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.validators.ValidOrderEnufs;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -21,6 +22,7 @@ import java.util.Set;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Table(name = "orders")
 @ToString
+@ValidOrderEnufs
 public class Order {
 
     @Id
@@ -28,7 +30,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    private String orderNumber;
+    private PaymentMethod paymentMethod;
     private double totalPrice;
 
     @ManyToOne
@@ -44,7 +46,7 @@ public class Order {
 
         if (orderItem != null) {
             orderItemSet.add(orderItem);
-            System.out.println(this + " -- being added to order");
+            System.out.println(orderItem + " -- being added to order");
             orderItem.setOrder(this);
         }
     }

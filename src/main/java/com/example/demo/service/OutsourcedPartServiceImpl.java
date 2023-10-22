@@ -29,22 +29,10 @@ public class OutsourcedPartServiceImpl implements OutsourcedPartService{
     }
 
     @Override
-    public OutsourcedPart findById(int theId) {
-        Long theIdl=(long)theId;
-        Optional<OutsourcedPart> result = partRepository.findById(theIdl);
+    public OutsourcedPart findById(int partId) {
+        Optional<OutsourcedPart> outsourcedPart = partRepository.findById((long) partId);
 
-        OutsourcedPart thePart = null;
-
-        if (result.isPresent()) {
-            thePart = result.get();
-        }
-        else {
-            // we didn't find the OutSourced id
-            //throw new RuntimeException("Did not find part id - " + theId);
-            return null;
-        }
-
-        return thePart;
+        return outsourcedPart.orElseThrow(() -> new IllegalArgumentException("Could not find part with id: " + partId));
     }
 
     @Override

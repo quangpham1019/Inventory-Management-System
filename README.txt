@@ -13,7 +13,7 @@ h1 {
 text-align: center;
 }
 ```
-mainscreen.html
+inventory.html
 ```
 // line 13
 
@@ -53,7 +53,7 @@ productForm.html
 ```
 **D.  Add an “About” page to the application to describe your chosen customer’s company to web viewers and include navigation to and from the “About” page and the main screen.**
 
-resources/templates/mainscreen.html
+resources/templates/inventory.html
 ```
 // line 14
 
@@ -184,7 +184,7 @@ public void setPartToProduct(Product product, Part... parts) {
 
 **•   The “Buy Now” button must be next to the buttons that update and delete products.**
 
-mainscreen.html
+inventory.html
 ```
 // line 84
 <a th:href="@{/showProductFormForBuyNow(productID=${tempProduct.id})}" 
@@ -246,7 +246,7 @@ InhousePart.java, OutsourcedPart.java
 // line 20-21
 modify the InhousePart and OutsourcedPart constructors to include minInv and maxInv
 ```
-mainscreen.html
+inventory.html
 ```
 // line 39-40
 <th>Min Inventory</th>

@@ -12,10 +12,10 @@ import java.util.List;
  *
  */
 public interface PartService {
-    public List<Part> findAll();
-    public Part findById(int theId);
-    public void save (Part thePart);
-    public void deleteById(int theId);
-
-    public List<Part> listAll(String keyword);
+    List<Part> findAll();
+    Part findById(int theId);
+    void save (Part thePart);
+    void saveAll(List<Part> partList);
+    void deleteById(int theId);
+    List<Part> listAllByKeyword(String keyword);
 }

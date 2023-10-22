@@ -1,22 +1,20 @@
 package com.example.demo.controllers;
 
+import com.example.demo.domain.User;
 import com.example.demo.repositories.ReportRepository;
 import com.example.demo.domain.Report;
+import com.example.demo.repositories.UserRepository;
+import com.example.demo.service.JcsUserService;
+import com.example.demo.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Access;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @PreAuthorize("hasAuthority('ADMIN')")
 @Controller
@@ -24,26 +22,78 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminController {
 
+    private ReportService reportService;
+    private JcsUserService jcsUserService;
     @Autowired
-    private ReportRepository reportRepository;
-    @GetMapping("/")
-    public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("hello admin");
+    public AdminController(ReportService reportService, JcsUserService jcsUserService) {
+        this.reportService = reportService;
+        this.jcsUserService = jcsUserService;
     }
 
-    @GetMapping("/session")
-    public String getAdminSession() {
-        return "/admin/index";
-    }
 
     @GetMapping("/report")
     public String getReportPage(Model model) {
-        Set<Report> reports = reportRepository.findAll().stream().collect(Collectors.toSet());
+        List<Report> reports = reportService.findAll();
         model.addAttribute("reports", reports);
         return "report";
     }
-    @GetMapping("/manageEmployees")
-    public String getManageEmployeesPage() {
-        return "manageEmployees";
+    @GetMapping("/manageUsers")
+    public String getManageUsersPage(Model model) {
+        List<User> users = jcsUserService.findAll();
+        model.addAttribute("users", users);
+        return "user_list";
+    }
+
+    @GetMapping("/addUser")
+    public String getNewUserForm(Model model,
+                                 @ModelAttribute("error") Exception e) {
+        model.addAttribute("user", new User());
+        model.addAttribute("action", "add");
+        model.addAttribute("error", e);
+        return "user_form";
+    }
+
+    @PostMapping("/processUser")
+    public String processNewEmployee(@ModelAttribute(name = "user") User newUser) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(encodedPassword);
+        newUser.setRoleType(newUser.getRoleType());
+        jcsUserService.save(newUser);
+
+        return "user_add_success";
+    }
+
+    @GetMapping("/updateUser")
+    public String getUpdateUser(@RequestParam("userId") int userId, Model model) {
+
+        User updateUser = jcsUserService.findById(userId);
+        model.addAttribute("user", updateUser);
+        model.addAttribute("action", "update");
+        return "user_form";
+    }
+    @PostMapping("/updateUser")
+    public String updateUserProcess(@RequestParam("userId") int userId,
+                                    @ModelAttribute("user") User updateUser) {
+
+        User user = jcsUserService.findById(userId);
+        if (!updateUser.getPassword().isBlank()) {
+            System.out.println("new password");
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(updateUser.getPassword());
+            user.setPassword(encodedPassword);
+        }
+        user.setEmail(updateUser.getEmail());
+        user.setFirstName(updateUser.getFirstName());
+        user.setLastName(updateUser.getLastName());
+        user.setRoleType(updateUser.getRoleType());
+        jcsUserService.save(user);
+        return "redirect:/api/v1/admin/manageUsers";
+    }
+
+    @GetMapping("/deleteUser")
+    public String deleteUser(@RequestParam("userId") int userId) {
+        jcsUserService.deleteById(userId);
+        return "redirect:/api/v1/admin/manageUsers";
     }
 }

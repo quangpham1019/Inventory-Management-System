@@ -30,11 +30,21 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(unique = true)
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private RoleType roleType;
+
+    public User() {}
+    public User(String email, String password, String firstName, String lastName, RoleType roleType) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roleType = roleType;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

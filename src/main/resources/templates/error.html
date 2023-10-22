@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
+    <div th:replace="fragments/head :: head"></div>
     <title>Page Not Found</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <div class="container text-center">
     <h3>This page does not exists...</h3>
+<!--    <div th:errors=""></div>-->
     <h4><a th:href="@{/}">Click here to go back to homepage</a></h4>
 </div>
 

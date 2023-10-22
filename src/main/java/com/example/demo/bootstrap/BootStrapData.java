@@ -2,11 +2,12 @@ package com.example.demo.bootstrap;
 
 import com.example.demo.domain.*;
 import com.example.demo.repositories.*;
+import com.example.demo.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -17,29 +18,31 @@ import java.util.List;
 @Component
 public class BootStrapData implements CommandLineRunner {
 
-    private final PartRepository partRepository;
-    private final ProductRepository productRepository;
-    private final UserRepository userRepository;
-    private final InhousePartRepository inhousePartRepository;
-    private final OutsourcedPartRepository outsourcedPartRepository;
+    private final JcsUserService jcsUserService;
+    private final CustomerService customerService;
+    private final JcsServiceService jcsServiceService;
+    private final ProductService productService;
+    private final PartService partService;
 
-    public BootStrapData(UserRepository userRepository, PartRepository partRepository, ProductRepository productRepository, OutsourcedPartRepository outsourcedPartRepository, InhousePartRepository inhousePartRepository) {
-        this.partRepository = partRepository;
-        this.productRepository = productRepository;
-        this.userRepository = userRepository;
-        this.outsourcedPartRepository=outsourcedPartRepository;
-        this.inhousePartRepository = inhousePartRepository;
+    public BootStrapData(JcsUserService jcsUserService, CustomerService customerService, JcsServiceService jcsServiceService, ProductService productService, PartService partService) {
+        this.jcsUserService = jcsUserService;
+        this.customerService = customerService;
+        this.jcsServiceService = jcsServiceService;
+        this.productService = productService;
+        this.partService = partService;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
-        List<OutsourcedPart> outsourcedParts=(List<OutsourcedPart>) outsourcedPartRepository.findAll();
-        for(OutsourcedPart part:outsourcedParts){
-            System.out.println(part.getName()+" "+part.getCompanyName());
-        }
+        if(productService.findAll().isEmpty() && partService.findAll().isEmpty()) {
 
-        if(productRepository.count() == 0 && partRepository.count() == 0) {
+            Product samsing_laptop = new Product("Samsing Laptop", 800.00, 30);
+            Product outtel_laptop = new Product("Outtel Laptop", 950.00, 40);
+            Product buck_gaming_pc = new Product("Buck Gaming PC", 1500.00, 20);
+            Product bucko_workstation = new Product("Bucko Workstation", 3000.00, 10);
+            Product macrohard_diveback = new Product("Macrohard Diveback 2-in-1 Laptop", 600.00, 35);
+            productService.saveAll(new ArrayList<>(Arrays.asList(samsing_laptop, outtel_laptop, bucko_workstation, buck_gaming_pc, macrohard_diveback)));
 
             InhousePart laptop_screen = new InhousePart("Bucko Laptop Screen", 140.00, 30, 5, 50);
             InhousePart mini_laptop_screen = new InhousePart("Bucko Mini Laptop Screen", 200.00, 35, 5, 50);
@@ -52,53 +55,52 @@ public class BootStrapData implements CommandLineRunner {
             OutsourcedPart samsing_motherboard = new OutsourcedPart("Samsing", "Samsing prebuilt Motherboard w/ RAM & CPU", 600.00, 30, 5, 50);
             OutsourcedPart outtel_motherboard = new OutsourcedPart("Outtel", "Outtel prebuilt Motherboard w/ RAM & CPU", 700.00, 15, 2, 25);
 
-            Product samsing_laptop = new Product("Samsing Laptop", 800.00, 30);
-            Product outtel_laptop = new Product("Outtel Laptop", 950.00, 40);
-            Product buck_gaming_pc = new Product("Buck Gaming PC", 1500.00, 20);
-            Product bucko_workstation = new Product("Bucko Workstation", 3000.00, 10);
-            Product macrohard_diveback = new Product("Macrohard Diveback 2-in-1 Laptop", 600.00, 35);
-
-            productRepository.save(macrohard_diveback);
-            productRepository.save(samsing_laptop);
-            productRepository.save(outtel_laptop);
-            productRepository.save(buck_gaming_pc);
-            productRepository.save(bucko_workstation);
-
             setPartToProduct(samsing_laptop, laptop_screen, samsing_motherboard, bucko_laptop_body);
             setPartToProduct(outtel_laptop, laptop_screen, outtel_motherboard, bucko_laptop_body);
             setPartToProduct(buck_gaming_pc, gaming_case, pc_fan, bucko_motherboard);
             setPartToProduct(bucko_workstation, bucko_workstation_case, pc_fan, bucko_motherboard);
             setPartToProduct(macrohard_diveback, macro_keyboard, mini_laptop_screen);
 
-            partRepository.save(laptop_screen);
-            partRepository.save(mini_laptop_screen);
-            partRepository.save(bucko_laptop_body);
-            partRepository.save(macro_keyboard);
-            partRepository.save(bucko_workstation_case);
-            partRepository.save(gaming_case);
-            partRepository.save(pc_fan);
-            partRepository.save(samsing_motherboard);
-            partRepository.save(outtel_motherboard);
-            partRepository.save(bucko_motherboard);
+            partService.saveAll(new ArrayList<>(Arrays.asList(
+                    laptop_screen, mini_laptop_screen, gaming_case, pc_fan, bucko_workstation_case, bucko_motherboard, bucko_laptop_body,
+                    macro_keyboard, samsing_motherboard, outtel_motherboard
+            )));
         }
 
-//        System.out.println("Started in Bootstrap");
-//        System.out.println("Number of Products"+productRepository.count());
-//        System.out.println(productRepository.findAll());
-//        System.out.println("Number of Parts"+partRepository.count());
-//        System.out.println(partRepository.findAll());
+        if (!jcsUserService.hasAdminRole()) {
+            User adminUser = new User("jcsadmin@gmail.com",
+                    new BCryptPasswordEncoder().encode("jcsadmin"),
+                    "adminFirst",
+                    "adminLast",
+                    RoleType.ADMIN);
+            jcsUserService.save(adminUser);
+        }
 
-        User adminAccount = userRepository.findByRoleType(RoleType.ADMIN);
-        if (adminAccount == null) {
-            User user = new User();
+        if (!jcsUserService.hasUserRole()) {
+            User user = new User("jcsuser@gmail.com",
+                    new BCryptPasswordEncoder().encode("jcsuser"),
+                    "userFirst",
+                    "userLast",
+                    RoleType.USER);
+            jcsUserService.save(user);
+        }
 
-            user.setEmail("admin1@gmail.com");
-            user.setFirstName("admin1");
-            user.setLastName("admin1");
-            user.setRoleType(RoleType.ADMIN);
-            user.setPassword(new BCryptPasswordEncoder().encode("admin1"));
+        if (!customerService.hasCustomer()) {
+            Customer customer1 = new Customer("jackpham@gmail.com", "Jack", "Pham", "1321 Strong Oak Rd", "Columbus", "OH", "43229");
+            Customer customer2 = new Customer("johndoe@gmail.com", "John", "Doe", "4432 Hayden St", "Dublin", "OH", "43235");
+            Customer customer3 = new Customer("jimjerry@gmail.com", "Jim", "Jerry", "1232 Toylane Rd", "Columbus", "OH", "43230");
+            Customer customer4 = new Customer("annadoschun@gmail.com", "Anna", "Doschun", "5532 Strangely St", "New Albany", "OH", "43232");
+            Customer customer5 = new Customer("navenumbriga@gmail.com", "Naven", "Umbriga", "2635 Ready Rd", "Dayton", "OH", "43228");
+            Customer customer6 = new Customer("lynnshim@gmail.com", "Lynn", "Shim", "1127 Brewing Br", "Delaware", "OH", "43015");
+            customerService.saveAll(new ArrayList<>(Arrays.asList(customer1, customer2, customer3, customer4, customer5, customer6)));
+        }
 
-            userRepository.save(user);
+        if (!jcsServiceService.hasService()) {
+            Service service1 = new Service("Replace battery", 120.0, 2);
+            Service service2 = new Service("Upgrade RAM", 100.0, 2);
+            Service service3 = new Service("Upgrade hard drive", 80.0, 2);
+            Service service4 = new Service("Replace laptop screen", 150.0, 4);
+            jcsServiceService.saveAll(new ArrayList<>(Arrays.asList(service1, service2, service3, service4)));
         }
     }
     public void setPartToProduct(Product product, Part... parts) {
