@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="fragments/head :: head"></div>
+    <title>Order List</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container text-center">
+    <form th:action="@{/api/v1/user/orderList}">
+        Filter: <input type="text" name="orderKeyword" id="orderKeyword" size="50" th:value="${orderKeyword}" required />
+        &nbsp;
+        <select name="filterCriteria" required class="col-3 text-center mt-2">
+            <option value="">Please choose a filter criteria</option>
+            <option value="paymentMethod">Payment Method</option>
+            <option value="customer">Customer Last Name</option>
+        </select>
+        <input type="submit" value="Search" />
+        &nbsp;
+        <input type="button" value="Clear" onclick="clearSearch()" />
+    </form>
+    <h1>ORDER LIST</h1>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Payment Method</th>
+            <th>Order Items</th>
+            <th>Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderFromRepo : ${orderFromRepos}">
+            <td th:text="${orderFromRepo.createdAt}"></td>
+            <td th:text="${orderFromRepo.customer.firstName} + ' ' + ${orderFromRepo.customer.lastName}"></td>
+            <td th:text="${orderFromRepo.paymentMethod}"></td>
+            <td>
+                <div th:each="orderItem : ${orderFromRepo.orderItemSet}">
+                    <span th:text="${orderItem} + ' x' + ${orderItem.quantity}"></span>
+                </div>
+            </td>
+            <td th:text="${orderFromRepo.totalPrice}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/api/v1/admin/report}]]";
+    }
+</script>
+</body>
+<div th:insert="fragments/footer :: footer"></div>
+
+</html>
