@@ -7,11 +7,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +32,8 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
+    @CreationTimestamp
+    private Date createdAt;
     private PaymentMethod paymentMethod;
     private double totalPrice;
 

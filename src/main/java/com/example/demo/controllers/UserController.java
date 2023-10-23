@@ -132,6 +132,17 @@ public class UserController {
         return "redirect:/api/v1/user/sales";
     }
 
+    @GetMapping("/orderList")
+    public String getOrderList(Model model,
+                               @Param("orderKeyword") String orderKeyword,
+                               @ModelAttribute("filterCriteria") String filterCriteria) {
+            List<Order> orderFromRepos = orderService.findAllBy(filterCriteria, orderKeyword);
+
+            model.addAttribute("orderFromRepos", orderFromRepos);
+            model.addAttribute("orderKeyword", orderKeyword);
+            return "order_list";
+
+    }
 
     @Transactional
     @PostMapping("/saveOrder")
@@ -158,7 +169,7 @@ public class UserController {
         // log user activity to report
         Report report = new Report();
         report.setOrder(myOrder);
-        report.setUser(user.getFirstName() + " " + user.getLastName());
+        report.setUserEmail(user.getEmail());
         report.setCustomer(order.getCustomer());
         report.setPrice(order.getTotalPrice());
         reportService.save(report);

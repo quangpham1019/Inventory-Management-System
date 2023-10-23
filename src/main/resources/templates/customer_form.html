@@ -25,42 +25,42 @@
         <label class="col-4 col-form-label">First Name: </label>
         <div class="col-8">
           <input type="text" th:field="*{firstName}" class="form-control"
-                 required minlength="2" maxlength="20" />
+                 required minlength="2" maxlength="20" placeholder="Jack"/>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-4 col-form-label">Last Name: </label>
         <div class="col-8">
           <input type="text" th:field="*{lastName}" class="form-control"
-                 required minlength="2" maxlength="20" />
+                 required minlength="2" maxlength="20" placeholder="Jin"/>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-4 col-form-label">Address: </label>
         <div class="col-8">
           <input type="text" th:field="*{address}" class="form-control"
-                 required minlength="2" maxlength="100" />
+                 required minlength="2" maxlength="100" placeholder="5421 Overthere St"/>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-4 col-form-label">City: </label>
         <div class="col-8">
           <input type="text" th:field="*{city}" class="form-control"
-                 required minlength="2" maxlength="20" />
+                 required minlength="2" maxlength="20" placeholder="Columbus"/>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-4 col-form-label">State: </label>
         <div class="col-8">
           <input type="text" th:field="*{state}" class="form-control"
-                 required minlength="2" maxlength="2" />
+                 required minlength="2" maxlength="2" placeholder="OH"/>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-4 col-form-label">Zip Code: </label>
         <div class="col-8">
-          <input type="number" th:field="*{zipCode}" class="form-control"
-                 required minlength="5" maxlength="5" />
+          <input type="text" th:field="*{zipCode}" class="form-control"
+                 required minlength="5" maxlength="5" placeholder="43229"/>
         </div>
       </div>
       <div>
@@ -70,4 +70,6 @@
   </form>
 </div>
 </body>
+<div th:insert="fragments/footer :: footer"></div>
+
 </html>
