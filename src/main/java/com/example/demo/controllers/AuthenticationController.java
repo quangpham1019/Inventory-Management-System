@@ -69,7 +69,7 @@ public class AuthenticationController {
         User user1 = userRepository.findByEmail(jwtService.extractUserName(token)).get();
         user.setFirstName(user1.getFirstName());
         user.setLastName(user1.getLastName());
-
+        user.setEmail(user1.getEmail());
         return "redirect:/";
     }
 

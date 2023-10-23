@@ -1,7 +1,6 @@
 package com.example.demo.bootstrap;
 
 import com.example.demo.domain.*;
-import com.example.demo.repositories.*;
 import com.example.demo.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,13 +22,15 @@ public class BootStrapData implements CommandLineRunner {
     private final JcsServiceService jcsServiceService;
     private final ProductService productService;
     private final PartService partService;
+    private final ReportService reportService;
 
-    public BootStrapData(JcsUserService jcsUserService, CustomerService customerService, JcsServiceService jcsServiceService, ProductService productService, PartService partService) {
+    public BootStrapData(JcsUserService jcsUserService, CustomerService customerService, JcsServiceService jcsServiceService, ProductService productService, PartService partService, ReportService reportService) {
         this.jcsUserService = jcsUserService;
         this.customerService = customerService;
         this.jcsServiceService = jcsServiceService;
         this.productService = productService;
         this.partService = partService;
+        this.reportService = reportService;
     }
 
     @Override
@@ -102,6 +103,7 @@ public class BootStrapData implements CommandLineRunner {
             Service service4 = new Service("Replace laptop screen", 150.0, 4);
             jcsServiceService.saveAll(new ArrayList<>(Arrays.asList(service1, service2, service3, service4)));
         }
+
     }
     public void setPartToProduct(Product product, Part... parts) {
         for (Part p: parts) {

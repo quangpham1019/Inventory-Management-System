@@ -23,7 +23,6 @@ public class Part extends Item implements Serializable {
 
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
-
     int minInv;
     int maxInv;
 

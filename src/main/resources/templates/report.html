@@ -8,13 +8,25 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div class="container text-center">
+    <form th:action="@{/api/v1/admin/report}">
+        Filter: <input type="text" name="reportKeyword" id="reportKeyword" size="50" th:value="${reportKeyword}" required />
+        &nbsp;
+        <select name="filterCriteria" required class="col-3 text-center mt-2">
+            <option value="">Please choose a filter criteria</option>
+            <option value="user">User Email</option>
+            <option value="customer">Customer Last Name</option>
+        </select>
+        <input type="submit" value="Search" />
+        &nbsp;
+        <input type="button" value="Clear" onclick="clearSearch()" />
+    </form>
     <h1>REPORT</h1>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
             <tr>
                 <th>Created Date</th>
                 <th>Order ID</th>
-                <th>User</th>
+                <th>User Email</th>
                 <th>Customer</th>
                 <th>Total</th>
             </tr>
@@ -23,13 +35,19 @@
             <tr th:each="report : ${reports}">
                 <td th:text="${report.createdAt}"></td>
                 <td th:text="${report.order.id}"></td>
-                <td th:text="${report.user}"></td>
+                <td th:text="${report.userEmail}"></td>
                 <td th:text="${report.customer}"></td>
                 <td th:text="${report.price}"></td>
             </tr>
         </tbody>
     </table>
 </div>
-
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/api/v1/admin/report}]]";
+    }
+</script>
 </body>
+<div th:insert="fragments/footer :: footer"></div>
+
 </html>

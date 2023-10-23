@@ -8,6 +8,7 @@ import com.example.demo.service.JcsUserService;
 import com.example.demo.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,12 @@ public class AdminController {
 
 
     @GetMapping("/report")
-    public String getReportPage(Model model) {
-        List<Report> reports = reportService.findAll();
+    public String getReportPage(Model model,
+                                @Param("reportKeyword") String reportKeyword,
+                                @ModelAttribute("filterCriteria") String filterCriteria) {
+        List<Report> reports = reportService.findAllBy(filterCriteria, reportKeyword);
+
+        model.addAttribute("reportKeyword", reportKeyword);
         model.addAttribute("reports", reports);
         return "report";
     }
