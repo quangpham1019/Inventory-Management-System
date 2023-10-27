@@ -8,8 +8,10 @@ import java.util.Set;
 
 public interface JcsServiceService {
 
+    Service findById(int serviceId);
     List<Service> listAllByKeyword(String keyword);
     void save(Service service);
     void saveAll(List<Service> serviceList);
+    void deleteById(int serviceId);
     boolean hasService();
 }
