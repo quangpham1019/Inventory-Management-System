@@ -6,10 +6,13 @@ variables:
   APP_VERSION: $CI_PIPELINE_IID
 
 build web app:
+  image: node:16-alpine
   stage: build
-  image: maven:3.9.5-amazoncorretto-17-al2023
   script:
-    - mvn clean install -D skipTests
+    - yarn install
+    - yarn lint
+    - yarn test
+    - yarn build
   artifacts:
     paths:
       - build
