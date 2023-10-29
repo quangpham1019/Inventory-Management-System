@@ -1,31 +1,12 @@
-image: maven:latest
+image: java:8
 
 stages:
   - build
-  - package
   - deploy
 
-variables:
-  APP_VERSION: $CI_PIPELINE_IID
-  MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
-
-cache:
-  paths:
-    - .m2/repository
-    - target
-
-build web app:
+build:
   stage: build
-  tags:
-    - docker
-  script:
-    - mvn install
-
-build docker image:
-  stage: package
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - docker build -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE:$APP_VERSION .
-    - docker image ls
+  script: ./mvnw package
+  artifacts:
+    paths:
+      - target/demo-0.0.1-SNAPSHOT.jar
