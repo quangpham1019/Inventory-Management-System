@@ -12,7 +12,7 @@ build web app:
     - mvn clean install -D skipTests
   artifacts:
     paths:
-      - /root/.m2/repository/com/example/demo/0.0.1-SNAPSHOT/
+      - /target
 
 build docker image:
   stage: package
