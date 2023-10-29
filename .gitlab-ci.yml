@@ -12,7 +12,7 @@ build web app:
     - mvn clean install -D skipTests
   artifacts:
     paths:
-      - build
+      - builds/wgu-gitlab-environment/student-repos/qpham15/d424-software-engineering-capstone
 
 build docker image:
   stage: package
