@@ -9,19 +9,16 @@ build web app:
   stage: build
   image: maven:3.9.5-amazoncorretto-17-al2023
   script:
-    - mkdir build
-    - cd build
     - mvn clean install -D skipTests
   artifacts:
     paths:
-      - build
+      - /root/.m2/repository/com/example/demo/0.0.1-SNAPSHOT/
 
-# build docker image:
-#   stage: package
-#   image: docker:latest
-#   services:
-#     - docker:dind
-#   script:
-#     - cd docker
-#     - docker build -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE:$APP_VERSION .
-#     - docker image ls
+build docker image:
+  stage: package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE:$APP_VERSION .
+    - docker image ls
