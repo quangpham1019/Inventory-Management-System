@@ -1,18 +1,25 @@
+image: maven:latests
+
 stages:
   - build
   - package
+  - deploy
 
 variables:
   APP_VERSION: $CI_PIPELINE_IID
+  MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
+
+cache:
+  paths:
+    - .m2/repository
+    - target
 
 build web app:
   stage: build
-  image: maven:3.9.5-amazoncorretto-17-al2023
+  tags:
+    - docker
   script:
-    - mvn install -D skipTests
-  artifacts:
-    paths:
-      - build
+    - mvn install
 
 build docker image:
   stage: package
