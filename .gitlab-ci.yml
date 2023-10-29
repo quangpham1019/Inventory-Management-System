@@ -4,10 +4,10 @@ stages:
   - deploy
 
 build:
-  image: mvn:latest
+  image: mvn:3.9.5-amazoncorretto-17-al2023
   stage: build
   script: 
-    - mvn install
+    - mvn package
   artifacts:
     paths:
       - target/demo-0.0.1-SNAPSHOT.jar
