@@ -12,7 +12,7 @@ build web app:
     - mvn install -D skipTests
   artifacts:
     paths:
-      - docker
+      - build
 
 build docker image:
   stage: package
