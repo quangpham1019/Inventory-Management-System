@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  *
@@ -40,9 +41,7 @@ public class AddInhousePartController{
         }
         else{
         InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
-        InhousePart ip=repo.findById((int)part.getId());
-        if(ip!=null)part.setProducts(ip.getProducts());
-            repo.save(part);
+        repo.save(part);
 
         return "confirmationaddpart";}
     }
