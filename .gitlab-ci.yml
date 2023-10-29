@@ -9,10 +9,10 @@ build web app:
   stage: build
   image: maven:3.9.5-amazoncorretto-17-al2023
   script:
-    - mvn clean install -D skipTests
+    - mvn install -D skipTests
   artifacts:
     paths:
-      - /target
+      - docker
 
 build docker image:
   stage: package
