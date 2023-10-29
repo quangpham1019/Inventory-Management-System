@@ -1,7 +1,3 @@
-FROM openjdk:17-jdk-slim
+FROM nginx:1.21.5-alpine
 
-COPY demo-0.0.1-SNAPSHOT.jar /d424_jcs.war
-
-EXPOSE 5000
-
-CMD ["java", "-jar", "/d424_jcs.war"]
+COPY build /usr/share/nginx/html
