@@ -6,7 +6,8 @@ stages:
 
 build:
   stage: build
-  script: ./mvnw package
+  script: 
+    - mvn install
   artifacts:
     paths:
       - target/demo-0.0.1-SNAPSHOT.jar
