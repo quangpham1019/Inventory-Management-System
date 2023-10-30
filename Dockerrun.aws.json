@@ -1,0 +1,17 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "registry.gitlab.com/wgu-gitlab-environment/student-repos/qpham15/d424-software-engineering-capstone:latest",
+    "Update": "true"
+  },
+  "Authentication": {
+    "Bucket": "elasticbeanstalk-us-east-2-835421043738",
+    "Key": "config.json"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 5000,
+      "HostPort": 8000
+    }
+  ]
+}
