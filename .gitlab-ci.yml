@@ -19,7 +19,7 @@ maven-build:
       - target/*.jar
 
 docker-build:
-  image: docker:latest
+  image: docker:stable
   services:
     - docker:dind
   stage: docker
