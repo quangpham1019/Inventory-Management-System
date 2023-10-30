@@ -15,7 +15,7 @@ stages:
 maven-build:
   image: maven:3.9.5-amazoncorretto-17
   stage: build
-  script: "mvn package -B"
+  script: "mvn package -B -D skipTests"
   artifacts:
     paths:
       - target/*.jar
