@@ -1,13 +1,33 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  SPRING_PROFILES_ACTIVE: gitlab-ci
+  USER_GITLAB: qpham15
+  APP_NAME: d424
 
 stages:
   - build
-  - deploy
+  - docker
 
-build:
-  image: mvn:3.9.5-amazoncorretto-17-al2023
+maven-build:
+  image: maven:3.9.5-amazoncorretto-17
   stage: build
-  script: 
-    - mvn package
+  script: "mvn package -B"
   artifacts:
     paths:
-      - target/demo-0.0.1-SNAPSHOT.jar
+      - target/*.jar
+
+docker-build:
+  stage: docker
+  variables:
+    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build -t "$DOCKER_IMAGE_NAME" .
+    - docker push "$DOCKER_IMAGE_NAME"
+
