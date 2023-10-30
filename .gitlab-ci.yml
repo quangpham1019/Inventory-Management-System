@@ -1,6 +1,4 @@
-image: docker:latest
-services:
-  - docker:dind
+
 
 variables:
   DOCKER_DRIVER: overlay
@@ -21,6 +19,9 @@ maven-build:
       - target/*.jar
 
 docker-build:
+  image: docker:latest
+  services:
+    - docker:dind
   stage: docker
   variables:
     DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
