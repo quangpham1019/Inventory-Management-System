@@ -72,4 +72,3 @@ deploy_eb:
     - aws configure set region $REGION
     - aws elasticbeanstalk create-application-version --application-name $PROD_APPNAME --version-label $PROD_LABEL --source-bundle S3Bucket=$S3BUCKET,S3Key=$PROD_S3KEY
     - aws elasticbeanstalk update-environment --application-name $PROD_APPNAME --environment-name $PROD_ENVNAME --version-label $PROD_LABEL
-
