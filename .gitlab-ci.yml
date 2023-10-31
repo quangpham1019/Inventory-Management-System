@@ -1,11 +1,24 @@
 variables:
   SPRING_PROFILES_ACTIVE: gitlab-ci
   USER_GITLAB: qpham15
-  APP_NAME: d424
+  # Shared variables
+  S3BUCKET: 'elasticbeanstalk-us-east-2-835421043738'
+  REGION: 'us-east-2'
+  AWS_ACCESS_KEY_ID: AKIA4FAXZPQNJTGK6NKL
+  AWS_SECRET_ACCESS_KEY: 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
+
+  # Prod variables
+  PROD_APPNAME: 'JCS-Inventory-Management'
+  PROD_ENVNAME: 'JCS-Inventory-Management-docker-env '
+  PROD_URL: 'http://jcs-imsd.us-east-2.elasticbeanstalk.com/'
+  PROD_LABEL: '$CI_COMMIT_REF_NAME-$CI_PIPELINE_ID'
+  PROD_S3KEY: 'Dockerrun.aws.json'
+  REVIEW_S3KEY: 'Dockerrunaws-$CI_COMMIT_SHORT_SHA.json'
 
 stages:
   - build
   - docker
+  - deploy
 
 maven-build:
   image: maven:3.9.5-amazoncorretto-17
@@ -41,5 +54,22 @@ docker-build:
     - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
     - docker push "$CI_REGISTRY_IMAGE${tag}"
 
-    
+deploy_eb:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  stage: deploy
+  environment:
+    name: production
+    url: $PROD_URL
+  script:
+
+    # Create new Dockerrun file with updated image tag
+    - cp $PROD_S3KEY $REVIEW_S3KEY
+    - sed -i "s/latest/$CI_COMMIT_REF_SLUG/" $REVIEW_S3KEY
+    - aws s3 cp $REVIEW_S3KEY s3://$S3BUCKET
+
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set region $REGION
+    - aws elasticbeanstalk create-application-version --application-name $PROD_APPNAME --version-label $PROD_LABEL --source-bundle S3Bucket=$S3BUCKET,S3Key=$PROD_S3KEY
+    - aws elasticbeanstalk update-environment --application-name $PROD_APPNAME --environment-name $PROD_ENVNAME --version-label $PROD_LABEL
 
