@@ -1,6 +1,7 @@
 variables:
   SPRING_PROFILES_ACTIVE: gitlab-ci
   USER_GITLAB: qpham15
+  PRODUCTION_BRANCH: production-pipeline-Beanstalk
   # Shared variables
   S3BUCKET: 'elasticbeanstalk-us-east-2-835421043738'
   REGION: 'us-east-2'
@@ -44,9 +45,9 @@ docker-build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - |
-      if [[ "$CI_COMMIT_BRANCH" == "production" ]]; then
+      if [[ "$CI_COMMIT_BRANCH" == "$PRODUCTION_BRANCH" ]]; then
         tag=""
-        echo "Running on branch 'production': tag = 'latest'"
+        echo "Running on branch '$PRODUCTION_BRANCH': tag = 'latest'"
       else
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
