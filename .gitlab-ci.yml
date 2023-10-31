@@ -1,0 +1,45 @@
+variables:
+  SPRING_PROFILES_ACTIVE: gitlab-ci
+  USER_GITLAB: qpham15
+  APP_NAME: d424
+
+stages:
+  - build
+  - docker
+
+maven-build:
+  image: maven:3.9.5-amazoncorretto-17
+  stage: build
+  script: "mvn package -B -D skipTests"
+  artifacts:
+    paths:
+      - target/*.jar
+
+docker-build:
+  image: docker:stable
+  services:
+    - name: docker:dind
+      entrypoint: ["env", "-u", "DOCKER_HOST"]
+      command: ["dockerd-entrypoint.sh"]
+  variables:
+      DOCKER_HOST: tcp://docker:2375/
+      DOCKER_DRIVER: overlay2
+      # See https://github.com/docker-library/docker/pull/166
+      DOCKER_TLS_CERTDIR: ""
+  stage: docker
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "production" ]]; then
+        tag=""
+        echo "Running on branch 'production': tag = 'latest'"
+      else
+        tag=":$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
+    - docker push "$CI_REGISTRY_IMAGE${tag}"
+
+    
+
