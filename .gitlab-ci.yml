@@ -1,6 +1,6 @@
 variables:
   SPRING_PROFILES_ACTIVE: gitlab-ci
-  USER_GITLAB: qpham15
+  USER_GITLAB: quangpham1019
   PRODUCTION_BRANCH: production-pipeline-Beanstalk
   # Shared variables
   S3BUCKET: 'elasticbeanstalk-us-east-2-835421043738'
