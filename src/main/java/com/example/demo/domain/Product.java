@@ -26,8 +26,7 @@ public class Product extends Item implements Serializable {
     @ManyToMany(cascade=CascadeType.ALL, mappedBy = "products")
     Set<Part> parts= new HashSet<>();
 
-    public Product() {
-    }
+    public Product() {}
 
     public Product(String name, double price, int inv) {
         super(name, price);
