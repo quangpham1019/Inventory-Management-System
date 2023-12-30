@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "registry.gitlab.com/wgu-gitlab-environment/student-repos/qpham15/d424-software-engineering-capstone:latest",
+    "Name": "registry.gitlab.com/quangpham1019/jack-computer-shop:latest",
     "Update": "true"
   },
   "Authentication": {
