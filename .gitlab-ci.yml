@@ -5,13 +5,13 @@ variables:
   # Shared variables
   S3BUCKET: 'elasticbeanstalk-us-east-2-835421043738'
   REGION: 'us-east-2'
-  AWS_ACCESS_KEY_ID: AKIA4FAXZPQNJTGK6NKL
-  AWS_SECRET_ACCESS_KEY: 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
+  AWS_ACCESS_KEY_ID: AKIA4FAXZPQNH76PLJWX
+  AWS_SECRET_ACCESS_KEY: 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
 
   # Prod variables
-  PROD_APPNAME: 'JCS-Inventory-Management'
-  PROD_ENVNAME: 'JCS-Inventory-Management-docker-env '
-  PROD_URL: 'http://jcs-imsd.us-east-2.elasticbeanstalk.com/'
+  PROD_APPNAME: 'jcs'
+  PROD_ENVNAME: 'Jcs-env '
+  PROD_URL: 'http://jcs-env.eba-8xej79by.us-east-2.elasticbeanstalk.com/'
   PROD_LABEL: '$CI_COMMIT_REF_NAME-$CI_PIPELINE_ID'
   PROD_S3KEY: 'Dockerrun.aws.json'
   REVIEW_S3KEY: 'Dockerrunaws-$CI_COMMIT_SHORT_SHA.json'
