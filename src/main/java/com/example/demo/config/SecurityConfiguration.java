@@ -19,8 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(
@@ -36,20 +34,19 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
-                        request.requestMatchers(new AntPathRequestMatcher("/"),
-                                new AntPathRequestMatcher("/api/v1/auth/**")).permitAll();
-                        request.anyRequest().authenticated();
+                    request.requestMatchers(new AntPathRequestMatcher("/"),
+                            new AntPathRequestMatcher("/api/v1/auth/**")).permitAll();
+                    request.anyRequest().authenticated();
                 })
-                .formLogin()
-                .loginPage("/api/v1/auth/signInPage")
-                .and()
+                .formLogin(login -> login
+                        .loginPage("/api/v1/auth/signInPage"))
                 .sessionManagement(manager -> manager
-                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                        .maximumSessions(1)
+                                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                                .maximumSessions(1)
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
-                );
+                jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
+        );
                 return http.build();
     }
 
