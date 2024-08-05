@@ -83,7 +83,7 @@ public class InventoryController {
     }
 
     @GetMapping("/updateService")
-    public String getUpdateService(@RequestParam("serviceId") int serviceId, Model model) {
+    public String getUpdateService(@RequestParam int serviceId, Model model) {
 
         Service updateService = jcsServiceService.findById(serviceId);
         model.addAttribute("service", updateService);
@@ -91,7 +91,7 @@ public class InventoryController {
         return "service_form";
     }
     @PostMapping("/updateService")
-    public String updateServiceProcess(@RequestParam("serviceId") int serviceId,
+    public String updateServiceProcess(@RequestParam int serviceId,
                                     @ModelAttribute("service") Service updateService) {
 
         Service service = jcsServiceService.findById(serviceId);
@@ -103,7 +103,7 @@ public class InventoryController {
     }
 
     @GetMapping("/deleteService")
-    public String deleteService(@RequestParam("serviceId") int serviceId) {
+    public String deleteService(@RequestParam int serviceId) {
         jcsServiceService.deleteById(serviceId);
         return "redirect:/";
     }

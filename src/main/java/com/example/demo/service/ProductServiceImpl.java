@@ -5,7 +5,6 @@ import com.example.demo.domain.Product;
 import com.example.demo.repositories.PartRepository;
 import com.example.demo.repositories.ProductRepository;
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
-    @Autowired
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }

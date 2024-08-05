@@ -49,7 +49,7 @@ public class UserController {
     @GetMapping("/sales")
     public String getSalesPage(Model model,
                                @Param("customerKeyword") String customerKeyword,
-                               @ModelAttribute("itemError") String itemError) {
+                               @ModelAttribute String itemError) {
         List<Customer> customerList = customerService.listAllByKeyword(customerKeyword);
         if (!itemError.isBlank()) {
             // string length is less than 12, invalidate int values from range of itemId
@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @PostMapping("/addItemToOrder")
-    public String addItemToOrder(@RequestParam("itemId") int itemId) {
+    public String addItemToOrder(@RequestParam int itemId) {
 
         // create new OrderItem orderItem
         // set Item of orderItem to part retrieved from partService.findById(partId)
@@ -104,7 +104,7 @@ public class UserController {
     }
 
     @GetMapping("/changeQuantity")
-    public String changeQuantity(@RequestParam("itemId") int itemId,
+    public String changeQuantity(@RequestParam int itemId,
                                  @RequestParam("increase") boolean increaseQuantityInOrder,
                                  RedirectAttributes redirectAttributes) {
         int changeAmount = increaseQuantityInOrder? 1:-1;
@@ -135,7 +135,7 @@ public class UserController {
     @GetMapping("/orderList")
     public String getOrderList(Model model,
                                @Param("orderKeyword") String orderKeyword,
-                               @ModelAttribute("filterCriteria") String filterCriteria) {
+                               @ModelAttribute String filterCriteria) {
             List<Order> orderFromRepos = orderService.findAllBy(filterCriteria, orderKeyword);
 
             model.addAttribute("orderFromRepos", orderFromRepos);
@@ -148,7 +148,7 @@ public class UserController {
     @PostMapping("/saveOrder")
     public String saveOrder(
             @ModelAttribute("customer") int customerId,
-            @ModelAttribute("paymentMethod") String paymentMethod,
+            @ModelAttribute String paymentMethod,
             RedirectAttributes redirectAttributes
     ) {
         if(order.getOrderItemSet().isEmpty()) {
@@ -191,7 +191,7 @@ public class UserController {
     }
 
     @PostMapping("/processCustomer")
-    public String processCustomer(@ModelAttribute(name = "customer") Customer customer) {
+    public String processCustomer(@ModelAttribute Customer customer) {
         customerService.save(customer);
         return "redirect:/api/v1/user/sales";
     }
@@ -204,7 +204,7 @@ public class UserController {
     }
 
     @GetMapping("/updateCustomer")
-    public String getUpdateUserPage(@RequestParam("customerId") int customerId,
+    public String getUpdateUserPage(@RequestParam int customerId,
                                     Model model) {
 
         Customer updateCustomer = customerService.findById(customerId);
@@ -213,7 +213,7 @@ public class UserController {
         return "customer_form";
     }
     @PostMapping("/updateCustomer")
-    public String updateUserProcess(@RequestParam("customerId") int customerId,
+    public String updateUserProcess(@RequestParam int customerId,
                                     @ModelAttribute("customer") Customer updateCustomer) {
 
         customerService.deleteById(customerId);
@@ -222,7 +222,7 @@ public class UserController {
     }
 
     @GetMapping("/deleteCustomer")
-    public String deleteCustomer(@RequestParam("customerId") int customerId) {
+    public String deleteCustomer(@RequestParam int customerId) {
         customerService.deleteById(customerId);
         return "redirect:/api/v1/user/manageCustomers";
     }

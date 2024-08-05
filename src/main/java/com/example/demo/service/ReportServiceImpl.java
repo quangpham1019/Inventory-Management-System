@@ -4,7 +4,6 @@ import com.example.demo.domain.Customer;
 import com.example.demo.domain.Report;
 import com.example.demo.domain.User;
 import com.example.demo.repositories.ReportRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
 public class ReportServiceImpl implements ReportService{
     private ReportRepository reportRepository;
 
-    @Autowired
     public ReportServiceImpl(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }
