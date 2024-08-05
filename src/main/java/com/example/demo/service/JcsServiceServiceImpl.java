@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Service;
 import com.example.demo.repositories.ServiceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +12,6 @@ public class JcsServiceServiceImpl implements JcsServiceService{
 
     private ServiceRepository serviceRepository;
 
-    @Autowired
     public JcsServiceServiceImpl(ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
     }

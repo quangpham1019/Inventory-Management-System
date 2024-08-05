@@ -35,7 +35,7 @@ public class AdminController {
     @GetMapping("/report")
     public String getReportPage(Model model,
                                 @Param("reportKeyword") String reportKeyword,
-                                @ModelAttribute("filterCriteria") String filterCriteria) {
+                                @ModelAttribute String filterCriteria) {
         List<Report> reports = reportService.findAllBy(filterCriteria, reportKeyword);
 
         model.addAttribute("reportKeyword", reportKeyword);
@@ -70,7 +70,7 @@ public class AdminController {
     }
 
     @GetMapping("/updateUser")
-    public String getUpdateUser(@RequestParam("userId") int userId, Model model) {
+    public String getUpdateUser(@RequestParam int userId, Model model) {
 
         User updateUser = jcsUserService.findById(userId);
         model.addAttribute("user", updateUser);
@@ -78,7 +78,7 @@ public class AdminController {
         return "user_form";
     }
     @PostMapping("/updateUser")
-    public String updateUserProcess(@RequestParam("userId") int userId,
+    public String updateUserProcess(@RequestParam int userId,
                                     @ModelAttribute("user") User updateUser) {
 
         User user = jcsUserService.findById(userId);
@@ -97,7 +97,7 @@ public class AdminController {
     }
 
     @GetMapping("/deleteUser")
-    public String deleteUser(@RequestParam("userId") int userId) {
+    public String deleteUser(@RequestParam int userId) {
         jcsUserService.deleteById(userId);
         return "redirect:/api/v1/admin/manageUsers";
     }

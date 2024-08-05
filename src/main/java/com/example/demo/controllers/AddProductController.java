@@ -51,7 +51,7 @@ public class AddProductController {
     }
 
     @PostMapping("/showFormAddProduct")
-    public String submitForm(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model theModel) {
+    public String submitForm(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model theModel) {
         theModel.addAttribute("product", product);
 
         if(bindingResult.hasErrors()){

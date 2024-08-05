@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.repositories.PartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.Optional;
 public class PartServiceImpl implements PartService {
     private PartRepository partRepository;
 
-    @Autowired
     public PartServiceImpl(PartRepository partRepository) {
         this.partRepository = partRepository;
     }

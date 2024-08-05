@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.domain.User;
 import com.example.demo.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public class JcsUserServiceImpl implements JcsUserService{
 
     private UserRepository userRepository;
 
-    @Autowired
     public JcsUserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
