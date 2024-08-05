@@ -68,23 +68,23 @@ public class BootStrapData implements CommandLineRunner {
             )));
         }
 
-        if (!jcsUserService.hasAdminRole()) {
-            User adminUser = new User("jcsadmin@gmail.com",
-                    new BCryptPasswordEncoder().encode("jcsadmin"),
-                    "adminFirst",
-                    "adminLast",
-                    RoleType.ADMIN);
-            jcsUserService.save(adminUser);
-        }
-
-        if (!jcsUserService.hasUserRole()) {
-            User user = new User("jcsuser@gmail.com",
-                    new BCryptPasswordEncoder().encode("jcsuser"),
-                    "userFirst",
-                    "userLast",
-                    RoleType.USER);
-            jcsUserService.save(user);
-        }
+//        if (!jcsUserService.hasAdminRole()) {
+//            User adminUser = new User("jcsadmin@gmail.com",
+//                    new BCryptPasswordEncoder().encode("jcsadmin"),
+//                    "adminFirst",
+//                    "adminLast",
+//                    RoleType.ADMIN);
+//            jcsUserService.save(adminUser);
+//        }
+//
+//        if (!jcsUserService.hasUserRole()) {
+//            User user = new User("jcsuser@gmail.com",
+//                    new BCryptPasswordEncoder().encode("jcsuser"),
+//                    "userFirst",
+//                    "userLast",
+//                    RoleType.USER);
+//            jcsUserService.save(user);
+//        }
 
         if (!customerService.hasCustomer()) {
             Customer customer1 = new Customer("jackpham@gmail.com", "Jack", "Pham", "1321 Strong Oak Rd", "Columbus", "OH", "43229");

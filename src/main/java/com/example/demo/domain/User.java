@@ -21,13 +21,13 @@ import java.util.Set;
 @Setter
 @Entity
 @Scope(value = "session", proxyMode= ScopedProxyMode.TARGET_CLASS)
-@Table(name = "users")
+@Table(name = "jcs_users")
 @ToString
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(unique = true)
