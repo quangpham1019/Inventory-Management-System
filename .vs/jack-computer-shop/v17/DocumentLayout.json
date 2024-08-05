@@ -1,0 +1,126 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\config\\SecurityConfiguration.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\com\\example\\demo\\config\\SecurityConfiguration.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\config\\JwtAuthenticationFilter.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\com\\example\\demo\\config\\JwtAuthenticationFilter.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\service\\security\\Impl\\UserServiceImpl.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\com\\example\\demo\\service\\security\\Impl\\UserServiceImpl.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\service\\security\\UserService.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\com\\example\\demo\\service\\security\\UserService.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\bootstrap\\BootStrapData.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\com\\example\\demo\\bootstrap\\BootStrapData.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\DemoApplication.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main\\java\\com\\example\\demo\\DemoApplication.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "JwtAuthenticationFilter.java",
+              "DocumentMoniker": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\config\\JwtAuthenticationFilter.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\com\\example\\demo\\config\\JwtAuthenticationFilter.java",
+              "ToolTip": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\config\\JwtAuthenticationFilter.java",
+              "RelativeToolTip": "src\\main\\java\\com\\example\\demo\\config\\JwtAuthenticationFilter.java",
+              "ViewState": "AQIAACcAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001630|",
+              "WhenOpened": "2024-08-04T00:32:18.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserServiceImpl.java",
+              "DocumentMoniker": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\service\\security\\Impl\\UserServiceImpl.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\com\\example\\demo\\service\\security\\Impl\\UserServiceImpl.java",
+              "ToolTip": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\service\\security\\Impl\\UserServiceImpl.java*",
+              "RelativeToolTip": "src\\main\\java\\com\\example\\demo\\service\\security\\Impl\\UserServiceImpl.java*",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001630|",
+              "WhenOpened": "2024-08-04T00:27:33.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserService.java",
+              "DocumentMoniker": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\service\\security\\UserService.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\com\\example\\demo\\service\\security\\UserService.java",
+              "ToolTip": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\service\\security\\UserService.java",
+              "RelativeToolTip": "src\\main\\java\\com\\example\\demo\\service\\security\\UserService.java",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001630|",
+              "WhenOpened": "2024-08-04T00:27:31.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SecurityConfiguration.java",
+              "DocumentMoniker": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\config\\SecurityConfiguration.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\com\\example\\demo\\config\\SecurityConfiguration.java",
+              "ToolTip": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\config\\SecurityConfiguration.java",
+              "RelativeToolTip": "src\\main\\java\\com\\example\\demo\\config\\SecurityConfiguration.java",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAAC4AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001630|",
+              "WhenOpened": "2024-08-04T00:24:37.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BootStrapData.java",
+              "DocumentMoniker": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\bootstrap\\BootStrapData.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\com\\example\\demo\\bootstrap\\BootStrapData.java",
+              "ToolTip": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\bootstrap\\BootStrapData.java",
+              "RelativeToolTip": "src\\main\\java\\com\\example\\demo\\bootstrap\\BootStrapData.java",
+              "ViewState": "AQIAADAAAAAAAAAAAAAAAEAAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001630|",
+              "WhenOpened": "2024-08-03T22:17:47.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DemoApplication.java",
+              "DocumentMoniker": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\DemoApplication.java",
+              "RelativeDocumentMoniker": "src\\main\\java\\com\\example\\demo\\DemoApplication.java",
+              "ToolTip": "C:\\Users\\Quang Pham\\source\\repos\\jack-computer-shop\\src\\main\\java\\com\\example\\demo\\DemoApplication.java",
+              "RelativeToolTip": "src\\main\\java\\com\\example\\demo\\DemoApplication.java",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001630|",
+              "WhenOpened": "2024-08-03T19:47:18.185Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
