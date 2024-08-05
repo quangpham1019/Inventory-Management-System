@@ -3,8 +3,8 @@ package com.example.demo.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import java.io.Serializable;
 
 @Entity
