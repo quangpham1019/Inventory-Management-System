@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <div th:replace="fragments/head :: head"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
     <title>Inventory</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <div class="container text-center">
     <h1>MANAGE EMPLOYEES</h1>
     <table class="table table-bordered table-striped">
@@ -39,5 +39,5 @@
 </div>
 
 </body>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </html>

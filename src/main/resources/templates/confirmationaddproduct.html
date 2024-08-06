@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <div th:replace="fragments/head :: head"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
     <title>Confirmation</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1>Your product has been added or updated</h1>
 
 <a href="http://localhost:8080/">Link
     to Main Screen</a>
 </body>
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 
 </html>

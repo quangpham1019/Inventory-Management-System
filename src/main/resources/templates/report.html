@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <div th:replace="fragments/head :: head"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
     <title>Report</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <div class="container text-center">
     <form th:action="@{/api/v1/admin/report}">
         Filter: <input type="text" name="reportKeyword" id="reportKeyword" size="50" th:value="${reportKeyword}" required />
@@ -48,6 +48,6 @@
     }
 </script>
 </body>
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 
 </html>

@@ -65,22 +65,22 @@ public class AuthenticationController {
 //        user.setFirstName(user1.getFirstName());
 //        user.setLastName(user1.getLastName());
 //        user.setEmail(user1.getEmail());
-        return "redirect:/";
+        return "redirect:/inventory";
     }
 
 
 
-    @GetMapping("/signOutProcess")
-    public String destroySession(HttpServletRequest request) {
-        System.out.println("DESTROYING SESSION");
-        request.getSession().invalidate();
-        return "redirect:/";
-    }
+//    @GetMapping("/signOutProcess")
+//    public String destroySession(HttpServletRequest request) {
+//        System.out.println("DESTROYING SESSION");
+//        request.getSession().invalidate();
+//        return "redirect:/";
+//    }
 
-    // TODO: integrate refreshToken with JwtAuthenticationFilter
-    @PostMapping("/refreshToken")
-    public ResponseEntity<JwtAuthenticationResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-//        return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
-        return null;
-    }
+//    // TODO: integrate refreshToken with JwtAuthenticationFilter
+//    @PostMapping("/refreshToken")
+//    public ResponseEntity<JwtAuthenticationResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+////        return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
+//        return null;
+//    }
 }
