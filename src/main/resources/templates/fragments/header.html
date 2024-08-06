@@ -30,7 +30,9 @@
                     <a class="nav-link" aria-current="page" th:href="@{/api/v1/user/orderList}">Orders</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/auth/signOutProcess}">Sign Out</a>
+                    <a class="ui secondary basic button" data-th-attr="onclick=|$('#logout_form').submit();|" data-sec-authorize="isAuthenticated()">Log out</a>
+                    <form id="logout_form" data-th-action="@{/logout}" method="post"></form>
+<!--                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/auth/signOutProcess}">Sign Out</a>-->
                 </li>
             </ul>
         </div>

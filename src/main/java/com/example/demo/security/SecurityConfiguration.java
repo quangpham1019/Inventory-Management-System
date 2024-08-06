@@ -26,7 +26,7 @@ public class SecurityConfiguration {
     @Order(0)
     SecurityFilterChain resources(HttpSecurity http) throws Exception {
         return http
-                .securityMatcher("/images/**", "/**.css", "/**.js")
+                .securityMatcher("/api/v1/auth/signInPage", "/images/**", "/css/**.css", "/**.js")
                 .authorizeHttpRequests(c -> c.anyRequest().permitAll())
                 .securityContext(c -> c.disable())
                 .sessionManagement(c -> c.disable())
@@ -40,16 +40,16 @@ public class SecurityConfiguration {
                                             OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2LoginHandler,
                                             OAuth2UserService<OidcUserRequest, OidcUser> oidcLoginHandler) throws Exception {
         return http
-                .formLogin(c -> c.loginPage("/login")
-                        .loginProcessingUrl("/authenticate")
+                .formLogin(c -> c.loginPage("/api/v1/auth/signInPage")
+                        .loginProcessingUrl("/api/v1/auth/signInProcess")
                         .usernameParameter("user")
                         .passwordParameter("pass")
-                        .defaultSuccessUrl("/user")
+                        .defaultSuccessUrl("/inventory")
                 )
                 .logout(c -> c.logoutSuccessUrl("/?logout"))
                 .oauth2Login(oc -> oc
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/user")
+                        .loginPage("/api/v1/auth/signInPage")
+                        .defaultSuccessUrl("/inventory")
                         .userInfoEndpoint(ui -> ui
                                 .userService(oauth2LoginHandler)
                                 .oidcUserService(oidcLoginHandler)))

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/head :: head"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
     <title>Page Not Found</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <div class="container text-center">
     <h3>This page does not exists...</h3>
 <!--    <div th:errors=""></div>-->
@@ -13,6 +13,6 @@
 </div>
 
 </body>
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 
 </html>
