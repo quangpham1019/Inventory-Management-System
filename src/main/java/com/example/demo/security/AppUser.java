@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;

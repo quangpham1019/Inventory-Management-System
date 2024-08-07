@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
@@ -148,7 +149,7 @@ public class AppUserService implements UserDetailsManager {
     }
 
     @Transactional
-    protected void createUser(AppUser user) {
+    public void createUser(AppUser user) {
         UserEntity userEntity = saveUserIfNotExists(user);
 
         List<AuthorityEntity> authorities = user
@@ -212,9 +213,54 @@ public class AppUserService implements UserDetailsManager {
                 .build());
     }
 
+    public void updateUser(UserEntity userEntity) {
+        UserEntity userEntityInDb = userEntityRepository.findById(userEntity.getUsername()).get();
+
+        if (userEntityInDb.getProvider() == LoginProvider.APP) {
+            if (!userEntity.getPassword().isBlank()) {
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String encodedPassword = passwordEncoder.encode(userEntity.getPassword());
+                userEntityInDb.setPassword(encodedPassword);
+            }
+        }
+
+        userEntityInDb.setUsername(userEntity.getUsername());
+        userEntityInDb.setEmail(userEntity.getEmail());
+        userEntityInDb.setName(userEntity.getName());
+        userEntityRepository.save(userEntityInDb);
+    }
+
     @Override
     public void updateUser(UserDetails user) {
-        throw new UnsupportedOperationException();
+        // find UserEntity by username of user
+        // invoke createUser(UserEntity)
+
+        UserEntity userEntity = userEntityRepository.findById(user.getUsername()).get();
+        updateUser(userEntity);
+
+        userEntityRepository.save(userEntity);
+    }
+
+    public void updateUser(String username, AppUser appUser) {
+        // find UserEntity by username
+        // invoke createUser(UserEntity)
+
+        UserEntity userEntityInDb = userEntityRepository.findById(username).get();
+        if (appUser.getProvider() == LoginProvider.APP) {
+            if (!appUser.getPassword().isBlank()) {
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String encodedPassword = passwordEncoder.encode(appUser.getPassword());
+                appUser.setPassword(encodedPassword);
+            }
+        }
+
+        userEntityInDb.setUsername(appUser.getUsername());
+        userEntityInDb.setEmail(appUser.getEmail());
+        userEntityInDb.setName(appUser.getName());
+        userEntityInDb.setImageUrl(appUser.getImageUrl());
+        userEntityInDb.setProvider(appUser.getProvider());
+
+        userEntityRepository.save(userEntityInDb);
     }
 
     @Override
