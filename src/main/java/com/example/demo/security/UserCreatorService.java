@@ -23,7 +23,7 @@ public class UserCreatorService {
                 .username("bob")
                 .provider(LoginProvider.APP)
                 .password(passwordEncoder.encode("1234"))
-                .authorities(List.of(new SimpleGrantedAuthority("read")))
+                .authorities(List.of(new SimpleGrantedAuthority("USER")))
                 .build();
 
         var bil = AppUser.builder()

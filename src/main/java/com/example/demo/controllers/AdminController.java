@@ -2,6 +2,10 @@ package com.example.demo.controllers;
 
 import com.example.demo.domain.User;
 import com.example.demo.domain.Report;
+import com.example.demo.security.AppUser;
+import com.example.demo.security.AppUserService;
+import com.example.demo.security.db.UserEntity;
+import com.example.demo.security.db.UserEntityRepository;
 import com.example.demo.service.JcsUserService;
 import com.example.demo.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +25,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
+    private final UserEntityRepository userEntityRepository;
     private ReportService reportService;
     private JcsUserService jcsUserService;
+
     @Autowired
-    public AdminController(ReportService reportService, JcsUserService jcsUserService) {
+    public AdminController(ReportService reportService, JcsUserService jcsUserService, UserEntityRepository userEntityRepository) {
         this.reportService = reportService;
         this.jcsUserService = jcsUserService;
+        this.userEntityRepository = userEntityRepository;
     }
 
 
@@ -42,7 +49,7 @@ public class AdminController {
     }
     @GetMapping("/manageUsers")
     public String getManageUsersPage(Model model) {
-        List<User> users = jcsUserService.findAll();
+        List<UserEntity> users = (List<UserEntity>)userEntityRepository.findAll();
         model.addAttribute("users", users);
         return "menu pages/users";
     }
