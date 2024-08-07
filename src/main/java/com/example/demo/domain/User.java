@@ -20,7 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Scope(value = "session", proxyMode= ScopedProxyMode.TARGET_CLASS)
+//@Scope(value = "session", proxyMode= ScopedProxyMode.TARGET_CLASS)
 @Table(name = "jcs_users")
 @ToString
 public class User implements UserDetails {
@@ -36,6 +36,7 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private RoleType roleType;
+
 
     public User() {}
     public User(String email, String password, String firstName, String lastName, RoleType roleType) {

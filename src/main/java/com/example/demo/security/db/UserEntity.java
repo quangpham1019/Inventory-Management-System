@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class UserEntity {
 
     @Id
@@ -90,5 +90,21 @@ public class UserEntity {
 
         authorities.forEach(this::addAuthority);
     }
+
+//    TODO: implement add/remove ADMIN authority
+//    public void setIsAdmin(boolean isAdmin) {
+//        AuthorityEntity authorityEntity = authorityEntityRepository
+//        if (isAdmin) {
+//            ;
+//        } else {
+//            removeAuthority(authorityEntity);
+//        }
+//    }
+//
+//    public boolean getIsAdmin() {
+//        return userAuthorities
+//                .stream()
+//                .anyMatch(uae -> uae.getAuthority().equals("ADMIN"));
+//    }
 }
 
