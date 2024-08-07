@@ -30,14 +30,14 @@ public class UserCreatorService {
                 .username("bil")
                 .provider(LoginProvider.APP)
                 .password(passwordEncoder.encode("321"))
-                .authorities(List.of(new SimpleGrantedAuthority("manage")))
+                .authorities(List.of(new SimpleGrantedAuthority("ADMIN")))
                 .build();
 
         var admin = AppUser.builder()
                 .username("admin")
                 .provider(LoginProvider.APP)
                 .password(passwordEncoder.encode("admin"))
-                .authorities(List.of(new SimpleGrantedAuthority("manage")))
+                .authorities(List.of(new SimpleGrantedAuthority("ADMIN")))
                 .build();
 
         appUserService.createUser(bob);
