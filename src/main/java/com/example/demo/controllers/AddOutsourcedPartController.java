@@ -42,7 +42,7 @@ public class AddOutsourcedPartController {
         else{
         OutsourcedPartService repo=context.getBean(OutsourcedPartServiceImpl.class);
         repo.save(part);
-        return "confirmationaddpart";}
+        return "confirmation/confirmationaddpart";}
     }
 
 

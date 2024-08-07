@@ -46,7 +46,7 @@ public class AuthenticationController {
     @GetMapping("/signInPage")
     public String getSignInPage(Model model) {
         model.addAttribute("signInRequest", new SigninRequest());
-        return "sign_in_form";
+        return "sign_in";
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -54,7 +54,7 @@ public class AuthenticationController {
     public String signIn(@ModelAttribute("signInRequest") SigninRequest signinRequest, BindingResult bindingResult,
                           HttpServletRequest httpServletRequest, Model model) {
         if (bindingResult.hasErrors()) {
-            return "sign_in_form";
+            return "sign_in";
         }
 
 //        JwtAuthenticationResponse jwtAuthenticationResponse = authenticationService.signin(signinRequest);

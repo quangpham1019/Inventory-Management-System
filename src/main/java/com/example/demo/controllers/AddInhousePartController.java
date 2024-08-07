@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
-import java.util.Optional;
 
 /**
  *
@@ -43,7 +42,7 @@ public class AddInhousePartController{
         InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
         repo.save(part);
 
-        return "confirmationaddpart";}
+        return "confirmation/confirmationaddpart";}
     }
 
 }
