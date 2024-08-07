@@ -1,5 +1,5 @@
 package com.example.demo.controllers;
-
+import com.example.demo.security.AppUser;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.domain.Service;
@@ -9,6 +9,7 @@ import com.example.demo.service.JcsServiceService;
 import com.example.demo.service.PartService;
 import com.example.demo.service.ProductService;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,12 +35,19 @@ public class InventoryController {
     private UserRepository userRepository;
     private JcsServiceService jcsServiceService;
 
+    @ModelAttribute
+    AppUser appUser(@AuthenticationPrincipal AppUser appUser) {
+        return appUser;
+    }
+
     public InventoryController(PartService partService, ProductService productService, UserRepository userRepository, JcsServiceService jcsServiceService){
         this.partService=partService;
         this.productService=productService;
         this.userRepository = userRepository;
         this.jcsServiceService = jcsServiceService;
     }
+
+
     @GetMapping("")
     public String redirect() {
         return "redirect:/inventory";
