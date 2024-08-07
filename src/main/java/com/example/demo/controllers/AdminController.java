@@ -4,6 +4,7 @@ import com.example.demo.domain.User;
 import com.example.demo.domain.Report;
 import com.example.demo.security.AppUser;
 import com.example.demo.security.AppUserService;
+import com.example.demo.security.LoginProvider;
 import com.example.demo.security.db.UserEntity;
 import com.example.demo.security.db.UserEntityRepository;
 import com.example.demo.service.JcsUserService;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +28,16 @@ import java.util.List;
 public class AdminController {
 
     private final UserEntityRepository userEntityRepository;
+    private final AppUserService appUserService;
     private ReportService reportService;
     private JcsUserService jcsUserService;
 
     @Autowired
-    public AdminController(ReportService reportService, JcsUserService jcsUserService, UserEntityRepository userEntityRepository) {
+    public AdminController(ReportService reportService, JcsUserService jcsUserService, UserEntityRepository userEntityRepository, AppUserService appUserService) {
         this.reportService = reportService;
         this.jcsUserService = jcsUserService;
         this.userEntityRepository = userEntityRepository;
+        this.appUserService = appUserService;
     }
 
 
@@ -66,11 +70,16 @@ public class AdminController {
     @PostMapping("/processUser")
     public String processNewEmployee(@ModelAttribute(name = "user") User newUser) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(encodedPassword);
-        newUser.setRoleType(newUser.getRoleType());
-        jcsUserService.save(newUser);
+        var userToAdd = AppUser.builder()
+                .username(newUser.getUsername())
+                .name(newUser.getFullname())
+                .email(newUser.getEmail())
+                .provider(LoginProvider.APP)
+                .password(passwordEncoder.encode(newUser.getPassword()))
+                .authorities(List.of(new SimpleGrantedAuthority("USER")))
+                .build();
 
+        appUserService.createUser(userToAdd);
         return "confirmation/user_add_success";
     }
 
