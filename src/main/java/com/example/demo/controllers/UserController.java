@@ -1,10 +1,12 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domain.*;
+import com.example.demo.security.AppUser;
 import com.example.demo.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,21 +24,24 @@ public class UserController {
 
     @Valid
     private Order order;
-    private User user;
     private ItemService itemService;
-    private PartService partService;
     private ProductService productService;
     private OrderService orderService;
     private ReportService reportService;
     private CustomerService customerService;
+    private AppUser appUser;
+
+    @ModelAttribute
+    AppUser appUser(@AuthenticationPrincipal AppUser appUser) {
+        this.appUser = appUser;
+        return appUser;
+    }
 
     @Autowired
-    public UserController(ItemService itemService, PartService partService, ProductService productService, Order order, User user, OrderService orderService, ReportService reportService, CustomerService customerService) {
+    public UserController(ItemService itemService, ProductService productService, Order order, OrderService orderService, ReportService reportService, CustomerService customerService) {
         this.itemService = itemService;
-        this.partService = partService;
         this.productService = productService;
         this.order = order;
-        this.user = user;
         this.orderService = orderService;
         this.reportService = reportService;
         this.customerService = customerService;
@@ -52,7 +56,6 @@ public class UserController {
         if (!itemError.isBlank()) {
             // string length is less than 12, invalidate int values from range of itemId
             if (itemError.length()<12) {
-
                 Product product = productService.findById(Integer.parseInt(itemError));
                 model.addAttribute("errors", "There are not enough products " + product.getName() + " in store.");
             } else {
@@ -167,13 +170,13 @@ public class UserController {
         // log user activity to report
         Report report = new Report();
         report.setOrder(myOrder);
-        report.setUserEmail("test@gmail.com");
+        report.setUserEmail(appUser.getEmail());
         report.setCustomer(order.getCustomer());
         report.setPrice(order.getTotalPrice());
         reportService.save(report);
 
         // reset order("session")
-        order.setOrderItemSet(new HashSet<>());
+        order.getOrderItemSet().clear();
         order.setPaymentMethod(null);
         order.setCustomer(null);
         order.setTotalPrice(0);
@@ -202,7 +205,7 @@ public class UserController {
     }
 
     @GetMapping("/updateCustomer")
-    public String getUpdateUserPage(@RequestParam int customerId,
+    public String getUpdateCustomerPage(@RequestParam int customerId,
                                     Model model) {
 
         Customer updateCustomer = customerService.findById(customerId);
@@ -211,7 +214,7 @@ public class UserController {
         return "customer_form";
     }
     @PostMapping("/updateCustomer")
-    public String updateUserProcess(@RequestParam int customerId,
+    public String updateCustomerProcess(@RequestParam int customerId,
                                     @ModelAttribute("customer") Customer updateCustomer) {
 
         customerService.deleteById(customerId);

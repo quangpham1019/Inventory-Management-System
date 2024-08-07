@@ -1,18 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domain.*;
-import com.example.demo.dto.JwtAuthenticationResponse;
-import com.example.demo.dto.RefreshTokenRequest;
 import com.example.demo.dto.SigninRequest;
-import com.example.demo.repositories.OrderRepository;
-import com.example.demo.repositories.ReportRepository;
-import com.example.demo.repositories.ServiceRepository;
-import com.example.demo.repositories.UserRepository;
-import com.example.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,21 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-
-    @Autowired
-    private ReportRepository reportRepository;
-    @Autowired
-    private User user;
-    @Autowired
-    private Order order;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private ServiceRepository serviceRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/signInPage")
@@ -67,20 +41,4 @@ public class AuthenticationController {
 //        user.setEmail(user1.getEmail());
         return "redirect:/inventory";
     }
-
-
-
-//    @GetMapping("/signOutProcess")
-//    public String destroySession(HttpServletRequest request) {
-//        System.out.println("DESTROYING SESSION");
-//        request.getSession().invalidate();
-//        return "redirect:/";
-//    }
-
-//    // TODO: integrate refreshToken with JwtAuthenticationFilter
-//    @PostMapping("/refreshToken")
-//    public ResponseEntity<JwtAuthenticationResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-////        return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
-//        return null;
-//    }
 }
