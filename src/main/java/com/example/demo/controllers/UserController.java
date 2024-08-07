@@ -2,7 +2,6 @@ package com.example.demo.controllers;
 
 import com.example.demo.domain.*;
 import com.example.demo.service.*;
-import com.example.demo.validators.ValidOrderEnufs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +14,6 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -66,7 +64,7 @@ public class UserController {
         model.addAttribute("customerKeyword", customerKeyword);
         model.addAttribute("order", order);
         model.addAttribute("selectedCustomer", currentCustomer);
-        return "sales";
+        return "menu pages/sales";
     }
 
     @PostMapping("/addItemToOrder")
@@ -140,7 +138,7 @@ public class UserController {
 
             model.addAttribute("orderFromRepos", orderFromRepos);
             model.addAttribute("orderKeyword", orderKeyword);
-            return "order_list";
+            return "menu pages/orders";
 
     }
 
@@ -148,7 +146,7 @@ public class UserController {
     @PostMapping("/saveOrder")
     public String saveOrder(
             @ModelAttribute("customer") int customerId,
-            @ModelAttribute String paymentMethod,
+            @ModelAttribute("paymentMethod") String paymentMethod,
             RedirectAttributes redirectAttributes
     ) {
         if(order.getOrderItemSet().isEmpty()) {
@@ -169,7 +167,7 @@ public class UserController {
         // log user activity to report
         Report report = new Report();
         report.setOrder(myOrder);
-        report.setUserEmail(user.getEmail());
+        report.setUserEmail("test@gmail.com");
         report.setCustomer(order.getCustomer());
         report.setPrice(order.getTotalPrice());
         reportService.save(report);
@@ -200,7 +198,7 @@ public class UserController {
     public String getManageCustomersPage(Model model) {
         List<Customer> customers = customerService.findAll();
         model.addAttribute("customers", customers);
-        return "customer_list";
+        return "menu pages/customers";
     }
 
     @GetMapping("/updateCustomer")

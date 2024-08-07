@@ -1,9 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domain.User;
-import com.example.demo.repositories.ReportRepository;
 import com.example.demo.domain.Report;
-import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.JcsUserService;
 import com.example.demo.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -40,13 +38,13 @@ public class AdminController {
 
         model.addAttribute("reportKeyword", reportKeyword);
         model.addAttribute("reports", reports);
-        return "report";
+        return "menu pages/reports";
     }
     @GetMapping("/manageUsers")
     public String getManageUsersPage(Model model) {
         List<User> users = jcsUserService.findAll();
         model.addAttribute("users", users);
-        return "user_list";
+        return "menu pages/users";
     }
 
     @GetMapping("/addUser")
@@ -66,7 +64,7 @@ public class AdminController {
         newUser.setRoleType(newUser.getRoleType());
         jcsUserService.save(newUser);
 
-        return "user_add_success";
+        return "confirmation/user_add_success";
     }
 
     @GetMapping("/updateUser")

@@ -20,6 +20,6 @@ public class CustomExceptionHandler {
     @ExceptionHandler({ AccessDeniedException.class })
     public String handleAccessDeniedException(AccessDeniedException exception) {
         System.out.println(exception.getMessage());
-        return "error_access_denied";
+        return "error/error_access_denied";
     }
 }

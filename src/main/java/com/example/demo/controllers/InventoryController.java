@@ -3,14 +3,12 @@ import com.example.demo.security.AppUser;
 import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
 import com.example.demo.domain.Service;
-import com.example.demo.domain.User;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.JcsServiceService;
 import com.example.demo.service.PartService;
 import com.example.demo.service.ProductService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,7 +72,7 @@ public class InventoryController {
 
         theModel.addAttribute("disabled", true);
         System.out.println(serviceList);
-        return "inventory";
+        return "menu pages/inventory";
     }
 
     @GetMapping("/addService")

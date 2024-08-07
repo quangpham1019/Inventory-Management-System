@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/skeleton::layout('sales', ~{::#sales_content})}">
+<head>
+    <title>Sales</title>
+</head>
+<body>
+    <div id="sales_content"
+         class="container text-center">
+
+        <h1>SALES</h1>
+        <h3>Order Summary</h3>
+
+        <div th:switch="${errors == null}">
+            <div th:case="true"></div>
+            <div class="alert alert-danger" th:case="false" th:text="${errors}"></div>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${order.getOrderItemSet().isEmpty()}">
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr th:each="orderItem : ${order.getOrderItemSet()}">
+                <td th:text="${orderItem}"></td>
+                <td >
+                    <a th:href="@{/api/v1/user/changeQuantity(itemId=${orderItem.item.id}, increase=false)}"><button>-</button></a>
+                    <span th:text="${orderItem.quantity}"></span>
+                    <a th:href="@{/api/v1/user/changeQuantity(itemId=${orderItem.item.id}, increase=true)}"><button>+</button></a>
+                </td>
+                <td>$
+                    <span th:text="${orderItem.item.price * orderItem.quantity}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Order Total</th>
+                <td></td>
+                <td>$
+                    <span th:text="${order.getTotalPrice()}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/inventory}"><button class="mt-2 mb-2 btn btn-primary btn-sm mb-3 col-2" >+ Add more item</button></a>
+
+        <h3>Customer Info</h3>
+
+        <a th:href="@{/api/v1/user/addCustomer}"><button class="mt-2 mb-2 btn btn-primary btn-sm mb-3 col-2" >Add Customer</button></a>
+        <a th:href="@{/api/v1/user/manageCustomers}"><button class="mt-2 mb-2 btn btn-primary btn-sm mb-3 col-2" >Manage Customer</button></a>
+
+        <form th:action="@{/api/v1/user/sales}" class="mt-2">
+            Filter:
+            <input type="text" name="customerKeyword" id="customerKeyword" size="50" th:value="${customerKeyword}" required placeholder="Enter customer last name to filter" />&nbsp;
+            <input type="submit" value="Search" />
+            <input type="button" value="Clear" id="btnClearPart" onclick="clearSearch()" />
+        </form>
+
+        <form th:action="@{/api/v1/user/saveOrder}" th:method="POST">
+            <div class="form-group row align-items-center justify-content-center">
+                <select id="customer" name="customer" required class="col-6 text-center mt-2" >
+                    <option value="" selected>Please choose a customer from the list</option>
+                    <option th:each="customer : ${customerList}"
+                            th:value="${customer.id}"
+                            th:text="${customer.getFirstName() + ' ' + customer.getLastName() + ', '
+                                + customer.getAddress() + ', ' + customer.getCity() + ', ' + customer.getState() + ' ' + customer.getZipCode()}"></option>
+                </select>
+                <div></div>
+                <select name="paymentMethod" required class="col-6 text-center mt-2">
+                    <option value="">Please choose a payment method</option>
+                    <option value="CREDIT">CREDIT CARD</option>
+                    <option value="DEBIT">DEBIT CARD</option>
+                    <option value="CASH">CASH</option>
+                </select>
+                <div class="mt-1 mb-1"></div>
+                <button type="submit" class="btn btn-primary btn-sm mb-3 col-2">Save order</button>
+            </div>
+        </form>
+
+    </div>
+
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "[[@{/api/v1/user/sales}]]";
+        }
+    </script>
+</body>
+</html>

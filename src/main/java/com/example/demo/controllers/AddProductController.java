@@ -86,7 +86,7 @@ public class AddProductController {
                 product.setInv(0);
             }
             repo.save(product);
-            return "confirmationaddproduct";
+            return "confirmation/confirmationaddproduct";
         }
     }
 
@@ -120,7 +120,7 @@ public class AddProductController {
 //        } else {
 //            theModel.addAttribute("success", false);
 //        }
-//        return "confirmationbuynowproduct";
+//        return "confirmation/confirmationbuynowproduct";
 //    }
     @GetMapping("/deleteproduct")
     public String deleteProduct(@RequestParam("productID") int theId, Model theModel) {
@@ -131,7 +131,7 @@ public class AddProductController {
                 .stream()
                 .anyMatch(orderItem -> orderItem.getItem().equals(product2))) {
 
-            return "error_product_in_order";
+            return "error/error_product_in_order";
         }
 
         for(Part part:product2.getParts()){
@@ -142,7 +142,7 @@ public class AddProductController {
         productService.save(product2);
         productService.deleteById(theId);
 
-        return "confirmationdeleteproduct";
+        return "confirmation/confirmationdeleteproduct";
     }
 
     public AddProductController(PartService partService) {
@@ -155,7 +155,7 @@ public class AddProductController {
     //    theModel.addAttribute("product", product);
     //    Product product1=new Product();
         if (product1.getName()==null) {
-            return "error_save_product_first";
+            return "error/error_save_product_first";
         }
         else{
         product1.getParts().add(partService.findById(theID));
@@ -171,7 +171,7 @@ public class AddProductController {
         }
         theModel.addAttribute("availparts",availParts);
         return "product_form";}
- //        return "confirmationassocpart";
+ //        return "confirmation/confirmationassocpart";
     }
     @GetMapping("/removepart")
     public String removePart(@RequestParam("partID") int theID, Model theModel){

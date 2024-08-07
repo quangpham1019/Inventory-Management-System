@@ -56,10 +56,10 @@ public class AddPartController {
         Part part=repo.findById(theId);
         if(part.getProducts().isEmpty()){
             repo.deleteById(theId);
-            return "confirmationdeletepart";
+            return "confirmation/confirmationdeletepart";
         }
         else{
-            return "error_not_enuf_parts";
+            return "error/error_not_enuf_parts";
         }
     }
 
