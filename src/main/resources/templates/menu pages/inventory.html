@@ -7,6 +7,7 @@
 </head>
 <body>
     <div id="home_content" class="container">
+        <button id="test_jquery">test button</button>
         <div class="container text-center">
             <h1>INVENTORY</h1>
 
@@ -16,15 +17,16 @@
             <!--                <h2 th:text="${authority}"></h2>-->
             <!--            </div>-->
             <!--        </div>-->
+
             <!--    PARTS -->
             <div sec:authorize="hasAuthority('ADMIN')">
                 <h2>Parts</h2>
-                <form th:action="@{/inventory}">
-                    Filter: <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}" required />
+                <form id="search_part" th:action="@{/inventory}">
+                    Filter: <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}"/>
                     &nbsp;
                     <input type="submit" value="Search" />
-                    &nbsp;
-                    <input type="button" value="Clear" id="btnClearPart" onclick="clearSearch()" />
+                    <!--&nbsp;-->
+                    <!--<input type="button" value="Clear" onclick="clearSearch()" />-->
                 </form>
                 <br><br>
                 <a th:href="@{/showFormAddInPart}" class="btn btn-primary btn-sm mb-3">Add Inhouse Part</a>
@@ -59,11 +61,11 @@
             <!--    PRODUCTS -->
             <h2>Products</h2>
             <form th:action="@{/inventory}">
-                Filter: <input type="text" name="productkeyword" id="productkeyword" size="50" th:value="${productkeyword}" required />
+                Filter: <input type="text" name="productkeyword" id="productkeyword" size="50" th:value="${productkeyword}" />
                 &nbsp;
                 <input type="submit" value="Search" />
-                &nbsp;
-                <input type="button" value="Clear" id="btnClearProduct" onclick="clearSearch()" />
+                <!--&nbsp;-->
+                <!--<input type="button" value="Clear" id="btnClearProduct" onclick="clearProductSearch()" />-->
             </form>
             <br><br>
             <a th:href="@{/showFormAddProduct}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Product</a>
@@ -100,11 +102,11 @@
             <!--    SERVICES-->
             <h2>Services</h2>
             <form th:action="@{/inventory}">
-                Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50" th:value="${serviceKeyword}" required />
+                Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50" th:value="${serviceKeyword}" />
                 &nbsp;
                 <input type="submit" value="Search" />
-                &nbsp;
-                <input type="button" value="Clear" onclick="clearSearch()" />
+                <!--&nbsp;-->
+                <!--<input type="button" value="Clear" onclick="clearServiceSearch()" />-->
             </form>
             <br><br>
             <a th:href="@{/addService}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Service</a>
@@ -138,12 +140,6 @@
 
         </div>
     </div>
-    <script type="text/javascript">
-        function clearSearch() {
-            window.location = "[[@{/}]]";
-        }
-    </script>
-
 </body>
 <div th:insert="~{fragments/footer :: footer}"></div>
 

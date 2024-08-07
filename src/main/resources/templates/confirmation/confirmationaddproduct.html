@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  th:replace="~{fragments/skeleton :: layout('confirm', ~{::#confirm})}">
 <head>
-    <div th:replace="~{fragments/footer :: footer}"></div>
     <title>Confirmation</title>
 </head>
 <body>
-<div th:replace="~{fragments/header_test :: header}"></div>
-<h1>Your product has been added or updated</h1>
-
-<a href="http://localhost:8080/">Link
-    to Main Screen</a>
+    <div id="confirm">
+        <h1>Your product has been added or updated</h1>
+        <a href="http://localhost:8080/">Link to Main Screen</a>
+    </div>
 </body>
-<div th:insert="~{fragments/footer :: footer}"></div>
-
 </html>
