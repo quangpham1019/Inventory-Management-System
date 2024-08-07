@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="~{fragments/footer :: footer}"></div>
     <title>Page Not Found</title>
 </head>
 <body>
-<div th:replace="~{fragments/header_test :: header}"></div>
 <div class="container text-center">
     <h3>This page does not exists...</h3>
-<!--    <div th:errors=""></div>-->
     <h4><a th:href="@{/static}">Click here to go back to homepage</a></h4>
 </div>
 
 </body>
-<div th:insert="~{fragments/footer :: footer}"></div>
-
 </html>
