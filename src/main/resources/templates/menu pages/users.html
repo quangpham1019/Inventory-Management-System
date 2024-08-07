@@ -11,16 +11,17 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
             <tr>
-                <th>Name</th>
-                <th>Email</th>
+                <th>Fullname</th>
+                <!--<th>Email</th>-->
                 <th>Username</th>
+                <th>User Role</th>
             </tr>
             </thead>
 
             <tbody>
             <tr th:each="user : ${users}">
                 <td th:text="${user.name}"></td>
-                <td th:text="${user.email}"></td>
+                <!--<td th:text="${user.email}"></td>-->
                 <td th:text="${user.username}"></td>
                 <td>
                     <div th:each="authority : ${user.getUserAuthorities()}">
@@ -35,7 +36,7 @@
             </tbody>
         </table>
 
-        <!--<h3><a class="btn btn-primary btn-lg mb-3" th:href="@{/api/v1/admin/addUser}">Add User</a></h3>-->
+        <h3><a class="btn btn-primary btn-lg mb-3" th:href="@{/api/v1/admin/addUser}">Add User</a></h3>
 
     </div>
 
