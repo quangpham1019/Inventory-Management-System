@@ -1,7 +1,4 @@
-_________________
 # **D424_ Software Engineering Capstone Project**
-
-_________________
 
 **Quang Pham** 
 
@@ -11,8 +8,6 @@ _________________
 
 - Full stack web application that allows users to manage stock supplies across multiple stores through a centralized web portal and database.
 - Support user authentication with Oauth, Spring Security, and user authorization with RBAC architecture.
-
-_________________
 
 ## **ENVIRONMENT SETUP**
 
@@ -30,9 +25,7 @@ Database:
  
 >If using your own database config, please update these variables in **application.properties**
 
-_________________
-
-**STARTING THE SERVER**
+## **STARTING THE SERVER**
 
 1. Clone the repo
 2. Configure the database
@@ -41,8 +34,6 @@ _________________
     ![StartServer](src/main/resources/static/images/StartServer.png)
 
 > Access the server at http://localhost:8080
-
-_________________
 
 ## **SIGN IN**
 
@@ -55,8 +46,6 @@ _________________
 
 - Email: jcsuser@gmail.com
 - Password: jcsuser
-
-_________________
 
 ## **PREVIEW AS ADMIN**
 
@@ -99,8 +88,6 @@ _________________
 - ADMIN can view/update/delete users.
 
 ![Users](src/main/resources/static/images/admin/Users.png)
-
-_________________
 
 ## **PREVIEW AS USER**
 
