@@ -21,12 +21,12 @@
             <!--    PARTS -->
             <div sec:authorize="hasAuthority('ADMIN')">
                 <h2>Parts</h2>
-                <form id="search_part" th:action="@{/inventory}">
+                <form th:action="@{/inventory}">
                     Filter: <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}"/>
                     &nbsp;
                     <input type="submit" value="Search" />
-                    <!--&nbsp;-->
-                    <!--<input type="button" value="Clear" onclick="clearSearch()" />-->
+                    &nbsp;
+                    <input type="submit" id="btnClearPart" value="Clear" />
                 </form>
                 <br><br>
                 <a th:href="@{/showFormAddInPart}" class="btn btn-primary btn-sm mb-3">Add Inhouse Part</a>
@@ -64,8 +64,8 @@
                 Filter: <input type="text" name="productkeyword" id="productkeyword" size="50" th:value="${productkeyword}" />
                 &nbsp;
                 <input type="submit" value="Search" />
-                <!--&nbsp;-->
-                <!--<input type="button" value="Clear" id="btnClearProduct" onclick="clearProductSearch()" />-->
+                &nbsp;
+                <input type="submit" value="Clear" id="btnClearProduct" />
             </form>
             <br><br>
             <a th:href="@{/showFormAddProduct}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Product</a>
@@ -105,8 +105,8 @@
                 Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50" th:value="${serviceKeyword}" />
                 &nbsp;
                 <input type="submit" value="Search" />
-                <!--&nbsp;-->
-                <!--<input type="button" value="Clear" onclick="clearServiceSearch()" />-->
+                &nbsp;
+                <input type="submit" id="btnClearService" value="Clear"/>
             </form>
             <br><br>
             <a th:href="@{/addService}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Service</a>
@@ -139,8 +139,18 @@
             </table>
 
         </div>
+
+        <script>
+            document.getElementById("btnClearPart").addEventListener("click", function (e) {
+                $("#partkeyword").val("");
+            })
+            document.getElementById("btnClearProduct").addEventListener("click", function (e) {
+                $("#productkeyword").val("");
+            })
+            document.getElementById("btnClearService").addEventListener("click", function (e) {
+                $("#serviceKeyword").val("");
+            })
+        </script>
     </div>
 </body>
-<div th:insert="~{fragments/footer :: footer}"></div>
-
 </html>
