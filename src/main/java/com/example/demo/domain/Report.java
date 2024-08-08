@@ -25,7 +25,7 @@ public class Report {
     @CreationTimestamp
     private Date createdAt;
 
-    private String userEmail;
+    private String username;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -34,9 +34,9 @@ public class Report {
     private double price;
 
     public Report() {}
-    public Report(Order order, String userEmail, Customer customer, double price) {
+    public Report(Order order, String username, Customer customer, double price) {
         this.order = order;
-        this.userEmail = userEmail;
+        this.username = username;
         this.customer = customer;
         this.price = price;
     }

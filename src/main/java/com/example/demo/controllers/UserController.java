@@ -170,7 +170,7 @@ public class UserController {
         // log user activity to report
         Report report = new Report();
         report.setOrder(myOrder);
-        report.setUserEmail(appUser.getEmail());
+        report.setUsername(appUser.getUsername());
         report.setCustomer(order.getCustomer());
         report.setPrice(order.getTotalPrice());
         reportService.save(report);

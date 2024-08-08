@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
     List<Report> findAllByCustomer_LastName(String customerLastName);
-    List<Report> findAllByUserEmail(String userEmail);
+    List<Report> findAllByUsername(String username);
 }

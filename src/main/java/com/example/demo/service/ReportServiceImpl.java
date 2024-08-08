@@ -25,7 +25,7 @@ public class ReportServiceImpl implements ReportService{
     public List<Report> findAllBy(String filterCriteria, String reportKeyword) {
         switch (filterCriteria){
             case "user":
-                return reportRepository.findAllByUserEmail(reportKeyword);
+                return reportRepository.findAllByUsername(reportKeyword);
             case "customer":
                 return reportRepository.findAllByCustomer_LastName(reportKeyword);
         }
