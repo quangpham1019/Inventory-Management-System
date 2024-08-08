@@ -2,8 +2,9 @@
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <div class="right ui large secondary pointing menu">
-        <div class="left aligned header item">
+        <div class="d-flex flex-column justify-content-start left aligned header item menu">
             <h1 style="color:#50b33a">Jack's Computer Shop</h1>
+
         </div>
 
         <div class="ui large secondary pointing menu" sec:authorize="isAuthenticated()">
@@ -18,10 +19,15 @@
         </div>
 
         <div class="right item" style="margin-left: 0% !important;">
-<!--            <a class="ui secondary basic button" style="margin-right: 1em" data-th-href="@{/login}" data-sec-authorize="!isAuthenticated()">Log in</a>-->
+            <!--            <a class="ui secondary basic button" style="margin-right: 1em" data-th-href="@{/login}" data-sec-authorize="!isAuthenticated()">Log in</a>-->
             <a class="ui secondary basic button" data-th-attr="onclick=|$('#logout_form').submit();|" data-sec-authorize="isAuthenticated()">Log out</a>
             <form id="logout_form" data-th-action="@{/logout}" method="post"></form>
-<!--            <a class="ui secondary basic button" data-sec-authorize="!isAuthenticated()" data-th-href="@{/user/sign-up}">Sign up</a>-->
+            <!--            <a class="ui secondary basic button" data-sec-authorize="!isAuthenticated()" data-th-href="@{/user/sign-up}">Sign up</a>-->
         </div>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        Logged in as <span sec:authentication="name"></span><br>
+        Roles: <span sec:authentication="principal.authorities"></span>
     </div>
 </div>
