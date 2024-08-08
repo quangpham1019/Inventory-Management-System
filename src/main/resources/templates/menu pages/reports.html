@@ -27,7 +27,7 @@
             <tr>
                 <th>Created Date</th>
                 <th>Order ID</th>
-                <th>User Email</th>
+                <th>User</th>
                 <th>Customer</th>
                 <th>Total</th>
             </tr>
@@ -36,7 +36,7 @@
             <tr th:each="report : ${reports}">
                 <td th:text="${report.createdAt}"></td>
                 <td th:text="${report.order.id}"></td>
-                <td th:text="${report.userEmail}"></td>
+                <td th:text="${report.username}"></td>
                 <td th:text="${report.customer}"></td>
                 <td th:text="${report.price}"></td>
             </tr>
