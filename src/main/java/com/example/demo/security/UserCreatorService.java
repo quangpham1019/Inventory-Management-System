@@ -19,30 +19,22 @@ public class UserCreatorService {
 
     @PostConstruct
     private void createHardcodedUsers() {
-        var bob = AppUser.builder()
-                .username("bob")
+        var user = AppUser.builder()
+                .username("jcsuser@gmail.com")
                 .provider(LoginProvider.APP)
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("jcsuser"))
                 .authorities(List.of(new SimpleGrantedAuthority("USER")))
                 .build();
 
-        var bil = AppUser.builder()
-                .username("bil")
-                .provider(LoginProvider.APP)
-                .password(passwordEncoder.encode("321"))
-                .authorities(List.of(new SimpleGrantedAuthority("ADMIN")))
-                .build();
-
         var admin = AppUser.builder()
-                .username("admin")
+                .username("jcsadmin@gmail.com")
                 .provider(LoginProvider.APP)
-                .password(passwordEncoder.encode("admin"))
+                .password(passwordEncoder.encode("jcsadmin"))
                 .authorities(List.of(new SimpleGrantedAuthority("ADMIN")))
                 .build();
 
-        appUserService.createUser(bob);
-        appUserService.createUser(bil);
         appUserService.createUser(admin);
+        appUserService.createUser(user);
 
     }
 }
