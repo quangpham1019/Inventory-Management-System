@@ -10,13 +10,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @Controller
 public class InventoryController {
 
@@ -37,6 +35,11 @@ public class InventoryController {
 
     // TODO: update search result without reloading whole page
     // guide @ https://stackoverflow.com/questions/70202040/update-content-in-thymeleaf-without-reloading-whole-page
+    @PostMapping("/clearKeyword")
+    public String clearKeyword(Model model){
+        return "fragments/tableFragments :: anotherTable";
+    }
+
 
     @GetMapping("")
     public String redirect() {
@@ -69,7 +72,7 @@ public class InventoryController {
     public String getAddServiceForm(Model model) {
         model.addAttribute("service", new Service());
         model.addAttribute("action", "add");
-        return "service_form";
+        return "form/service_form";
     }
 
     @PostMapping("/processService")
@@ -84,7 +87,7 @@ public class InventoryController {
         Service updateService = jcsServiceService.findById(serviceId);
         model.addAttribute("service", updateService);
         model.addAttribute("action", "update");
-        return "service_form";
+        return "form/service_form";
     }
     @PostMapping("/updateService")
     public String updateServiceProcess(@RequestParam int serviceId,

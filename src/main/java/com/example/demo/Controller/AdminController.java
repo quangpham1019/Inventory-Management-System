@@ -62,7 +62,7 @@ public class AdminController {
         model.addAttribute("oldUsername", "");
         model.addAttribute("action", "add");
         model.addAttribute("error", e);
-        return "user_form";
+        return "form/user_form";
     }
 
     @PostMapping("/processUser")
@@ -88,7 +88,7 @@ public class AdminController {
         model.addAttribute("updateUser", user);
         model.addAttribute("oldUsername", user.getUsername());
         model.addAttribute("action", "update");
-        return "user_form";
+        return "form/user_form";
     }
 
     @PostMapping("/updateUser")
@@ -99,7 +99,7 @@ public class AdminController {
 
         if (errors.hasErrors()) {
             model.addAttribute("action", "update");
-            return "user_form";
+            return "form/user_form";
         }
 
         updateUser.setUsername(USERNAME);

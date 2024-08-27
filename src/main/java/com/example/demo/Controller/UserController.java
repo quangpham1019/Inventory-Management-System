@@ -174,7 +174,7 @@ public class UserController {
     public String getNewCustomerForm(Model model) {
         model.addAttribute("customer", new Customer());
         model.addAttribute("action", "add");
-        return "customer_form";
+        return "form/customer_form";
     }
 
     @PostMapping("/processCustomer")
@@ -197,7 +197,7 @@ public class UserController {
         Customer updateCustomer = customerService.findById(customerId);
         model.addAttribute("customer", updateCustomer);
         model.addAttribute("action", "update");
-        return "customer_form";
+        return "form/customer_form";
     }
     @PostMapping("/updateCustomer")
     public String updateCustomerProcess(@RequestParam int customerId,
