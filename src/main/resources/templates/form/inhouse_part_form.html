@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html data-th-replace="~{fragments/skeleton::layout('inhouse_part_form', ~{::#inhouse_part_form_content})}">
+<head>
+    <title>Part Form</title>
+</head>
+<body>
+    <div id="inhouse_part_form_content" class="container">
+        <h1>Inhouse Part Detail</h1>
+        <form action="#" th:action="@{/showFormAddInPart}" th:object="${inhousepart}" method="POST"}>
+
+            <!-- Add hidden form field to handle update -->
+            <p><input type="hidden" th:field="*{id}"/></p>
+
+            <p>
+                <label for="partName">Part Name</label>
+                <input id="partName" type="text" th:field="*{name}" placeholder="Name" class="form-control mb-4 col-4"/>
+            </p>
+
+            <p>
+                <label for="price">Price</label>
+                <input id="price" type="text" path="price" th:field="*{price}" placeholder= "Price" class="form-control mb-4 col-4"/>
+            </p>
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</p>
+
+            <p>
+                <label for="inv">Inventory</label>
+                <input id="inv" type="text" path="inv" th:field="*{inv}" placeholder="Inventory" class="form-control mb-4 col-4"/>
+            </p>
+            <p th:if="${#fields.hasErrors('inv')}" th:errors="*{inv}">Inventory Error</p>
+
+            <p>
+                <label for="minInv">Min Inventory</label>
+                <input id="minInv" type="text" path="minInv" th:field="*{minInv}" placeholder="Inventory" class="form-control mb-4 col-4"/>
+            </p>
+            <p>
+                <label for="maxInv">Max Inventory</label>
+                <input id="maxInv" type="text" path="maxInv" th:field="*{maxInv}" placeholder="Inventory" class="form-control mb-4 col-4"/>
+            </p>
+
+            <p>
+                <label for="partId">Part Id</label>
+                <input id="partId" type="text" th:field="*{partId}" placeholder="Part ID" class="form-control mb-4 col-4"/>
+            </p>
+
+            <p>
+            <div th:if="${#fields.hasAnyErrors()}">
+                <ul><li th:each="err: ${#fields.allErrors()}" th:text="${err}"></li></ul>
+            </div>
+            </p>
+            <p><input type="submit" value="Submit" /></p>
+        </form>
+        <p><errors path="price" cssClass=""error/><p>
+        <a href="http://localhost:8080/">Link
+            to Main Screen</a>
+    </div>
+</body>
+</html>

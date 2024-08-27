@@ -30,10 +30,10 @@ public class PartController {
 
         if (curPart.getClass().equals(InhousePart.class)) {
             partType = "inhousepart";
-            form = "inhouse_part_form";
+            form = "form/inhouse_part_form";
         } else {
             partType = "outsourcedpart";
-            form = "outsourced_part_form";
+            form = "form/outsourced_part_form";
         }
 
         model.addAttribute(partType, curPart);
@@ -59,7 +59,7 @@ public class PartController {
 
         model.addAttribute("inhousepart", new InhousePart());
 
-        return "inhouse_part_form";
+        return "form/inhouse_part_form";
     }
 
     @PostMapping("/showFormAddInPart")
@@ -68,7 +68,7 @@ public class PartController {
         model.addAttribute("inhousepart",part);
 
         if(theBindingResult.hasErrors()){
-            return "inhouse_part_form";
+            return "form/inhouse_part_form";
         }
 
         partService.save(part);
@@ -81,7 +81,7 @@ public class PartController {
 
         model.addAttribute("outsourcedpart", new OutsourcedPart());
 
-        return "outsourced_part_form";
+        return "form/outsourced_part_form";
     }
 
     @PostMapping("/showFormAddOutPart")
@@ -90,7 +90,7 @@ public class PartController {
         model.addAttribute("outsourcedpart",part);
 
         if(bindingResult.hasErrors()){
-            return "outsourced_part_form";
+            return "form/outsourced_part_form";
         }
 
         partService.save(part);

@@ -13,6 +13,6 @@ public class AuthenticationController {
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/signInPage")
     public String getSignInPage() {
-        return "sign_in";
+        return "form/sign_in";
     }
 }

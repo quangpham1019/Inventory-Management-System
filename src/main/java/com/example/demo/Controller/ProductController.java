@@ -42,7 +42,7 @@ public class ProductController {
 
         filterAvailableParts(model, curProduct);
 
-        return "product_form";
+        return "form/product_form";
     }
 
     @PostMapping("/showFormAddProduct")
@@ -54,7 +54,7 @@ public class ProductController {
             filterAvailableParts(model, product);
             model.addAttribute("parts", partService.findAll());
 
-            return "product_form";
+            return "form/product_form";
         }
 
         if(product.getId()!=0) {
@@ -85,7 +85,7 @@ public class ProductController {
 
         filterAvailableParts(model, curProduct);
 
-        return "product_form";
+        return "form/product_form";
     }
 
     @GetMapping("/deleteproduct")
@@ -128,7 +128,7 @@ public class ProductController {
         model.addAttribute("product", curProduct);
         filterAvailableParts(model, curProduct);
 
-        return "product_form";
+        return "form/product_form";
     }
 
     @GetMapping("/removepart")
@@ -144,7 +144,7 @@ public class ProductController {
         model.addAttribute("product", curProduct);
         filterAvailableParts(model, curProduct);
 
-        return "product_form";
+        return "form/product_form";
     }
 
     public void filterAvailableParts(Model model, Product product) {

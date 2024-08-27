@@ -11,6 +11,12 @@
         <div class="container text-center">
             <h1>INVENTORY</h1>
 
+            <div id="output">
+                Some initial text displayed here. This will be replaced.
+            </div>
+            <br>
+            <button onclick="updateOutput()">Replace the above text without reloading whole page</button>
+
             <!--        <div>-->
             <!--            <h1 th:text="${appUser.getName()}"></h1>-->
             <!--            <div th:each="authority : ${appUser.getAuthorities()}">-->
@@ -140,10 +146,20 @@
 
         </div>
 
+        <!-- Obtain CSRF token using Thymeleaf -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            let _csrf_token = /*[[${_csrf.token}]]*/ '';
+            let _csrf_param_name = /*[[${_csrf.parameterName}]]*/ '';
+            /*]]>*/
+
+            // Set the _csrf attribute with _csrf_token from Spring security
+            let requestData = {};
+            requestData[_csrf_param_name] = _csrf_token; // Adds the token
+        </script>
         <script>
             document.getElementById("btnClearPart").addEventListener("click", function (e) {
                 $("#partkeyword").val("");
-
             })
             document.getElementById("btnClearProduct").addEventListener("click", function (e) {
                 $("#productkeyword").val("");
@@ -151,6 +167,20 @@
             document.getElementById("btnClearService").addEventListener("click", function (e) {
                 $("#serviceKeyword").val("");
             })
+
+            function updateOutput() {
+
+                // send the ajax request
+                $.ajax({
+                    type: 'POST',
+                    url: "http://localhost:8080/clearKeyword",
+                    data: requestData
+                }).done(function (fragment) {
+                        console.log(fragment);
+                        $("#output").replaceWith(fragment);
+                });
+                console.log("ajax request sent");
+            }
         </script>
     </div>
 </body>
