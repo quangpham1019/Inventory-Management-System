@@ -165,8 +165,8 @@ public class UserController {
         order.setCustomer(currentCustomer);
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
 
-        SaveCurrentOrderAndReport();
-        ResetOrderSession();
+        saveCurrentOrderAndReport();
+        resetOrderSession();
         return "redirect:/";
     }
 
@@ -214,7 +214,7 @@ public class UserController {
         return "redirect:/api/v1/user/manageCustomers";
     }
 
-    void SaveCurrentOrderAndReport() {
+    void saveCurrentOrderAndReport() {
         Order myOrder = new Order();
         myOrder.setPaymentMethod(order.getPaymentMethod());
         myOrder.setCustomer(order.getCustomer());
@@ -229,7 +229,7 @@ public class UserController {
                 order.getTotalPrice());
         reportService.save(report);
     }
-    void ResetOrderSession() {
+    void resetOrderSession() {
         order.getOrderItemSet().clear();
         order.setPaymentMethod(null);
         order.setCustomer(null);
