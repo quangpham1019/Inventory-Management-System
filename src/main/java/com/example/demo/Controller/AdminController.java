@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// TODO: Refactor AdminController into ReportController, UserController
 @PreAuthorize("hasAuthority('ADMIN')")
 @Controller
 @RequestMapping("/api/v1/admin")
