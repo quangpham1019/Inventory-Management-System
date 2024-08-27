@@ -11,142 +11,53 @@
         <div class="container text-center">
             <h1>INVENTORY</h1>
 
-            <div id="output">
-                Some initial text displayed here. This will be replaced.
-            </div>
-            <br>
-            <button onclick="updateOutput()">Replace the above text without reloading whole page</button>
-
-            <!--        <div>-->
-            <!--            <h1 th:text="${appUser.getName()}"></h1>-->
-            <!--            <div th:each="authority : ${appUser.getAuthorities()}">-->
-            <!--                <h2 th:text="${authority}"></h2>-->
-            <!--            </div>-->
-            <!--        </div>-->
-
-            <!--    PARTS -->
+            <!--region PART-->
             <div sec:authorize="hasAuthority('ADMIN')">
                 <h2>Parts</h2>
-                <form th:action="@{/inventory}">
-                    Filter: <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}"/>
-                    &nbsp;
-                    <input type="submit" value="Search" />
-                    &nbsp;
-                    <input type="submit" id="btnClearPart" value="Clear" />
-                </form>
+
+                Filter: <input type="text" name="partKeyword" id="partKeyword" size="50" th:value="${partKeyword}"/>
+                <button onclick="">Search</button>
+                <button onclick="clearKeyword('part')">Clear</button>
+
                 <br><br>
                 <a th:href="@{/showFormAddInPart}" class="btn btn-primary btn-sm mb-3">Add Inhouse Part</a>
                 <a th:href="@{/showFormAddOutPart}" class="btn btn-primary btn-sm mb-3">Add Outsourced Part</a>
-                <table class="table table-bordered table-striped">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Inventory</th>
-                        <th>Min Inventory</th>
-                        <th>Max Inventory</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="tempPart : ${parts}">
-                        <td th:text="${tempPart.name}">1</td>
-                        <td th:text="${tempPart.price}">1</td>
-                        <td th:text="${tempPart.inv}">1</td>
-                        <td th:text="${tempPart.minInv}">1</td>
-                        <td th:text="${tempPart.maxInv}">1</td>
-                        <td><a th:href="@{/showPartFormForUpdate(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
-                            <a th:href="@{/deletepart(partID=${tempPart.id})}" class="btn btn-danger btn-sm mb-3"
-                               onclick="if(!(confirm('Are you sure you want to delete this part?')))return false">Delete</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div id="partTable">
+                    <table data-th-replace="~{fragments/inventoryTable::partTable}"></table>
+                </div>
             </div>
+            <!--endregion-->
 
-            <!--    PRODUCTS -->
+            <!--region PRODUCT-->
             <h2>Products</h2>
-            <form th:action="@{/inventory}">
-                Filter: <input type="text" name="productkeyword" id="productkeyword" size="50" th:value="${productkeyword}" />
-                &nbsp;
-                <input type="submit" value="Search" />
-                &nbsp;
-                <input type="submit" value="Clear" id="btnClearProduct" />
-            </form>
+
+            Filter: <input type="text" name="productKeyword" id="productKeyword" size="50" th:value="${productKeyword}" />
+            <button onclick="">Search</button>
+            <button onclick="clearKeyword('product')">Clear</button>
+
             <br><br>
             <a th:href="@{/showFormAddProduct}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Product</a>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Inventory</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="tempProduct : ${products}">
-                    <td th:text="${tempProduct.name}">1</td>
-                    <td th:text="${tempProduct.price}">1</td>
-                    <td th:text="${tempProduct.inv}">1</td>
-                    <td>
-                        <div sec:authorize="hasAuthority('ADMIN')">
-                            <a th:href="@{/showProductFormForUpdate(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
-                            <a th:href="@{/deleteproduct(productID=${tempProduct.id})}" class="btn btn-danger btn-sm mb-3"
-                               onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
-                        </div>
+            <div id="productTable">
+                <table data-th-replace="~{fragments/inventoryTable::productTable}"></table>
+            </div>
+            <!--endregion-->
 
-                        <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${tempProduct.id})}" th:object="${tempProduct}">
-                            <button class="btn btn-primary btn-sm mb-3" th:disabled="${tempProduct.inv == 0}">Add to order</button>
-                        </form>
-                        <!--                TODO: DISABLE THIS BUTTON IF tempProduct.inv == 0-->
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <!--    SERVICES-->
+            <!--region SERVICE-->
             <h2>Services</h2>
-            <form th:action="@{/inventory}">
-                Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50" th:value="${serviceKeyword}" />
-                &nbsp;
-                <input type="submit" value="Search" />
-                &nbsp;
-                <input type="submit" id="btnClearService" value="Clear"/>
-            </form>
+
+            Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50" th:value="${serviceKeyword}" />
+            <button onclick="">Search</button>
+            <button onclick="clearKeyword('service')">Clear</button>
+
             <br><br>
             <a th:href="@{/addService}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Service</a>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Duration</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="service : ${serviceList}" >
-                    <td th:text="${service.name}">1</td>
-                    <td th:text="${service.price}">1</td>
-                    <td th:text="${service.duration}">1</td>
-                    <td>
-                        <div sec:authorize="hasAuthority('ADMIN')">
-                            <a th:href="@{/updateService(serviceId=${service.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
-                            <a th:href="@{/deleteService(serviceId=${service.id})}" class="btn btn-danger btn-sm mb-3"
-                               onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
-                        </div>
-                        <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${service.id})}">
-                            <button class="btn btn-primary btn-sm mb-3">Add to order</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
+            <div id="serviceTable">
+                <table data-th-replace="~{fragments/inventoryTable::serviceTable}"></table>
+            </div>
+            <!--endregion-->
         </div>
 
-        <!-- Obtain CSRF token using Thymeleaf -->
+        <!--region Obtain CSRF token using Thymeleaf -->
         <script th:inline="javascript">
             /*<![CDATA[*/
             let _csrf_token = /*[[${_csrf.token}]]*/ '';
@@ -157,28 +68,30 @@
             let requestData = {};
             requestData[_csrf_param_name] = _csrf_token; // Adds the token
         </script>
+        <!--endregion-->
+
         <script>
-            document.getElementById("btnClearPart").addEventListener("click", function (e) {
-                $("#partkeyword").val("");
-            })
-            document.getElementById("btnClearProduct").addEventListener("click", function (e) {
-                $("#productkeyword").val("");
-            })
-            document.getElementById("btnClearService").addEventListener("click", function (e) {
-                $("#serviceKeyword").val("");
-            })
+            // document.getElementById("btnClearPart").addEventListener("click", function (e) {
+            //     $("#partKeyword").val("");
+            // })
+            // document.getElementById("btnClearProduct").addEventListener("click", function (e) {
+            //     $("#productKeyword").val("");
+            // })
+            // document.getElementById("btnClearService").addEventListener("click", function (e) {
+            //     $("#serviceKeyword").val("");
+            // })
 
-            function updateOutput() {
-
+            function clearKeyword(table) {
                 // send the ajax request
                 $.ajax({
                     type: 'POST',
-                    url: "http://localhost:8080/clearKeyword",
+                    url: `http://localhost:8080/clearKeyword/${table}`,
                     data: requestData
                 }).done(function (fragment) {
-                        console.log(fragment);
-                        $("#output").replaceWith(fragment);
+                    console.log(fragment);
+                    $(`#${table}Table`).replaceWith(fragment);
                 });
+                $(`#${table}Keyword`).val("");
                 console.log("ajax request sent");
             }
         </script>
