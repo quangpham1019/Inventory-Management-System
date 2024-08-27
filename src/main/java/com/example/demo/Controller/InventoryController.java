@@ -35,6 +35,8 @@ public class InventoryController {
         this.jcsServiceService = jcsServiceService;
     }
 
+    // TODO: update search result without reloading whole page
+    // guide @ https://stackoverflow.com/questions/70202040/update-content-in-thymeleaf-without-reloading-whole-page
 
     @GetMapping("")
     public String redirect() {
@@ -42,26 +44,24 @@ public class InventoryController {
     }
     @GetMapping("/inventory")
     public String listPartsAndProducts(
-            Model theModel,
+            Model model,
             @Param("partkeyword") String partkeyword,
             @Param("productkeyword") String productkeyword,
             @Param("serviceKeyword") String serviceKeyword){
 
         List<Part> partList = partService.listAllByKeyword(partkeyword);
-        theModel.addAttribute("parts",partList);
-        theModel.addAttribute("partkeyword",partkeyword);
+        model.addAttribute("parts",partList);
+        model.addAttribute("partkeyword",partkeyword);
 
-    //    theModel.addAttribute("products",productService.findAll());
         List<Product> productList = productService.listAll(productkeyword);
-        theModel.addAttribute("products", productList);
-        theModel.addAttribute("productkeyword",productkeyword);
+        model.addAttribute("products", productList);
+        model.addAttribute("productkeyword",productkeyword);
 
         List<Service> serviceList = jcsServiceService.listAllByKeyword(serviceKeyword);
-        theModel.addAttribute("serviceList", serviceList);
-        theModel.addAttribute("serviceKeyword", serviceKeyword);
+        model.addAttribute("serviceList", serviceList);
+        model.addAttribute("serviceKeyword", serviceKeyword);
 
-        theModel.addAttribute("disabled", true);
-        System.out.println(serviceList);
+        model.addAttribute("disabled", true);
         return "menu pages/inventory";
     }
 

@@ -17,6 +17,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// TODO: separate UserController into CustomerController, SalesController, ReportController
+
 @Controller
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -92,7 +94,7 @@ public class UserController {
             orderItem.setQuantity(1);
             order.getOrderItemSet().add(orderItem);
         } else {
-            // orderItem DOES exists in the orderItemSet
+            // orderItem DOES exist in the orderItemSet
             System.out.println("duplicate item in order");
             OrderItem orderItemInOrder = order.getOrderItemSet()
                     .stream()
@@ -152,35 +154,19 @@ public class UserController {
             @ModelAttribute("paymentMethod") String paymentMethod,
             RedirectAttributes redirectAttributes
     ) {
+
         if(order.getOrderItemSet().isEmpty()) {
             redirectAttributes.addFlashAttribute("itemError", "Please add item to order before saving.");
             return "redirect:/api/v1/user/sales";
         }
+
         currentCustomer = customerService.findById(customerId);
+
         order.setCustomer(currentCustomer);
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
 
-        Order myOrder = new Order();
-        myOrder.setPaymentMethod(order.getPaymentMethod());
-        myOrder.setCustomer(order.getCustomer());
-        order.getOrderItemSet().forEach(myOrder::addOrderItem);
-        myOrder.setTotalPrice(order.getTotalPrice());
-        orderService.save(myOrder);
-
-        // log user activity to report
-        Report report = new Report();
-        report.setOrder(myOrder);
-        report.setUsername(appUser.getUsername());
-        report.setCustomer(order.getCustomer());
-        report.setPrice(order.getTotalPrice());
-        reportService.save(report);
-
-        // reset order("session")
-        order.getOrderItemSet().clear();
-        order.setPaymentMethod(null);
-        order.setCustomer(null);
-        order.setTotalPrice(0);
-
+        SaveCurrentOrderAndReport();
+        ResetOrderSession();
         return "redirect:/";
     }
 
@@ -228,4 +214,25 @@ public class UserController {
         return "redirect:/api/v1/user/manageCustomers";
     }
 
+    void SaveCurrentOrderAndReport() {
+        Order myOrder = new Order();
+        myOrder.setPaymentMethod(order.getPaymentMethod());
+        myOrder.setCustomer(order.getCustomer());
+        order.getOrderItemSet().forEach(myOrder::addOrderItem);
+        myOrder.setTotalPrice(order.getTotalPrice());
+        orderService.save(myOrder);
+
+        Report report = new Report(
+                myOrder,
+                appUser.getUsername(),
+                order.getCustomer(),
+                order.getTotalPrice());
+        reportService.save(report);
+    }
+    void ResetOrderSession() {
+        order.getOrderItemSet().clear();
+        order.setPaymentMethod(null);
+        order.setCustomer(null);
+        order.setTotalPrice(0);
+    }
 }
