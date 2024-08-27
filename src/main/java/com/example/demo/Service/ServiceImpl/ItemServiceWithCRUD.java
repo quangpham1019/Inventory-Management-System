@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ItemServiceImpl implements ItemService {
+public class ItemServiceWithCRUD implements ItemService {
 
     private ItemRepository itemRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository) {
+    public ItemServiceWithCRUD(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
 

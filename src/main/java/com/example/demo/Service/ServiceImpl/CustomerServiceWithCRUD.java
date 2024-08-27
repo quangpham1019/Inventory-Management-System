@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceWithCRUD implements CustomerService {
 
     private CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceWithCRUD(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 

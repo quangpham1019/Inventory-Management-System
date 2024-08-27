@@ -15,10 +15,10 @@ import java.util.Optional;
  *
  */
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceWithCRUD implements ProductService {
     private ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceWithCRUD(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 

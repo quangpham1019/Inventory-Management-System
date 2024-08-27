@@ -13,10 +13,10 @@ import java.util.Optional;
  */
 
 @Service
-public class PartServiceImpl implements PartService {
+public class PartServiceWithCRUD implements PartService {
     private PartRepository partRepository;
 
-    public PartServiceImpl(PartRepository partRepository) {
+    public PartServiceWithCRUD(PartRepository partRepository) {
         this.partRepository = partRepository;
     }
 
