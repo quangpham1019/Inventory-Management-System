@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/skeleton :: layout('error', ~{::#error_access_denied})}">
 <head>
-    <div th:replace="~{fragments/footer :: footer}"></div>
     <title>Access Denied</title>
 </head>
 <body>
-<div th:replace="~{fragments/header_test :: header}"></div><div class="container text-center">
-    <h3>You are not authorized to view this content</h3>
-    <h4><a th:href="@{/static}">Click here to go back to homepage</a></h4>
-</div>
-
+    <div class="container text-center" id="error_access_denied">
+        <h3>You are not authorized to view this content</h3>
+        <h4><a th:href="@{/static}">Click here to go back to homepage</a></h4>
+    </div>
 </body>
-<div th:insert="~{fragments/footer :: footer}"></div>
-
 </html>

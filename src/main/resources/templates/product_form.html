@@ -41,7 +41,7 @@
             </thead>
 
             <form th:object="${product}">
-                <tr th:each="tempPart : ${availparts}">
+                <tr th:each="tempPart : ${availableParts}">
                     <td th:text="${tempPart.name}">1</td>
                     <td th:text="${tempPart.price}">1</td>
                     <td th:text="${tempPart.inv}">1</td>
@@ -62,7 +62,7 @@
             </thead>
             <tbody>
 
-            <tr th:each="tempPart : ${assparts}">
+            <tr th:each="tempPart : ${associatedParts}">
                 <td th:text="${tempPart.name}">1</td>
                 <td th:text="${tempPart.price}">1</td>
                 <td th:text="${tempPart.inv}">1</td>

@@ -1,9 +1,10 @@
-package com.example.demo.security;
+package com.example.demo.Security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AdminConfig {
-    @Value("123") String adminPassword;
+    @Value("jcsadmin")
+    public String adminPassword;
 }
