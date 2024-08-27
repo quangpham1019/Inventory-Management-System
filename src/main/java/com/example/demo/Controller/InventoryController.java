@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -33,14 +34,6 @@ public class InventoryController {
         this.jcsServiceService = jcsServiceService;
     }
 
-    // TODO: update search result without reloading whole page
-    // guide @ https://stackoverflow.com/questions/70202040/update-content-in-thymeleaf-without-reloading-whole-page
-    @PostMapping("/clearKeyword")
-    public String clearKeyword(Model model){
-        return "fragments/tableFragments :: anotherTable";
-    }
-
-
     @GetMapping("")
     public String redirect() {
         return "redirect:/inventory";
@@ -48,17 +41,17 @@ public class InventoryController {
     @GetMapping("/inventory")
     public String listPartsAndProducts(
             Model model,
-            @Param("partkeyword") String partkeyword,
-            @Param("productkeyword") String productkeyword,
+            @Param("partKeyword") String partKeyword,
+            @Param("productKeyword") String productKeyword,
             @Param("serviceKeyword") String serviceKeyword){
 
-        List<Part> partList = partService.listAllByKeyword(partkeyword);
+        List<Part> partList = partService.listAllByKeyword(partKeyword);
         model.addAttribute("parts",partList);
-        model.addAttribute("partkeyword",partkeyword);
+        model.addAttribute("partKeyword",partKeyword);
 
-        List<Product> productList = productService.listAll(productkeyword);
+        List<Product> productList = productService.listAll(productKeyword);
         model.addAttribute("products", productList);
-        model.addAttribute("productkeyword",productkeyword);
+        model.addAttribute("productKeyword",productKeyword);
 
         List<Service> serviceList = jcsServiceService.listAllByKeyword(serviceKeyword);
         model.addAttribute("serviceList", serviceList);
@@ -105,5 +98,27 @@ public class InventoryController {
     public String deleteService(@RequestParam int serviceId) {
         jcsServiceService.deleteById(serviceId);
         return "redirect:/";
+    }
+
+    @PostMapping("/clearKeyword/{table}")
+    public String clearPartKeyword(Model model,
+                                   @PathVariable String table) {
+
+        String fragment = "";
+        switch (table) {
+            case "part":
+                model.addAttribute("parts", partService.findAll());
+                fragment = "fragments/inventoryTable :: partTable";
+                break;
+            case "product":
+                model.addAttribute("products", productService.listAll(""));
+                fragment = "fragments/inventoryTable :: productTable";
+                break;
+            case "service":
+                model.addAttribute("serviceList", jcsServiceService.listAllByKeyword(""));
+                fragment = "fragments/inventoryTable :: serviceTable";
+                break;
+        }
+        return fragment;
     }
 }

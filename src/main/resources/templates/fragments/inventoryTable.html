@@ -1,0 +1,93 @@
+<div xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <table data-th-fragment="partTable"
+           class="table table-bordered table-striped" xmlns:sec="http://www.w3.org/1999/xhtml">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Min Inventory</th>
+            <th>Max Inventory</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempPart : ${parts}">
+            <td th:text="${tempPart.name}">1</td>
+            <td th:text="${tempPart.price}">1</td>
+            <td th:text="${tempPart.inv}">1</td>
+            <td th:text="${tempPart.minInv}">1</td>
+            <td th:text="${tempPart.maxInv}">1</td>
+            <td><a th:href="@{/showPartFormForUpdate(partID=${tempPart.id})}"
+                   class="btn btn-primary btn-sm mb-3">Update</a>
+                <a th:href="@{/deletepart(partID=${tempPart.id})}" class="btn btn-danger btn-sm mb-3"
+                   onclick="if(!(confirm('Are you sure you want to delete this part?')))return false">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table th:fragment="productTable"
+           class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempProduct : ${products}">
+            <td th:text="${tempProduct.name}">1</td>
+            <td th:text="${tempProduct.price}">1</td>
+            <td th:text="${tempProduct.inv}">1</td>
+            <td>
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/showProductFormForUpdate(productID=${tempProduct.id})}"
+                       class="btn btn-primary btn-sm mb-3">Update</a>
+                    <a th:href="@{/deleteproduct(productID=${tempProduct.id})}" class="btn btn-danger btn-sm mb-3"
+                       onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
+                </div>
+
+                <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${tempProduct.id})}"
+                      th:object="${tempProduct}">
+                    <button class="btn btn-primary btn-sm mb-3" th:disabled="${tempProduct.inv == 0}">Add to order
+                    </button>
+                </form>
+                <!--                TODO: DISABLE THIS BUTTON IF tempProduct.inv == 0-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table th:fragment="serviceTable"
+           class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="service : ${serviceList}" >
+            <td th:text="${service.name}">1</td>
+            <td th:text="${service.price}">1</td>
+            <td th:text="${service.duration}">1</td>
+            <td>
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/updateService(serviceId=${service.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
+                    <a th:href="@{/deleteService(serviceId=${service.id})}" class="btn btn-danger btn-sm mb-3"
+                       onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
+                </div>
+                <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${service.id})}">
+                    <button class="btn btn-primary btn-sm mb-3">Add to order</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
