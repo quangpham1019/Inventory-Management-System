@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
-public class JcsServiceServiceImpl implements JcsServiceService {
+public class JcsServiceServiceWithCRUD implements JcsServiceService {
 
     private ServiceRepository serviceRepository;
 
-    public JcsServiceServiceImpl(ServiceRepository serviceRepository) {
+    public JcsServiceServiceWithCRUD(ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
     }
 

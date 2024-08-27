@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReportServiceImpl implements ReportService {
+public class ReportServiceWithCRUD implements ReportService {
     private ReportRepository reportRepository;
 
-    public ReportServiceImpl(ReportRepository reportRepository) {
+    public ReportServiceWithCRUD(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }
 
