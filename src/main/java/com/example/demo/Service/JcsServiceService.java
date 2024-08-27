@@ -1,0 +1,15 @@
+package com.example.demo.Service;
+
+import com.example.demo.Domain.Service;
+
+import java.util.List;
+
+public interface JcsServiceService {
+
+    Service findById(int serviceId);
+    List<Service> listAllByKeyword(String keyword);
+    void save(Service service);
+    void saveAll(List<Service> serviceList);
+    void deleteById(int serviceId);
+    boolean hasService();
+}

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/skeleton :: layout('error', ~{::#error})}">
 <head>
     <title>Page Not Found</title>
 </head>
 <body>
-<div class="container text-center">
-    <h3>This page does not exists...</h3>
-    <h4><a th:href="@{/static}">Click here to go back to homepage</a></h4>
-</div>
-
+    <div class="container text-center" id="error">
+        <h3>This page does not exists...</h3>
+        <h4><a th:href="@{/static}">Click here to go back to homepage</a></h4>
+    </div>
 </body>
 </html>
