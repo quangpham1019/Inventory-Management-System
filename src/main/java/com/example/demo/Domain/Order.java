@@ -45,25 +45,9 @@ public class Order {
 
 
     public void addOrderItem(OrderItem orderItem) {
-
         if (orderItem != null) {
             orderItemSet.add(orderItem);
-            System.out.println(orderItem + " -- being added to order");
             orderItem.setOrder(this);
         }
     }
-
-//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private Set<OrderItem> orderItemSet = new HashSet<>();
-//
-//    public void add(OrderItem orderItem) {
-//
-//        if (orderItem != null) {
-//            orderItemSet.add(orderItem);
-//            System.out.println("Adding order item to order");
-//            orderItem.setOrder(this);
-//            System.out.println("Setting order for order item");
-//        }
-//    }
 }

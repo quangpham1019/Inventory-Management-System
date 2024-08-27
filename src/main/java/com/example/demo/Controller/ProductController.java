@@ -40,7 +40,7 @@ public class ProductController {
         model.addAttribute("product", curProduct);
         model.addAttribute("parts", partService.findAll());
 
-        FilterAvailableParts(model, curProduct);
+        filterAvailableParts(model, curProduct);
 
         return "product_form";
     }
@@ -51,7 +51,7 @@ public class ProductController {
 
         if(bindingResult.hasErrors()){
 
-            FilterAvailableParts(model, product);
+            filterAvailableParts(model, product);
             model.addAttribute("parts", partService.findAll());
 
             return "product_form";
@@ -83,13 +83,13 @@ public class ProductController {
         model.addAttribute("product", curProduct);
         model.addAttribute("parts", partService.findAll());
 
-        FilterAvailableParts(model, curProduct);
+        filterAvailableParts(model, curProduct);
 
         return "product_form";
     }
 
     @GetMapping("/deleteproduct")
-    public String deleteProduct(@RequestParam("productID") int productId, Model model) {
+    public String deleteProduct(@RequestParam("productID") int productId) {
 
         Product deletingProduct = productService.findById(productId);
         if (order.getOrderItemSet()
@@ -126,7 +126,7 @@ public class ProductController {
         partService.save(curPart);
 
         model.addAttribute("product", curProduct);
-        FilterAvailableParts(model, curProduct);
+        filterAvailableParts(model, curProduct);
 
         return "product_form";
     }
@@ -142,12 +142,12 @@ public class ProductController {
         partService.save(curPart);
 
         model.addAttribute("product", curProduct);
-        FilterAvailableParts(model, curProduct);
+        filterAvailableParts(model, curProduct);
 
         return "product_form";
     }
 
-    void FilterAvailableParts(Model model, Product product) {
+    public void filterAvailableParts(Model model, Product product) {
         List<Part> availableParts = new ArrayList<>();
 
         for(Part p: partService.findAll()){
