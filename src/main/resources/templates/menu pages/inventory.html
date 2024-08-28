@@ -16,8 +16,9 @@
                 <h2>Parts</h2>
 
                 Filter: <input type="text" name="partKeyword" id="partKeyword" size="50" th:value="${partKeyword}"/>
-                <button onclick="">Search</button>
-                <button onclick="clearKeyword('part')">Clear</button>
+                <!--<button th:onclick="'clearKeyword('+${partKeyword}+')'">Search</button>-->
+                <button onclick="clearKeyword('part', true)">Search</button>
+                <button onclick="clearKeyword('part', false)">Clear</button>
 
                 <br><br>
                 <a th:href="@{/showFormAddInPart}" class="btn btn-primary btn-sm mb-3">Add Inhouse Part</a>
@@ -81,17 +82,28 @@
             //     $("#serviceKeyword").val("");
             // })
 
-            function clearKeyword(table) {
+            function clearKeyword(table, hasKeyword) {
+                let keywordInput = $(`#${table}Keyword`);
+                let keyword;
+
+                if (hasKeyword) {
+                    keyword = keywordInput.val();
+                } else {
+                    keywordInput.val("");
+                    keyword = "CLEAR_KEYWORD";
+                }
+
                 // send the ajax request
                 $.ajax({
                     type: 'POST',
-                    url: `http://localhost:8080/clearKeyword/${table}`,
+                    url: `http://localhost:8080/findByKeyword/${table}/${keyword}`,
                     data: requestData
                 }).done(function (fragment) {
                     console.log(fragment);
-                    $(`#${table}Table`).replaceWith(fragment);
+                    console.log(`#${table}Table`);
+                    $(`#${table}Table`).find("table").replaceWith(fragment);
                 });
-                $(`#${table}Keyword`).val("");
+
                 console.log("ajax request sent");
             }
         </script>
