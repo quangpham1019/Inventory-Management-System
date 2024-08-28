@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @Controller
@@ -40,24 +41,13 @@ public class InventoryController {
     }
     @GetMapping("/inventory")
     public String listPartsAndProducts(
-            Model model,
-            @Param("partKeyword") String partKeyword,
-            @Param("productKeyword") String productKeyword,
-            @Param("serviceKeyword") String serviceKeyword){
+            Model model) {
 
-        List<Part> partList = partService.listAllByKeyword(partKeyword);
-        model.addAttribute("parts",partList);
-        model.addAttribute("partKeyword",partKeyword);
-
-        List<Product> productList = productService.listAll(productKeyword);
-        model.addAttribute("products", productList);
-        model.addAttribute("productKeyword",productKeyword);
-
-        List<Service> serviceList = jcsServiceService.listAllByKeyword(serviceKeyword);
-        model.addAttribute("serviceList", serviceList);
-        model.addAttribute("serviceKeyword", serviceKeyword);
-
+        model.addAttribute("parts", partService.listAllByKeyword(""));
+        model.addAttribute("products", productService.listAll(""));
+        model.addAttribute("serviceList", jcsServiceService.listAllByKeyword(""));
         model.addAttribute("disabled", true);
+
         return "menu pages/inventory";
     }
 
@@ -100,22 +90,25 @@ public class InventoryController {
         return "redirect:/";
     }
 
-    @PostMapping("/clearKeyword/{table}")
+    @PostMapping("/findByKeyword/{table}/{keyword}")
     public String clearPartKeyword(Model model,
-                                   @PathVariable String table) {
+                                   @PathVariable String table,
+                                   @PathVariable String keyword) {
 
         String fragment = "";
+        keyword = keyword.equals("CLEAR_KEYWORD") ? "" : keyword;
+
         switch (table) {
             case "part":
-                model.addAttribute("parts", partService.findAll());
+                model.addAttribute("parts", partService.listAllByKeyword(keyword));
                 fragment = "fragments/inventoryTable :: partTable";
                 break;
             case "product":
-                model.addAttribute("products", productService.listAll(""));
+                model.addAttribute("products", productService.listAll(keyword));
                 fragment = "fragments/inventoryTable :: productTable";
                 break;
             case "service":
-                model.addAttribute("serviceList", jcsServiceService.listAllByKeyword(""));
+                model.addAttribute("serviceList", jcsServiceService.listAllByKeyword(keyword));
                 fragment = "fragments/inventoryTable :: serviceTable";
                 break;
         }
