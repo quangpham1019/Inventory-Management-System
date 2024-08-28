@@ -15,7 +15,7 @@
             <div sec:authorize="hasAuthority('ADMIN')">
                 <h2>Parts</h2>
 
-                Filter: <input type="text" name="partKeyword" id="partKeyword" size="50" th:value="${partKeyword}"/>
+                Filter: <input type="text" name="partKeyword" id="partKeyword" size="50"/>
                 <!--<button th:onclick="'clearKeyword('+${partKeyword}+')'">Search</button>-->
                 <button onclick="clearKeyword('part', true)">Search</button>
                 <button onclick="clearKeyword('part', false)">Clear</button>
@@ -32,9 +32,9 @@
             <!--region PRODUCT-->
             <h2>Products</h2>
 
-            Filter: <input type="text" name="productKeyword" id="productKeyword" size="50" th:value="${productKeyword}" />
-            <button onclick="">Search</button>
-            <button onclick="clearKeyword('product')">Clear</button>
+            Filter: <input type="text" name="productKeyword" id="productKeyword" size="50" />
+            <button onclick="clearKeyword('product', true)">Search</button>
+            <button onclick="clearKeyword('product', false)">Clear</button>
 
             <br><br>
             <a th:href="@{/showFormAddProduct}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Product</a>
@@ -46,9 +46,9 @@
             <!--region SERVICE-->
             <h2>Services</h2>
 
-            Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50" th:value="${serviceKeyword}" />
-            <button onclick="">Search</button>
-            <button onclick="clearKeyword('service')">Clear</button>
+            Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50"/>
+            <button onclick="clearKeyword('service', true)">Search</button>
+            <button onclick="clearKeyword('service', false)">Clear</button>
 
             <br><br>
             <a th:href="@{/addService}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Service</a>
@@ -99,12 +99,11 @@
                     url: `http://localhost:8080/findByKeyword/${table}/${keyword}`,
                     data: requestData
                 }).done(function (fragment) {
-                    console.log(fragment);
-                    console.log(`#${table}Table`);
+                    // console.log(fragment);
+                    // console.log(`#${table}Table`);
                     $(`#${table}Table`).find("table").replaceWith(fragment);
                 });
-
-                console.log("ajax request sent");
+                // console.log("ajax request sent");
             }
         </script>
     </div>
