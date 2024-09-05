@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      data-th-fragment="layout(activeMenu, content)"
+      data-th-fragment="layout(title, activeMenu, content)"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <div th:replace="~{fragments/head :: head}"></div>
+    <title th:text="${title}"></title>
 </head>
 <body>
     <div data-th-replace="~{fragments/menu::top_menu(${activeMenu})}"></div>
