@@ -3,8 +3,10 @@ package com.example.demo.Controller;
 import com.example.demo.Domain.Order;
 import com.example.demo.Domain.Part;
 import com.example.demo.Domain.Product;
+import com.example.demo.Service.Interface.ItemService;
 import com.example.demo.Service.Interface.PartService;
 import com.example.demo.Service.Interface.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,18 +24,16 @@ import java.util.List;
  *
  */
 @Controller
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private Order order;
+
+    private final Order order;
+    private final PartService partService;
+    private final ProductService productService;
+    private final ItemService itemService;
 
     private static Product curProduct;
-    private PartService partService;
-    private ProductService productService;
 
-    public ProductController(PartService partService, ProductService productService) {
-        this.partService = partService;
-        this.productService = productService;
-    }
     @GetMapping("/showFormAddProduct")
     public String showFormAddPart(Model model) {
         curProduct = new Product();
@@ -92,10 +92,7 @@ public class ProductController {
     public String deleteProduct(@RequestParam("productID") int productId) {
 
         Product deletingProduct = productService.findById((long) productId);
-        if (order.getOrderItemSet()
-                .stream()
-                .anyMatch(orderItem -> orderItem.getItem().equals(deletingProduct))) {
-
+        if (itemService.itemExistsInOrder((long) productId, order)) {
             return "error/error_item_in_order";
         }
 

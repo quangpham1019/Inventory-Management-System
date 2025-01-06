@@ -1,8 +1,10 @@
 package com.example.demo.UnitTest;
 
 import com.example.demo.Controller.ProductController;
+import com.example.demo.Domain.Order;
 import com.example.demo.Domain.Part;
 import com.example.demo.Domain.Product;
+import com.example.demo.Service.Interface.ItemService;
 import com.example.demo.Service.Interface.PartService;
 import com.example.demo.Service.Interface.ProductService;
 import org.junit.jupiter.api.Test;
@@ -22,9 +24,12 @@ public class ControllerTest {
     public void filterAvailablePartsTest() {
 
         // Arrange
+        Order order = Mockito.mock(Order.class);
         PartService partService = Mockito.mock(PartService.class);
         ProductService productService = Mockito.mock(ProductService.class);
-        ProductController productController = new ProductController(partService, productService);
+        ItemService itemService = Mockito.mock(ItemService.class);
+
+        ProductController productController = new ProductController(order, partService, productService, itemService);
         Model model = Mockito.mock(Model.class);
         Product product = Mockito.mock(Product.class);
 

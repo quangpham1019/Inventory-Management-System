@@ -31,6 +31,12 @@ public class PartServiceUsingCRUDRepository extends CommonServiceUsingCRUDReposi
         return (List<Part>) partRepository.findAll();
     }
 
+    @Override
+    public boolean partInUse(long id) {
+        Part part = findById(id);
+        return !part.getProducts().isEmpty();
+    }
+
     @Service
     public static class ReportServiceUsingCRUDRepository extends CommonServiceUsingCRUDRepository<Report, Long> implements ReportService {
         private final ReportRepository reportRepository;

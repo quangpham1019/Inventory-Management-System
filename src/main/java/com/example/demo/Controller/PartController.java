@@ -1,7 +1,10 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.*;
+import com.example.demo.Service.Implementation.UsingCRUDRepository.ItemServiceUsingCRUDRepository;
+import com.example.demo.Service.Interface.ItemService;
 import com.example.demo.Service.Interface.PartService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,16 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor
 public class PartController {
 
     private final PartService partService;
     private final Order order;
-
-    @Autowired
-    public PartController(PartService partService, Order order) {
-        this.partService = partService;
-        this.order = order;
-    }
+    private final ItemService itemService;
 
     @GetMapping("/showPartFormForUpdate")
     public String showPartFormForUpdate(@RequestParam("partID") int partId, Model model){
@@ -43,15 +42,12 @@ public class PartController {
     @GetMapping("/deletepart")
     public String deletePart(@Valid @RequestParam("partID") int partId){
 
-        Part part = partService.findById((long) partId);
-        if (order.getOrderItemSet()
-                .stream()
-                .anyMatch(orderItem -> orderItem.getItem().equals(part))) {
+
+        if (itemService.itemExistsInOrder((long) partId, order)) {
             return "error/error_item_in_order";
         }
-        if(!part.getProducts().isEmpty()){
+        if(partService.partInUse((long) partId)){
             return "error/error_part_in_use";
-
         }
 
         partService.deleteById((long) partId);

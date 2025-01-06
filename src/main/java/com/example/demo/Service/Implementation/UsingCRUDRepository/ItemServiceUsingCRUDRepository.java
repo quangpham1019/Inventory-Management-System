@@ -1,6 +1,8 @@
 package com.example.demo.Service.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Item;
+import com.example.demo.Domain.Order;
+import com.example.demo.Domain.Part;
 import com.example.demo.Repository.CRUDRepository.ItemRepository;
 import com.example.demo.Service.Interface.ItemService;
 import org.springframework.stereotype.Service;
@@ -13,5 +15,14 @@ public class ItemServiceUsingCRUDRepository extends CommonServiceUsingCRUDReposi
     public ItemServiceUsingCRUDRepository(ItemRepository itemRepository) {
         super(itemRepository);
         this.itemRepository = itemRepository;
+    }
+
+    @Override
+    public boolean itemExistsInOrder(long id, Order order) {
+        Item item = findById(id);
+
+        return order.getOrderItemSet()
+                .stream()
+                .anyMatch(orderItem -> orderItem.getItem().equals(item));
     }
 }
