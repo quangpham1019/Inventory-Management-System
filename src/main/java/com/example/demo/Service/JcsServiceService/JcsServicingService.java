@@ -1,15 +1,15 @@
 package com.example.demo.Service.JcsServiceService;
 
-import com.example.demo.Domain.Service;
+import com.example.demo.Domain.JcsServicing;
 
 import java.util.List;
 
 public interface JcsServicingService {
 
-    Service findById(int serviceId);
-    List<Service> listAllByKeyword(String keyword);
-    void save(Service service);
-    void saveAll(List<Service> serviceList);
+    JcsServicing findById(int serviceId);
+    List<JcsServicing> listAllByKeyword(String keyword);
+    void save(JcsServicing jcsServicing);
+    void saveAll(List<JcsServicing> jcsServicingList);
     void deleteById(int serviceId);
     boolean hasService();
 }

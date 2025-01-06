@@ -45,14 +45,14 @@
             <!--region SERVICE-->
             <h2>Services</h2>
 
-            Filter: <input type="text" name="serviceKeyword" id="serviceKeyword" size="50"/>
-            <button onclick="clearKeyword('service', true)">Search</button>
-            <button onclick="clearKeyword('service', false)">Clear</button>
+            Filter: <input type="text" name="jcsServicingKeyword" id="jcsServicingKeyword" size="50"/>
+            <button onclick="clearKeyword('jcsServicing', true)">Search</button>
+            <button onclick="clearKeyword('jcsServicing', false)">Clear</button>
 
             <br><br>
-            <a th:href="@{/addService}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Service</a>
-            <div id="serviceTable">
-                <table data-th-replace="~{fragments/inventoryTable::serviceTable}"></table>
+            <a th:href="@{/addJcsServicing}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('ADMIN')">Add Service</a>
+            <div id="jcsServicingTable">
+                <table data-th-replace="~{fragments/inventoryTable::jcsServicingTable}"></table>
             </div>
             <!--endregion-->
         </div>
@@ -78,7 +78,7 @@
             //     $("#productKeyword").val("");
             // })
             // document.getElementById("btnClearService").addEventListener("click", function (e) {
-            //     $("#serviceKeyword").val("");
+            //     $("#jcsServicingKeyword").val("");
             // })
 
             function clearKeyword(table, hasKeyword) {

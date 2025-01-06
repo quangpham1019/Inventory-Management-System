@@ -12,13 +12,13 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "services")
-public class Service extends Item {
+public class JcsServicing extends Item {
 
     @CreationTimestamp
     private Date createdDate;
     private int duration;
-    public Service() {}
-    public Service(String name, double price, int duration) {
+    public JcsServicing() {}
+    public JcsServicing(String name, double price, int duration) {
         super(name, price);
         this.duration = duration;
     }

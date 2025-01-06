@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
+import com.example.demo.Domain.JcsServicing;
 import com.example.demo.Domain.Order;
 import com.example.demo.Security.AppUser;
-import com.example.demo.Domain.Service;
 import com.example.demo.Service.JcsServiceService.JcsServicingService;
 import com.example.demo.Service.PartService.PartService;
 import com.example.demo.Service.ProductService.ProductService;
@@ -41,51 +41,51 @@ public class InventoryController {
 
         model.addAttribute("parts", partService.listAllByKeyword(""));
         model.addAttribute("products", productService.listAllByKeyword(""));
-        model.addAttribute("serviceList", jcsServicingService.listAllByKeyword(""));
+        model.addAttribute("jcsServicingList", jcsServicingService.listAllByKeyword(""));
         model.addAttribute("disabled", true);
 
         return "menu pages/inventory";
     }
 
-    @GetMapping("/addService")
+    @GetMapping("/addJcsServicing")
     public String getAddServiceForm(Model model) {
-        model.addAttribute("service", new Service());
+        model.addAttribute("jcsServicing", new JcsServicing());
         model.addAttribute("action", "add");
         return "form/service_form";
     }
 
-    @PostMapping("/processService")
-    public String processNewService(@ModelAttribute(name = "service") Service newService) {
-        jcsServicingService.save(newService);
+    @PostMapping("/processJcsServicing")
+    public String processNewService(@ModelAttribute(name = "jcsServicing") JcsServicing newJcsServicing) {
+        jcsServicingService.save(newJcsServicing);
         return "redirect:/";
     }
 
-    @GetMapping("/updateService")
+    @GetMapping("/updateJcsServicing")
     public String getUpdateService(@RequestParam int serviceId, Model model) {
 
-        Service updateService = jcsServicingService.findById(serviceId);
-        model.addAttribute("service", updateService);
+        JcsServicing updateJcsServicing = jcsServicingService.findById(serviceId);
+        model.addAttribute("jcsServicing", updateJcsServicing);
         model.addAttribute("action", "update");
         return "form/service_form";
     }
-    @PostMapping("/updateService")
-    public String updateServiceProcess(@RequestParam int serviceId,
-                                    @ModelAttribute("service") Service updateService) {
+    @PostMapping("/updateJcsServicing")
+    public String updateJcsServicingProcess(@RequestParam int serviceId,
+                                    @ModelAttribute("jcsServicing") JcsServicing updateJcsServicing) {
 
-        Service service = jcsServicingService.findById(serviceId);
-        service.setDuration(updateService.getDuration());
-        service.setName(updateService.getName());
-        service.setPrice(updateService.getPrice());
-        jcsServicingService.save(service);
+        JcsServicing jcsServicing = jcsServicingService.findById(serviceId);
+        jcsServicing.setDuration(updateJcsServicing.getDuration());
+        jcsServicing.setName(updateJcsServicing.getName());
+        jcsServicing.setPrice(updateJcsServicing.getPrice());
+        jcsServicingService.save(jcsServicing);
         return "redirect:/";
     }
 
-    @GetMapping("/deleteService")
-    public String deleteService(@RequestParam int serviceId) {
-        Service service = jcsServicingService.findById(serviceId);
+    @GetMapping("/deleteJcsServicing")
+    public String deleteJcsServicing(@RequestParam int serviceId) {
+        JcsServicing jcsServicing = jcsServicingService.findById(serviceId);
         if (order.getOrderItemSet()
                 .stream()
-                .anyMatch(orderItem -> orderItem.getItem().equals(service))) {
+                .anyMatch(orderItem -> orderItem.getItem().equals(jcsServicing))) {
             return "error/error_item_in_order";
         }
         jcsServicingService.deleteById(serviceId);
@@ -93,9 +93,9 @@ public class InventoryController {
     }
 
     @PostMapping("/findByKeyword/{table}/{keyword}")
-    public String clearPartKeyword(Model model,
-                                   @PathVariable String table,
-                                   @PathVariable String keyword) {
+    public String findByKeyword(Model model,
+                                @PathVariable String table,
+                                @PathVariable String keyword) {
 
         String fragment = "";
         keyword = keyword.equals("CLEAR_KEYWORD") ? "" : keyword;
@@ -109,9 +109,9 @@ public class InventoryController {
                 model.addAttribute("products", productService.listAllByKeyword(keyword));
                 fragment = "fragments/inventoryTable :: productTable";
                 break;
-            case "service":
-                model.addAttribute("serviceList", jcsServicingService.listAllByKeyword(keyword));
-                fragment = "fragments/inventoryTable :: serviceTable";
+            case "jcsServicing":
+                model.addAttribute("jcsServicingList", jcsServicingService.listAllByKeyword(keyword));
+                fragment = "fragments/inventoryTable :: jcsServicingTable";
                 break;
         }
         return fragment;

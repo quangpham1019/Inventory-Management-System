@@ -30,7 +30,7 @@ public class OrderEnufsValidator implements ConstraintValidator<ValidOrderEnufs,
         ProductService productService = myContext.getBean(ProductServiceWithCRUD.class);
         for (OrderItem orderItem : order.getOrderItemSet()) {
             Item item = orderItem.getItem();
-            if (item.getClass() != Service.class) {
+            if (item.getClass() != JcsServicing.class) {
                 Product product = productService.findById((long) item.getId());
                 System.out.println(product.getName());
             }
