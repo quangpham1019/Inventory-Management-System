@@ -96,7 +96,7 @@ public class ProductController {
                 .stream()
                 .anyMatch(orderItem -> orderItem.getItem().equals(deletingProduct))) {
 
-            return "error/error_product_in_order";
+            return "error/error_item_in_order";
         }
 
         for (Part part : deletingProduct.getParts()){

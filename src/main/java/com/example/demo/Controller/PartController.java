@@ -1,8 +1,6 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Domain.InhousePart;
-import com.example.demo.Domain.OutsourcedPart;
-import com.example.demo.Domain.Part;
+import com.example.demo.Domain.*;
 import com.example.demo.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +14,12 @@ import jakarta.validation.Valid;
 public class PartController {
 
     private PartService partService;
+    private Order order;
 
     @Autowired
-    public PartController(PartService partService) {
+    public PartController(PartService partService, Order order) {
         this.partService = partService;
+        this.order = order;
     }
 
     @GetMapping("/showPartFormForUpdate")
@@ -44,13 +44,18 @@ public class PartController {
     public String deletePart(@Valid @RequestParam("partID") int partId){
 
         Part part = partService.findById(partId);
+        if (order.getOrderItemSet()
+                .stream()
+                .anyMatch(orderItem -> orderItem.getItem().equals(part))) {
+            return "error/error_item_in_order";
+        }
+        if(!part.getProducts().isEmpty()){
+            return "error/error_not_enuf_parts";
 
-        if(part.getProducts().isEmpty()){
-            partService.deleteById(partId);
-            return "confirmation/confirmationdeletepart";
         }
 
-        return "error/error_not_enuf_parts";
+        partService.deleteById(partId);
+        return "confirmation/confirmationdeletepart";
     }
 
     // inhouse

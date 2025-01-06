@@ -20,6 +20,7 @@ public class OrderServiceWithCRUD extends CommonServiceWithCRUD<Order, Long> imp
 
     @Override
     public List<Order> findAllBy(String filterCriteria, String orderKeyword) {
+        if (filterCriteria == null || filterCriteria.isEmpty()) { filterCriteria = "";}
         return switch (filterCriteria) {
             case "paymentMethod" -> orderRepository.findAllByPaymentMethod(PaymentMethod.valueOf(orderKeyword));
             case "customer" -> orderRepository.findAllByCustomer_LastName(orderKeyword);
