@@ -100,20 +100,21 @@ public class InventoryController {
         String fragment = "";
         keyword = keyword.equals("CLEAR_KEYWORD") ? "" : keyword;
 
-        switch (table) {
-            case "part":
+        fragment = switch (table) {
+            case "part" -> {
                 model.addAttribute("parts", partService.listAllByKeyword(keyword));
-                fragment = "fragments/inventoryTable :: partTable";
-                break;
-            case "product":
+                yield "fragments/inventoryTable :: partTable";
+            }
+            case "product" -> {
                 model.addAttribute("products", productService.listAllByKeyword(keyword));
-                fragment = "fragments/inventoryTable :: productTable";
-                break;
-            case "jcsServicing":
+                yield "fragments/inventoryTable :: productTable";
+            }
+            case "jcsServicing" -> {
                 model.addAttribute("jcsServicingList", jcsServicingService.listAllByKeyword(keyword));
-                fragment = "fragments/inventoryTable :: jcsServicingTable";
-                break;
-        }
+                yield "fragments/inventoryTable :: jcsServicingTable";
+            }
+            default -> fragment;
+        };
         return fragment;
     }
 }
