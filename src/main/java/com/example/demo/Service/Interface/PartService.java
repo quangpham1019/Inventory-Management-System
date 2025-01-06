@@ -14,4 +14,5 @@ import java.util.List;
 public interface PartService extends CommonService<Part, Long> {
     List<Part> listAllByKeyword(String keyword);
     boolean partInUse(long id);
+    List<Part> findAllPartsNotIncludedInProduct(Product product);
 }
