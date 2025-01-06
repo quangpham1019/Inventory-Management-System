@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class InventoryController {
 
-    private Order order;
     private PartService partService;
     private ProductService productService;
     private JcsServicingService jcsServicingService;
@@ -24,17 +23,17 @@ public class InventoryController {
         return appUser;
     }
 
-    public InventoryController(PartService partService, ProductService productService, JcsServicingService jcsServicingService, Order order){
+    public InventoryController(PartService partService, ProductService productService, JcsServicingService jcsServicingService){
         this.partService=partService;
         this.productService=productService;
         this.jcsServicingService = jcsServicingService;
-        this.order = order;
     }
 
     @GetMapping("")
     public String redirect() {
         return "redirect:/inventory";
     }
+
     @GetMapping("/inventory")
     public String listPartsAndProducts(
             Model model) {
@@ -45,51 +44,6 @@ public class InventoryController {
         model.addAttribute("disabled", true);
 
         return "menu pages/inventory";
-    }
-
-    @GetMapping("/addJcsServicing")
-    public String getAddServiceForm(Model model) {
-        model.addAttribute("jcsServicing", new JcsServicing());
-        model.addAttribute("action", "add");
-        return "form/service_form";
-    }
-
-    @PostMapping("/processJcsServicing")
-    public String processNewService(@ModelAttribute(name = "jcsServicing") JcsServicing newJcsServicing) {
-        jcsServicingService.save(newJcsServicing);
-        return "redirect:/";
-    }
-
-    @GetMapping("/updateJcsServicing")
-    public String getUpdateService(@RequestParam int serviceId, Model model) {
-
-        JcsServicing updateJcsServicing = jcsServicingService.findById(serviceId);
-        model.addAttribute("jcsServicing", updateJcsServicing);
-        model.addAttribute("action", "update");
-        return "form/service_form";
-    }
-    @PostMapping("/updateJcsServicing")
-    public String updateJcsServicingProcess(@RequestParam int serviceId,
-                                    @ModelAttribute("jcsServicing") JcsServicing updateJcsServicing) {
-
-        JcsServicing jcsServicing = jcsServicingService.findById(serviceId);
-        jcsServicing.setDuration(updateJcsServicing.getDuration());
-        jcsServicing.setName(updateJcsServicing.getName());
-        jcsServicing.setPrice(updateJcsServicing.getPrice());
-        jcsServicingService.save(jcsServicing);
-        return "redirect:/";
-    }
-
-    @GetMapping("/deleteJcsServicing")
-    public String deleteJcsServicing(@RequestParam int serviceId) {
-        JcsServicing jcsServicing = jcsServicingService.findById(serviceId);
-        if (order.getOrderItemSet()
-                .stream()
-                .anyMatch(orderItem -> orderItem.getItem().equals(jcsServicing))) {
-            return "error/error_item_in_order";
-        }
-        jcsServicingService.deleteById(serviceId);
-        return "redirect:/";
     }
 
     @PostMapping("/findByKeyword/{table}/{keyword}")

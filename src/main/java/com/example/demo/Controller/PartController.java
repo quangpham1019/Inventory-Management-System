@@ -13,8 +13,8 @@ import jakarta.validation.Valid;
 @Controller
 public class PartController {
 
-    private PartService partService;
-    private Order order;
+    private final PartService partService;
+    private final Order order;
 
     @Autowired
     public PartController(PartService partService, Order order) {

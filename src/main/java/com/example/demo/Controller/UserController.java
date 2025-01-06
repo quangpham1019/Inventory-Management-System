@@ -64,6 +64,7 @@ public class UserController {
 
         UserEntity user = userEntityRepository.findById(username).orElse(null);
         model.addAttribute("updateUser", user);
+        assert user != null;
         model.addAttribute("oldUsername", user.getUsername());
         model.addAttribute("action", "update");
         return "form/user_form";
