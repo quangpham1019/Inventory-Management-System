@@ -1,6 +1,6 @@
 package com.example.demo.Service.JcsServiceService;
 
-import com.example.demo.Domain.Service;
+import com.example.demo.Domain.JcsServicing;
 import com.example.demo.Repository.JcsServicingRepository;
 
 import java.util.List;
@@ -17,26 +17,26 @@ public class JcsServicingServiceWithCRUD implements JcsServicingService {
 
 
     @Override
-    public Service findById(int serviceId) {
-        Optional<Service> service = jcsServicingRepository.findById((long) serviceId);
+    public JcsServicing findById(int serviceId) {
+        Optional<JcsServicing> service = jcsServicingRepository.findById((long) serviceId);
         return service.orElseThrow(() -> new IllegalArgumentException("Could not find service with id: " + serviceId));
     }
 
     @Override
-    public List<Service> listAllByKeyword(String keyword) {
+    public List<JcsServicing> listAllByKeyword(String keyword) {
         if(keyword != null) {
             return jcsServicingRepository.search(keyword);
         }
-        return (List<Service>) jcsServicingRepository.findAll();
+        return (List<JcsServicing>) jcsServicingRepository.findAll();
     }
     @Override
-    public void save(Service service) {
-        jcsServicingRepository.save(service);
+    public void save(JcsServicing jcsServicing) {
+        jcsServicingRepository.save(jcsServicing);
     }
 
     @Override
-    public void saveAll(List<Service> serviceList) {
-        jcsServicingRepository.saveAll(serviceList);
+    public void saveAll(List<JcsServicing> jcsServicingList) {
+        jcsServicingRepository.saveAll(jcsServicingList);
     }
 
     @Override

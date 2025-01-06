@@ -80,11 +80,11 @@ public class BootStrapData implements CommandLineRunner {
         }
 
         if (!jcsServicingService.hasService()) {
-            Service service1 = new Service("Replace battery", 120.0, 2);
-            Service service2 = new Service("Upgrade RAM", 100.0, 2);
-            Service service3 = new Service("Upgrade hard drive", 80.0, 2);
-            Service service4 = new Service("Replace laptop screen", 150.0, 4);
-            jcsServicingService.saveAll(new ArrayList<>(Arrays.asList(service1, service2, service3, service4)));
+            JcsServicing jcsServicing1 = new JcsServicing("Replace battery", 120.0, 2);
+            JcsServicing jcsServicing2 = new JcsServicing("Upgrade RAM", 100.0, 2);
+            JcsServicing jcsServicing3 = new JcsServicing("Upgrade hard drive", 80.0, 2);
+            JcsServicing jcsServicing4 = new JcsServicing("Replace laptop screen", 150.0, 4);
+            jcsServicingService.saveAll(new ArrayList<>(Arrays.asList(jcsServicing1, jcsServicing2, jcsServicing3, jcsServicing4)));
         }
 
     }

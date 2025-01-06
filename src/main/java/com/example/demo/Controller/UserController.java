@@ -86,7 +86,7 @@ public class UserController {
         orderItem.setItem(currentItem);
         System.out.println("ADDING ITEM: " + currentItem.getName());
 
-        if (!currentItem.getClass().equals(Service.class)) {
+        if (!currentItem.getClass().equals(JcsServicing.class)) {
             Product product = productService.findById((long) itemId);
             product.setInv(product.getInv() - 1);
             productService.save(product);
@@ -117,7 +117,7 @@ public class UserController {
         int changeAmount = increaseQuantityInOrder? 1:-1;
 
         Item itemFromRepo = itemService.findById((long) itemId);
-        if (!itemFromRepo.getClass().equals(Service.class)) {
+        if (!itemFromRepo.getClass().equals(JcsServicing.class)) {
             Product product = productService.findById((long) itemId);
             if(product.getInv()==0 && increaseQuantityInOrder) {
                 redirectAttributes.addFlashAttribute("itemError", itemId);

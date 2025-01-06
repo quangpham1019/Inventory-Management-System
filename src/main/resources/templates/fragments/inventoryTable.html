@@ -61,7 +61,7 @@
         </tbody>
     </table>
 
-    <table th:fragment="serviceTable"
+    <table th:fragment="jcsServicingTable"
            class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -72,17 +72,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="service : ${serviceList}" >
-            <td th:text="${service.name}">1</td>
-            <td th:text="${service.price}">1</td>
-            <td th:text="${service.duration}">1</td>
+        <tr th:each="jcsServicing : ${jcsServicingList}" >
+            <td th:text="${jcsServicing.name}">1</td>
+            <td th:text="${jcsServicing.price}">1</td>
+            <td th:text="${jcsServicing.duration}">1</td>
             <td>
                 <div sec:authorize="hasAuthority('ADMIN')">
-                    <a th:href="@{/updateService(serviceId=${service.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
-                    <a th:href="@{/deleteService(serviceId=${service.id})}" class="btn btn-danger btn-sm mb-3"
+                    <a th:href="@{/updateJcsServicing(serviceId=${jcsServicing.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
+                    <a th:href="@{/deleteJcsServicing(serviceId=${jcsServicing.id})}" class="btn btn-danger btn-sm mb-3"
                        onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
                 </div>
-                <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${service.id})}">
+                <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${jcsServicing.id})}">
                     <button class="btn btn-primary btn-sm mb-3">Add to order</button>
                 </form>
             </td>
