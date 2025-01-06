@@ -71,4 +71,21 @@ public class ProductServiceUsingCRUDRepository extends CommonServiceUsingCRUDRep
         save(product);
         partService.save(part);
     }
+
+    @Override
+    public void adjustProductQuantity(Product updatingProduct) {
+        Product productInDb = findById(updatingProduct.getId());
+        int updatingProductInv = updatingProduct.getInv();
+        int productInDbInv = productInDb.getInv();
+
+        // increase associated parts count if updatingProductInv < productInDbInv
+        // decrease if updatingProductInv > productInDbInv
+        // add (productInDbInv - updatingProductInv) to associated parts count
+        int changeInAssociatedPartsCount = productInDbInv - updatingProductInv;
+        for (Part part : productInDb.getParts()) {
+            int prevPartInv = part.getInv();
+            part.setInv(prevPartInv + changeInAssociatedPartsCount);
+            partService.save(part);
+        }
+    }
 }

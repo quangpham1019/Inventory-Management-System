@@ -6,7 +6,7 @@
     <div id="product_form_content"
          class="container">
         <h1>Product Detail</h1>
-        <form action="#" th:action="@{/showFormAddProduct}" th:object="${product}" method="POST">
+        <form action="#" th:action="@{/processFormAddProduct}" th:object="${product}" method="POST">
             <!-- Add hidden form field to handle update -->
             <p><input type="hidden" th:field="*{id}"/></p>
 

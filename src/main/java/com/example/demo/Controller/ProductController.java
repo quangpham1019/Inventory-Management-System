@@ -44,7 +44,7 @@ public class ProductController {
         return "form/product_form";
     }
 
-    @PostMapping("/showFormAddProduct")
+    @PostMapping("/processFormAddProduct")
     public String submitForm(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
         model.addAttribute("product", product);
 
@@ -57,14 +57,7 @@ public class ProductController {
         }
 
         if(product.getId()!=0) {
-            Product oldProduct = productService.findById((long) product.getId());
-            if(product.getInv() - oldProduct.getInv()>0) {
-                for (Part p : oldProduct.getParts()) {
-                    int inv = p.getInv();
-                    p.setInv(inv - (product.getInv() - oldProduct.getInv()));
-                    partService.save(p);
-                }
-            }
+            productService.adjustProductQuantity(product);
         }
         else {
             product.setInv(0);
@@ -98,6 +91,9 @@ public class ProductController {
         return "confirmation/confirmationdeleteproduct";
     }
 
+    // TODO: use js to manipulate adding/removing associate parts on frontend
+    //      receive a list of associatedParts in backend
+    //      process the list and add associated parts accordingly
     @GetMapping("/associatepart")
     public String associatePart(@Valid @RequestParam("partID") int partId, Model model){
 
