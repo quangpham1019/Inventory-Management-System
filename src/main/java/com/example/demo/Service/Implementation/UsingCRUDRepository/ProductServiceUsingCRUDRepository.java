@@ -61,4 +61,14 @@ public class ProductServiceUsingCRUDRepository extends CommonServiceUsingCRUDRep
         save(product);
         partService.save(part);
     }
+
+    @Override
+    public void disassociatePartFromProduct(Product product, long partId) {
+        Part part = partService.findById(partId);
+
+        product.getParts().remove(part);
+        part.getProducts().remove(product);
+        save(product);
+        partService.save(part);
+    }
 }
