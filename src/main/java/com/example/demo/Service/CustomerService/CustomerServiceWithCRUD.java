@@ -1,8 +1,8 @@
-package com.example.demo.Service.ServiceImpl;
+package com.example.demo.Service.CustomerService;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Repository.CustomerRepository;
-import com.example.demo.Service.CustomerService;
+import com.example.demo.Service.CommonService.CommonServiceWithCRUD;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

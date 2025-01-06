@@ -1,11 +1,9 @@
-package com.example.demo.Service.ServiceImpl;
+package com.example.demo.Service.ItemService;
 
 import com.example.demo.Domain.Item;
 import com.example.demo.Repository.ItemRepository;
-import com.example.demo.Service.ItemService;
+import com.example.demo.Service.CommonService.CommonServiceWithCRUD;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ItemServiceWithCRUD extends CommonServiceWithCRUD<Item, Long> implements ItemService {

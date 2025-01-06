@@ -1,6 +1,5 @@
-package com.example.demo.Service.ServiceImpl;
+package com.example.demo.Service.CommonService;
 
-import com.example.demo.Service.CommonService;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

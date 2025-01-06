@@ -6,7 +6,7 @@ import com.example.demo.Security.AppUserService;
 import com.example.demo.Security.LoginProvider;
 import com.example.demo.Domain.UserEntity;
 import com.example.demo.Repository.UserEntityRepository;
-import com.example.demo.Service.ReportService;
+import com.example.demo.Service.ReportService.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

@@ -1,8 +1,7 @@
-package com.example.demo.Service.ServiceImpl;
+package com.example.demo.Service.ReportService;
 
 import com.example.demo.Domain.Report;
 import com.example.demo.Repository.ReportRepository;
-import com.example.demo.Service.ReportService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
