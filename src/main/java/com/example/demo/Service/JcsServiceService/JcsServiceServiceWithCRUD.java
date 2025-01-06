@@ -1,8 +1,7 @@
-package com.example.demo.Service.ServiceImpl;
+package com.example.demo.Service.JcsServiceService;
 
 import com.example.demo.Domain.Service;
 import com.example.demo.Repository.ServiceRepository;
-import com.example.demo.Service.JcsServiceService;
 
 import java.util.List;
 import java.util.Optional;
