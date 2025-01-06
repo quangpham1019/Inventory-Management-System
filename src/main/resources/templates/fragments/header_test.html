@@ -18,14 +18,14 @@
                 </li>
 
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/admin/report}">Report</a>
+                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/report}">Report</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                     <a class="nav-link" aria-current="page" th:href="@{/api/v1/admin/manageUsers}">Manage Users</a>
                 </li>
 
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/user/sales}">Sales</a>
+                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/sales}">Sales</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" aria-current="page" th:href="@{/api/v1/user/orderList}">Orders</a>

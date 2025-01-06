@@ -53,91 +53,7 @@ public class UserController {
         this.customerService = customerService;
     }
 
-    private static Customer currentCustomer;
-    @GetMapping("/sales")
-    public String getSalesPage(Model model,
-                               @Param("customerKeyword") String customerKeyword,
-                               @ModelAttribute String itemError) {
-        List<Customer> customerList = customerService.listAllByKeyword(customerKeyword);
-        if (!itemError.isBlank()) {
-            // string length is less than 12, invalidate int values from range of itemId
-            if (itemError.length()<12) {
-                Product product = productService.findById((long) Integer.parseInt(itemError));
-                model.addAttribute("errors", "There are not enough products " + product.getName() + " in store.");
-            } else {
-                model.addAttribute("errors", itemError);
-            }
-        }
 
-        model.addAttribute("customerList", customerList);
-        model.addAttribute("customerKeyword", customerKeyword);
-        model.addAttribute("order", order);
-        model.addAttribute("selectedCustomer", currentCustomer);
-        return "menu pages/sales";
-    }
-
-    @PostMapping("/addItemToOrder")
-    public String addItemToOrder(@RequestParam int itemId) {
-
-        // create new OrderItem orderItem
-        // set Item of orderItem to part retrieved from partService.findById(partId)
-        OrderItem orderItem = new OrderItem();
-        Item currentItem = itemService.findById((long) itemId);
-        orderItem.setItem(currentItem);
-        System.out.println("ADDING ITEM: " + currentItem.getName());
-
-        if (!currentItem.getClass().equals(JcsServicing.class)) {
-            Product product = productService.findById((long) itemId);
-            product.setInv(product.getInv() - 1);
-            productService.save(product);
-        }
-
-        // COMPARE orderItem with elements of order.getOrderItemSet()
-        if(!order.getOrderItemSet().contains(orderItem)) {
-            // orderItem NOT exists in the orderItemSet
-            orderItem.setQuantity(1);
-            order.getOrderItemSet().add(orderItem);
-        } else {
-            // orderItem DOES exist in the orderItemSet
-            System.out.println("duplicate item in order");
-            OrderItem orderItemInOrder = order.getOrderItemSet()
-                    .stream()
-                    .filter(o -> o.equals(orderItem))
-                    .findFirst().get();
-            orderItemInOrder.setQuantity(orderItemInOrder.getQuantity() + 1);
-        }
-        order.setTotalPrice(order.getTotalPrice() + orderItem.getItem().getPrice());
-        return "redirect:/";
-    }
-
-    @GetMapping("/changeQuantity")
-    public String changeQuantity(@RequestParam int itemId,
-                                 @RequestParam("increase") boolean increaseQuantityInOrder,
-                                 RedirectAttributes redirectAttributes) {
-        int changeAmount = increaseQuantityInOrder? 1:-1;
-
-        Item itemFromRepo = itemService.findById((long) itemId);
-        if (!itemFromRepo.getClass().equals(JcsServicing.class)) {
-            Product product = productService.findById((long) itemId);
-            if(product.getInv()==0 && increaseQuantityInOrder) {
-                redirectAttributes.addFlashAttribute("itemError", itemId);
-                return "redirect:/api/v1/user/sales";
-            }
-
-            product.setInv(product.getInv() - changeAmount);
-            productService.save(product);
-        }
-
-        OrderItem currentItem = order.getOrderItemSet()
-                .stream()
-                .filter(o -> o.getItem().getId() == (long)itemId)
-                .findFirst().get();
-
-        currentItem.setQuantity(currentItem.getQuantity() + changeAmount);
-        order.setTotalPrice(order.getTotalPrice() + changeAmount * currentItem.getItem().getPrice());
-        order.setOrderItemSet(order.getOrderItemSet().stream().filter(orderItem -> orderItem.getQuantity()!=0).collect(Collectors.toSet()));
-        return "redirect:/api/v1/user/sales";
-    }
 
     @GetMapping("/orderList")
     public String getOrderList(Model model,
@@ -151,28 +67,7 @@ public class UserController {
 
     }
 
-    @Transactional
-    @PostMapping("/saveOrder")
-    public String saveOrder(
-            @ModelAttribute("customer") int customerId,
-            @ModelAttribute("paymentMethod") String paymentMethod,
-            RedirectAttributes redirectAttributes
-    ) {
 
-        if(order.getOrderItemSet().isEmpty()) {
-            redirectAttributes.addFlashAttribute("itemError", "Please add item to order before saving.");
-            return "redirect:/api/v1/user/sales";
-        }
-
-        currentCustomer = customerService.findById((long) customerId);
-
-        order.setCustomer(currentCustomer);
-        order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
-
-        saveCurrentOrderAndReport();
-        resetOrderSession();
-        return "redirect:/";
-    }
 
     @GetMapping("/addCustomer")
     public String getNewCustomerForm(Model model) {
@@ -184,7 +79,7 @@ public class UserController {
     @PostMapping("/processCustomer")
     public String processCustomer(@ModelAttribute Customer customer) {
         customerService.save(customer);
-        return "redirect:/api/v1/user/sales";
+        return "redirect:/api/v1/sales";
     }
 //
     @GetMapping("/manageCustomers")
@@ -218,25 +113,4 @@ public class UserController {
         return "redirect:/api/v1/user/manageCustomers";
     }
 
-    void saveCurrentOrderAndReport() {
-        Order myOrder = new Order();
-        myOrder.setPaymentMethod(order.getPaymentMethod());
-        myOrder.setCustomer(order.getCustomer());
-        order.getOrderItemSet().forEach(myOrder::addOrderItem);
-        myOrder.setTotalPrice(order.getTotalPrice());
-        orderService.save(myOrder);
-
-        Report report = new Report(
-                myOrder,
-                appUser.getUsername(),
-                order.getCustomer(),
-                order.getTotalPrice());
-        reportService.save(report);
-    }
-    void resetOrderSession() {
-        order.getOrderItemSet().clear();
-        order.setPaymentMethod(null);
-        order.setCustomer(null);
-        order.setTotalPrice(0);
-    }
 }

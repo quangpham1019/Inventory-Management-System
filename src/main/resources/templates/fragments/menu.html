@@ -9,12 +9,12 @@
 
         <div class="ui large secondary pointing menu" sec:authorize="isAuthenticated()">
             <a class="item" data-th-href="@{/inventory}" data-th-classappend="${(activeMenu eq 'inventory') ? 'active' : ''}">Inventory</a>
-            <a class="item" data-th-href="@{/api/v1/user/sales}" data-th-classappend="${(activeMenu eq 'sales') ? 'active' : ''}">Sales</a>
+            <a class="item" data-th-href="@{/api/v1/sales}" data-th-classappend="${(activeMenu eq 'sales') ? 'active' : ''}">Sales</a>
             <a class="item" data-th-href="@{/api/v1/user/orderList}" data-th-classappend="${(activeMenu eq 'orders') ? 'active' : ''}">Orders</a>
             <a class="item" data-th-href="@{/api/v1/user/manageCustomers}" data-th-classappend="${(activeMenu eq 'customers') ? 'active' : ''}">Customers</a>
         </div>
         <div class="ui large secondary pointing menu" sec:authorize="hasAuthority('ADMIN')">
-            <a class="item" data-th-href="@{/api/v1/admin/report}" data-th-classappend="${(activeMenu eq 'reports') ? 'active' : ''}">Sale Reports</a>
+            <a class="item" data-th-href="@{/api/v1/report}" data-th-classappend="${(activeMenu eq 'reports') ? 'active' : ''}">Sale Reports</a>
             <a class="item" data-th-href="@{/api/v1/admin/manageUsers}" data-sec-authorize="isAuthenticated()" data-th-classappend="${(activeMenu eq 'users') ? 'active' : ''}">Users</a>
         </div>
 

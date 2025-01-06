@@ -50,7 +50,7 @@
                        onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
                 </div>
 
-                <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${tempProduct.id})}"
+                <form th:method="post" th:action="@{/api/v1/sales/addItemToOrder(itemId=${tempProduct.id})}"
                       th:object="${tempProduct}">
                     <button class="btn btn-primary btn-sm mb-3" th:disabled="${tempProduct.inv == 0}">Add to order
                     </button>
@@ -82,7 +82,7 @@
                     <a th:href="@{/deleteJcsServicing(serviceId=${jcsServicing.id})}" class="btn btn-danger btn-sm mb-3"
                        onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
                 </div>
-                <form th:method="post" th:action="@{/api/v1/user/addItemToOrder(itemId=${jcsServicing.id})}">
+                <form th:method="post" th:action="@{/api/v1/sales/addItemToOrder(itemId=${jcsServicing.id})}">
                     <button class="btn btn-primary btn-sm mb-3">Add to order</button>
                 </form>
             </td>

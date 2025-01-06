@@ -6,7 +6,7 @@
     <div id="reports_content"
          class="container text-center">
 
-        <form th:action="@{/api/v1/admin/report}">
+        <form th:action="@{/api/v1/report}">
             Filter: <input type="text" name="reportKeyword" id="reportKeyword" size="50" th:value="${reportKeyword}" required />
             &nbsp;
             <select name="filterCriteria" required class="col-3 text-center mt-2">
@@ -45,7 +45,7 @@
 
     <script type="text/javascript">
         function clearSearch() {
-            window.location = "[[@{/api/v1/admin/report}]]";
+            window.location = "[[@{/api/v1/report}]]";
         }
     </script>
 </body>
