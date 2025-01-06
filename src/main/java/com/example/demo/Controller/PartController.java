@@ -50,7 +50,7 @@ public class PartController {
             return "error/error_item_in_order";
         }
         if(!part.getProducts().isEmpty()){
-            return "error/error_not_enough_parts";
+            return "error/error_part_in_use";
 
         }
 
