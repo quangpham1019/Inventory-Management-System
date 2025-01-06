@@ -31,7 +31,7 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
         if(context!=null)myContext=context;
         ProductService repo = myContext.getBean(ProductServiceWithCRUD.class);
         if (product.getId() != 0) {
-            Product myProduct = repo.findById((int) product.getId());
+            Product myProduct = repo.findById((long) product.getId());
             for (Part p : myProduct.getParts()) {
                 if ((p.getInv()-p.getMinInv())<(product.getInv()-myProduct.getInv()))return false;
             }

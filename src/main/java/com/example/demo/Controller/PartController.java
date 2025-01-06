@@ -25,7 +25,7 @@ public class PartController {
     @GetMapping("/showPartFormForUpdate")
     public String showPartFormForUpdate(@RequestParam("partID") int partId, Model model){
 
-        var curPart = partService.findById(partId);
+        var curPart = partService.findById((long) partId);
         String partType, form;
 
         if (curPart.getClass().equals(InhousePart.class)) {
@@ -43,7 +43,7 @@ public class PartController {
     @GetMapping("/deletepart")
     public String deletePart(@Valid @RequestParam("partID") int partId){
 
-        Part part = partService.findById(partId);
+        Part part = partService.findById((long) partId);
         if (order.getOrderItemSet()
                 .stream()
                 .anyMatch(orderItem -> orderItem.getItem().equals(part))) {
@@ -54,7 +54,7 @@ public class PartController {
 
         }
 
-        partService.deleteById(partId);
+        partService.deleteById((long) partId);
         return "confirmation/confirmationdeletepart";
     }
 

@@ -41,7 +41,7 @@ public class AdminController {
     @GetMapping("/report")
     public String getReportPage(Model model,
                                 @Param("reportKeyword") String reportKeyword,
-                                @ModelAttribute String filterCriteria) {
+                                @Param("filterCriteria") String filterCriteria) {
         List<Report> reports = reportService.findAllBy(filterCriteria, reportKeyword);
 
         model.addAttribute("reportKeyword", reportKeyword);

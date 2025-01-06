@@ -58,7 +58,7 @@ public class ProductController {
         }
 
         if(product.getId()!=0) {
-            Product oldProduct = productService.findById((int)product.getId());
+            Product oldProduct = productService.findById((long) product.getId());
             if(product.getInv() - oldProduct.getInv()>0) {
                 for (Part p : oldProduct.getParts()) {
                     int inv = p.getInv();
@@ -78,7 +78,7 @@ public class ProductController {
 
     @GetMapping("/showProductFormForUpdate")
     public String showProductFormForUpdate(@RequestParam("productID") int productId, Model model) {
-        curProduct = productService.findById(productId);
+        curProduct = productService.findById((long) productId);
 
         model.addAttribute("product", curProduct);
         model.addAttribute("parts", partService.findAll());
@@ -91,7 +91,7 @@ public class ProductController {
     @GetMapping("/deleteproduct")
     public String deleteProduct(@RequestParam("productID") int productId) {
 
-        Product deletingProduct = productService.findById(productId);
+        Product deletingProduct = productService.findById((long) productId);
         if (order.getOrderItemSet()
                 .stream()
                 .anyMatch(orderItem -> orderItem.getItem().equals(deletingProduct))) {
@@ -106,7 +106,7 @@ public class ProductController {
 
         deletingProduct.getParts().removeAll(deletingProduct.getParts());
         productService.save(deletingProduct);
-        productService.deleteById(productId);
+        productService.deleteById((long) productId);
 
         return "confirmation/confirmationdeleteproduct";
     }
@@ -118,7 +118,7 @@ public class ProductController {
             return "error/error_save_product_first";
         }
 
-        Part curPart = partService.findById(partId);
+        Part curPart = partService.findById((long) partId);
 
         curProduct.getParts().add(curPart);
         curPart.getProducts().add(curProduct);
@@ -134,7 +134,7 @@ public class ProductController {
     @GetMapping("/removepart")
     public String removePart(@RequestParam("partID") int partId, Model model){
 
-        Part curPart = partService.findById(partId);
+        Part curPart = partService.findById((long) partId);
 
         curProduct.getParts().remove(curPart);
         curPart.getProducts().remove(curProduct);

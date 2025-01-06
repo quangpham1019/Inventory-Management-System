@@ -40,7 +40,7 @@ public class InventoryController {
             Model model) {
 
         model.addAttribute("parts", partService.listAllByKeyword(""));
-        model.addAttribute("products", productService.listAll(""));
+        model.addAttribute("products", productService.listAllByKeyword(""));
         model.addAttribute("serviceList", jcsServiceService.listAllByKeyword(""));
         model.addAttribute("disabled", true);
 
@@ -106,7 +106,7 @@ public class InventoryController {
                 fragment = "fragments/inventoryTable :: partTable";
                 break;
             case "product":
-                model.addAttribute("products", productService.listAll(keyword));
+                model.addAttribute("products", productService.listAllByKeyword(keyword));
                 fragment = "fragments/inventoryTable :: productTable";
                 break;
             case "service":
