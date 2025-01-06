@@ -88,22 +88,14 @@ public class ProductController {
         return "form/product_form";
     }
 
-    @GetMapping("/deleteproduct")
-    public String deleteProduct(@RequestParam("productID") int productId) {
+    @GetMapping("/removeProduct")
+    public String removeProduct(@RequestParam("productID") int productId) {
 
-        Product deletingProduct = productService.findById((long) productId);
-        if (itemService.itemExistsInOrder((long) productId, order)) {
+        if (itemService.itemExistsInOrder(productId, order)) {
             return "error/error_item_in_order";
         }
 
-        for (Part part : deletingProduct.getParts()){
-            part.getProducts().remove(deletingProduct);
-            partService.save(part);
-        }
-
-        deletingProduct.getParts().removeAll(deletingProduct.getParts());
-        productService.save(deletingProduct);
-        productService.deleteById((long) productId);
+        productService.removeProduct(productId);
 
         return "confirmation/confirmationdeleteproduct";
     }
@@ -115,12 +107,7 @@ public class ProductController {
             return "error/error_save_product_first";
         }
 
-        Part curPart = partService.findById((long) partId);
-
-        curProduct.getParts().add(curPart);
-        curPart.getProducts().add(curProduct);
-        productService.save(curProduct);
-        partService.save(curPart);
+        productService.associatePartToProduct(curProduct, partId);
 
         model.addAttribute("product", curProduct);
         filterAvailableParts(model, curProduct);
