@@ -28,7 +28,7 @@
                     <a class="nav-link" aria-current="page" th:href="@{/api/v1/sales}">Sales</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/user/orderList}">Orders</a>
+                    <a class="nav-link" aria-current="page" th:href="@{/api/v1/order/orderList}">Orders</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="ui secondary basic button" data-th-attr="onclick=|$('#logout_form').submit();|" data-sec-authorize="isAuthenticated()">Log out</a>

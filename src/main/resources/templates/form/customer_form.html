@@ -8,7 +8,7 @@
     <div>
       <h1 th:text="${action}=='add'? 'New Customer Form':'Update Customer Form'"></h1>
     </div>
-    <form th:with="baseURL='/api/v1/user'"
+    <form th:with="baseURL='/api/v1/customer'"
           th:action="@{${action == 'add' ? baseURL+'/processCustomer':baseURL +'/updateCustomer'}(customerId=${customer.id})}"
           th:object="${customer}"
           method="post" style="max-width: 600px; margin: 0 auto;">

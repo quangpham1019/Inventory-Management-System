@@ -6,7 +6,7 @@
     <div id="orders_content"
          class="container text-center">
 
-        <form th:action="@{/api/v1/user/orderList}">
+        <form th:action="@{/api/v1/order/orderList}">
             Filter: <input type="text" name="orderKeyword" id="orderKeyword" size="50" th:value="${orderKeyword}" required />
             &nbsp;
             <select name="filterCriteria" required class="col-3 text-center mt-2">
