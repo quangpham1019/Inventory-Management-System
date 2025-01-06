@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ServiceRepository extends CrudRepository<Service, Long> {
+public interface JcsServicingRepository extends CrudRepository<Service, Long> {
 
     @Query("SELECT s FROM Service s WHERE s.name LIKE %?1%")
     List<Service> search(String keyword);

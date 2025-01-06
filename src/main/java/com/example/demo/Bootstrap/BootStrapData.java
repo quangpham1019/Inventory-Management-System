@@ -2,7 +2,7 @@ package com.example.demo.Bootstrap;
 
 import com.example.demo.Domain.*;
 import com.example.demo.Service.CustomerService.CustomerService;
-import com.example.demo.Service.JcsServiceService.JcsServiceService;
+import com.example.demo.Service.JcsServiceService.JcsServicingService;
 import com.example.demo.Service.PartService.PartService;
 import com.example.demo.Service.ProductService.ProductService;
 import com.example.demo.Service.ReportService.ReportService;
@@ -21,14 +21,14 @@ import java.util.*;
 public class BootStrapData implements CommandLineRunner {
 
     private final CustomerService customerService;
-    private final JcsServiceService jcsServiceService;
+    private final JcsServicingService jcsServicingService;
     private final ProductService productService;
     private final PartService partService;
     private final ReportService reportService;
 
-    public BootStrapData(CustomerService customerService, JcsServiceService jcsServiceService, ProductService productService, PartService partService, ReportService reportService) {
+    public BootStrapData(CustomerService customerService, JcsServicingService jcsServicingService, ProductService productService, PartService partService, ReportService reportService) {
         this.customerService = customerService;
-        this.jcsServiceService = jcsServiceService;
+        this.jcsServicingService = jcsServicingService;
         this.productService = productService;
         this.partService = partService;
         this.reportService = reportService;
@@ -79,12 +79,12 @@ public class BootStrapData implements CommandLineRunner {
             customerService.saveAll(new ArrayList<>(Arrays.asList(customer1, customer2, customer3, customer4, customer5, customer6)));
         }
 
-        if (!jcsServiceService.hasService()) {
+        if (!jcsServicingService.hasService()) {
             Service service1 = new Service("Replace battery", 120.0, 2);
             Service service2 = new Service("Upgrade RAM", 100.0, 2);
             Service service3 = new Service("Upgrade hard drive", 80.0, 2);
             Service service4 = new Service("Replace laptop screen", 150.0, 4);
-            jcsServiceService.saveAll(new ArrayList<>(Arrays.asList(service1, service2, service3, service4)));
+            jcsServicingService.saveAll(new ArrayList<>(Arrays.asList(service1, service2, service3, service4)));
         }
 
     }
