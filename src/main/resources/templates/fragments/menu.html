@@ -15,7 +15,7 @@
         </div>
         <div class="ui large secondary pointing menu" sec:authorize="hasAuthority('ADMIN')">
             <a class="item" data-th-href="@{/api/v1/report}" data-th-classappend="${(activeMenu eq 'reports') ? 'active' : ''}">Sale Reports</a>
-            <a class="item" data-th-href="@{/api/v1/admin/manageUsers}" data-sec-authorize="isAuthenticated()" data-th-classappend="${(activeMenu eq 'users') ? 'active' : ''}">Users</a>
+            <a class="item" data-th-href="@{/api/v1/user/manageUsers}" data-sec-authorize="isAuthenticated()" data-th-classappend="${(activeMenu eq 'users') ? 'active' : ''}">Users</a>
         </div>
 
         <div class="right item" style="margin-left: 0% !important;">

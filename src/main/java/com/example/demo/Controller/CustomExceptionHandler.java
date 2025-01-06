@@ -14,7 +14,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler({ SQLIntegrityConstraintViolationException.class})
     public String handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException exception, Model model) {
         model.addAttribute("error", exception.getMessage());
-        return "redirect:/api/v1/admin/addUser";
+        return "redirect:/api/v1/user/addUser";
     }
     @ExceptionHandler({ AccessDeniedException.class })
     public String handleAccessDeniedException(AccessDeniedException exception) {
