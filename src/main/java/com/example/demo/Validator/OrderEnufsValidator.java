@@ -31,7 +31,7 @@ public class OrderEnufsValidator implements ConstraintValidator<ValidOrderEnufs,
         for (OrderItem orderItem : order.getOrderItemSet()) {
             Item item = orderItem.getItem();
             if (item.getClass() != Service.class) {
-                Product product = productService.findById((int) item.getId());
+                Product product = productService.findById((long) item.getId());
                 System.out.println(product.getName());
             }
 

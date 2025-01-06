@@ -1,6 +1,7 @@
 package com.example.demo.Service.ProductService;
 
 import com.example.demo.Domain.Product;
+import com.example.demo.Service.CommonService.CommonService;
 
 import java.util.List;
 
@@ -10,11 +11,6 @@ import java.util.List;
  *
  *
  */
-public interface ProductService {
-    List<Product> findAll();
-    Product findById(int theId);
-    void save (Product theProduct);
-    void deleteById(int theId);
-    List<Product> listAll(String keyword);
-    void saveAll(List<Product> productList);
+public interface ProductService extends CommonService<Product, Long> {
+    List<Product> listAllByKeyword(String keyword);
 }

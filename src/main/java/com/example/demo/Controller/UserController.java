@@ -62,7 +62,7 @@ public class UserController {
         if (!itemError.isBlank()) {
             // string length is less than 12, invalidate int values from range of itemId
             if (itemError.length()<12) {
-                Product product = productService.findById(Integer.parseInt(itemError));
+                Product product = productService.findById((long) Integer.parseInt(itemError));
                 model.addAttribute("errors", "There are not enough products " + product.getName() + " in store.");
             } else {
                 model.addAttribute("errors", itemError);
@@ -87,7 +87,7 @@ public class UserController {
         System.out.println("ADDING ITEM: " + currentItem.getName());
 
         if (!currentItem.getClass().equals(Service.class)) {
-            Product product = productService.findById(itemId);
+            Product product = productService.findById((long) itemId);
             product.setInv(product.getInv() - 1);
             productService.save(product);
         }
@@ -118,7 +118,7 @@ public class UserController {
 
         Item itemFromRepo = itemService.findById((long) itemId);
         if (!itemFromRepo.getClass().equals(Service.class)) {
-            Product product = productService.findById(itemId);
+            Product product = productService.findById((long) itemId);
             if(product.getInv()==0 && increaseQuantityInOrder) {
                 redirectAttributes.addFlashAttribute("itemError", itemId);
                 return "redirect:/api/v1/user/sales";
