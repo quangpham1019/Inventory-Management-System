@@ -8,18 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ItemServiceWithCRUD implements ItemService {
+public class ItemServiceWithCRUD extends CommonServiceWithCRUD<Item, Long> implements ItemService {
 
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     public ItemServiceWithCRUD(ItemRepository itemRepository) {
+        super(itemRepository);
         this.itemRepository = itemRepository;
-    }
-
-    @Override
-    public Item findById(int itemId) {
-        Optional<Item> item = itemRepository.findById((long) itemId);
-
-        return item.orElseThrow(() -> new IllegalArgumentException("Could not find item with id: " + itemId));
     }
 }

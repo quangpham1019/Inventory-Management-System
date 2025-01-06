@@ -78,7 +78,7 @@ public class UserController {
         // create new OrderItem orderItem
         // set Item of orderItem to part retrieved from partService.findById(partId)
         OrderItem orderItem = new OrderItem();
-        Item currentItem = itemService.findById(itemId);
+        Item currentItem = itemService.findById((long) itemId);
         orderItem.setItem(currentItem);
         System.out.println("ADDING ITEM: " + currentItem.getName());
 
@@ -112,7 +112,7 @@ public class UserController {
                                  RedirectAttributes redirectAttributes) {
         int changeAmount = increaseQuantityInOrder? 1:-1;
 
-        Item itemFromRepo = itemService.findById(itemId);
+        Item itemFromRepo = itemService.findById((long) itemId);
         if (!itemFromRepo.getClass().equals(Service.class)) {
             Product product = productService.findById(itemId);
             if(product.getInv()==0 && increaseQuantityInOrder) {
