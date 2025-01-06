@@ -1,14 +1,15 @@
-package com.example.demo.Service.CommonService;
+package com.example.demo.Service.Implementation.UsingCRUDRepository;
 
+import com.example.demo.Service.Interface.CommonService;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CommonServiceWithCRUD<T, TId> implements CommonService<T, TId> {
+public class CommonServiceUsingCRUDRepository<T, TId> implements CommonService<T, TId> {
 
     private final CrudRepository<T, TId> repository;
-    public CommonServiceWithCRUD(CrudRepository<T, TId> repository) {
+    public CommonServiceUsingCRUDRepository(CrudRepository<T, TId> repository) {
         this.repository = repository;
     }
 

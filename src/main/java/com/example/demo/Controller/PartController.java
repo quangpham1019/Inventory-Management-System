@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.*;
-import com.example.demo.Service.PartService.PartService;
+import com.example.demo.Service.Interface.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

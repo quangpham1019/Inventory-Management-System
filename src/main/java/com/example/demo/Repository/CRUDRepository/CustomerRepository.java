@@ -1,4 +1,4 @@
-package com.example.demo.Repository;
+package com.example.demo.Repository.CRUDRepository;
 
 import com.example.demo.Domain.Customer;
 import org.springframework.data.jpa.repository.Query;

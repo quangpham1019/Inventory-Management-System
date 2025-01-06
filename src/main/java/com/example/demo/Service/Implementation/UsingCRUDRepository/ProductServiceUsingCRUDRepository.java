@@ -1,12 +1,11 @@
-package com.example.demo.Service.ProductService;
+package com.example.demo.Service.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Product;
-import com.example.demo.Repository.ProductRepository;
-import com.example.demo.Service.CommonService.CommonServiceWithCRUD;
+import com.example.demo.Repository.CRUDRepository.ProductRepository;
+import com.example.demo.Service.Interface.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -15,10 +14,10 @@ import java.util.Optional;
  *
  */
 @Service
-public class ProductServiceWithCRUD extends CommonServiceWithCRUD<Product, Long> implements ProductService {
+public class ProductServiceUsingCRUDRepository extends CommonServiceUsingCRUDRepository<Product, Long> implements ProductService {
     private ProductRepository productRepository;
 
-    public ProductServiceWithCRUD(ProductRepository productRepository) {
+    public ProductServiceUsingCRUDRepository(ProductRepository productRepository) {
         super(productRepository);
         this.productRepository = productRepository;
     }

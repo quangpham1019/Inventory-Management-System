@@ -1,8 +1,7 @@
-package com.example.demo.Repository;
+package com.example.demo.Repository.CRUDRepository;
 
 import com.example.demo.Domain.Order;
 import com.example.demo.Domain.PaymentMethod;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
