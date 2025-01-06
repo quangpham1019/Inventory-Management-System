@@ -4,7 +4,7 @@ import com.example.demo.Domain.Service;
 
 import java.util.List;
 
-public interface JcsServiceService {
+public interface JcsServicingService {
 
     Service findById(int serviceId);
     List<Service> listAllByKeyword(String keyword);

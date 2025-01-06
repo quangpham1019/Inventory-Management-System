@@ -2,7 +2,7 @@ package com.example.demo.Controller;
 import com.example.demo.Domain.Order;
 import com.example.demo.Security.AppUser;
 import com.example.demo.Domain.Service;
-import com.example.demo.Service.JcsServiceService.JcsServiceService;
+import com.example.demo.Service.JcsServiceService.JcsServicingService;
 import com.example.demo.Service.PartService.PartService;
 import com.example.demo.Service.ProductService.ProductService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,17 +17,17 @@ public class InventoryController {
     private Order order;
     private PartService partService;
     private ProductService productService;
-    private JcsServiceService jcsServiceService;
+    private JcsServicingService jcsServicingService;
 
     @ModelAttribute
     AppUser appUser(@AuthenticationPrincipal AppUser appUser) {
         return appUser;
     }
 
-    public InventoryController(PartService partService, ProductService productService, JcsServiceService jcsServiceService, Order order){
+    public InventoryController(PartService partService, ProductService productService, JcsServicingService jcsServicingService, Order order){
         this.partService=partService;
         this.productService=productService;
-        this.jcsServiceService = jcsServiceService;
+        this.jcsServicingService = jcsServicingService;
         this.order = order;
     }
 
@@ -41,7 +41,7 @@ public class InventoryController {
 
         model.addAttribute("parts", partService.listAllByKeyword(""));
         model.addAttribute("products", productService.listAllByKeyword(""));
-        model.addAttribute("serviceList", jcsServiceService.listAllByKeyword(""));
+        model.addAttribute("serviceList", jcsServicingService.listAllByKeyword(""));
         model.addAttribute("disabled", true);
 
         return "menu pages/inventory";
@@ -56,14 +56,14 @@ public class InventoryController {
 
     @PostMapping("/processService")
     public String processNewService(@ModelAttribute(name = "service") Service newService) {
-        jcsServiceService.save(newService);
+        jcsServicingService.save(newService);
         return "redirect:/";
     }
 
     @GetMapping("/updateService")
     public String getUpdateService(@RequestParam int serviceId, Model model) {
 
-        Service updateService = jcsServiceService.findById(serviceId);
+        Service updateService = jcsServicingService.findById(serviceId);
         model.addAttribute("service", updateService);
         model.addAttribute("action", "update");
         return "form/service_form";
@@ -72,23 +72,23 @@ public class InventoryController {
     public String updateServiceProcess(@RequestParam int serviceId,
                                     @ModelAttribute("service") Service updateService) {
 
-        Service service = jcsServiceService.findById(serviceId);
+        Service service = jcsServicingService.findById(serviceId);
         service.setDuration(updateService.getDuration());
         service.setName(updateService.getName());
         service.setPrice(updateService.getPrice());
-        jcsServiceService.save(service);
+        jcsServicingService.save(service);
         return "redirect:/";
     }
 
     @GetMapping("/deleteService")
     public String deleteService(@RequestParam int serviceId) {
-        Service service = jcsServiceService.findById(serviceId);
+        Service service = jcsServicingService.findById(serviceId);
         if (order.getOrderItemSet()
                 .stream()
                 .anyMatch(orderItem -> orderItem.getItem().equals(service))) {
             return "error/error_item_in_order";
         }
-        jcsServiceService.deleteById(serviceId);
+        jcsServicingService.deleteById(serviceId);
         return "redirect:/";
     }
 
@@ -110,7 +110,7 @@ public class InventoryController {
                 fragment = "fragments/inventoryTable :: productTable";
                 break;
             case "service":
-                model.addAttribute("serviceList", jcsServiceService.listAllByKeyword(keyword));
+                model.addAttribute("serviceList", jcsServicingService.listAllByKeyword(keyword));
                 fragment = "fragments/inventoryTable :: serviceTable";
                 break;
         }
