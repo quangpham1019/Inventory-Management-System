@@ -117,12 +117,7 @@ public class ProductController {
     @GetMapping("/removepart")
     public String removePart(@RequestParam("partID") int partId, Model model){
 
-        Part curPart = partService.findById((long) partId);
-
-        curProduct.getParts().remove(curPart);
-        curPart.getProducts().remove(curProduct);
-        productService.save(curProduct);
-        partService.save(curPart);
+        productService.disassociatePartFromProduct(curProduct, partId);
 
         model.addAttribute("product", curProduct);
         model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
