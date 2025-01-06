@@ -1,6 +1,7 @@
 package com.example.demo.Service.Interface;
 
 import com.example.demo.Domain.Part;
+import com.example.demo.Domain.Product;
 
 import java.util.List;
 
