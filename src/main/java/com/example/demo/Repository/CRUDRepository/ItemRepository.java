@@ -1,4 +1,4 @@
-package com.example.demo.Repository;
+package com.example.demo.Repository.CRUDRepository;
 
 import com.example.demo.Domain.Item;
 import org.springframework.data.repository.CrudRepository;

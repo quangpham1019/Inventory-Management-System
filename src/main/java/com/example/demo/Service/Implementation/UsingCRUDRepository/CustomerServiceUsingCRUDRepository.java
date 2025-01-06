@@ -1,18 +1,18 @@
-package com.example.demo.Service.CustomerService;
+package com.example.demo.Service.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Customer;
-import com.example.demo.Repository.CustomerRepository;
-import com.example.demo.Service.CommonService.CommonServiceWithCRUD;
+import com.example.demo.Repository.CRUDRepository.CustomerRepository;
+import com.example.demo.Service.Interface.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CustomerServiceWithCRUD extends CommonServiceWithCRUD<Customer, Long> implements CustomerService {
+public class CustomerServiceUsingCRUDRepository extends CommonServiceUsingCRUDRepository<Customer, Long> implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerServiceWithCRUD(CustomerRepository customerRepository) {
+    public CustomerServiceUsingCRUDRepository(CustomerRepository customerRepository) {
         super(customerRepository);
         this.customerRepository = customerRepository;
     }

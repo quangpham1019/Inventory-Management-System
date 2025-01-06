@@ -2,8 +2,8 @@ package com.example.demo.Validator;
 
 import com.example.demo.Domain.Part;
 import com.example.demo.Domain.Product;
-import com.example.demo.Service.ProductService.ProductService;
-import com.example.demo.Service.ProductService.ProductServiceWithCRUD;
+import com.example.demo.Service.Interface.ProductService;
+import com.example.demo.Service.Implementation.UsingCRUDRepository.ProductServiceUsingCRUDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -29,7 +29,7 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
     public boolean isValid(Product product, ConstraintValidatorContext constraintValidatorContext) {
         if(context==null) return true;
         if(context!=null)myContext=context;
-        ProductService repo = myContext.getBean(ProductServiceWithCRUD.class);
+        ProductService repo = myContext.getBean(ProductServiceUsingCRUDRepository.class);
         if (product.getId() != 0) {
             Product myProduct = repo.findById((long) product.getId());
             for (Part p : myProduct.getParts()) {

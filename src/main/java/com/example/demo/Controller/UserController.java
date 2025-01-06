@@ -2,11 +2,11 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.*;
 import com.example.demo.Security.AppUser;
-import com.example.demo.Service.CustomerService.CustomerService;
-import com.example.demo.Service.ItemService.ItemService;
-import com.example.demo.Service.OrderService.OrderService;
-import com.example.demo.Service.ProductService.ProductService;
-import com.example.demo.Service.ReportService.ReportService;
+import com.example.demo.Service.Interface.CustomerService;
+import com.example.demo.Service.Interface.ItemService;
+import com.example.demo.Service.Interface.OrderService;
+import com.example.demo.Service.Interface.ProductService;
+import com.example.demo.Service.Interface.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

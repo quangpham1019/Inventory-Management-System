@@ -1,19 +1,19 @@
-package com.example.demo.Service.OrderService;
+package com.example.demo.Service.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Order;
 import com.example.demo.Domain.PaymentMethod;
-import com.example.demo.Repository.OrderRepository;
-import com.example.demo.Service.CommonService.CommonServiceWithCRUD;
+import com.example.demo.Repository.CRUDRepository.OrderRepository;
+import com.example.demo.Service.Interface.OrderService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class OrderServiceWithCRUD extends CommonServiceWithCRUD<Order, Long> implements OrderService {
+public class OrderServiceUsingCRUDRepository extends CommonServiceUsingCRUDRepository<Order, Long> implements OrderService {
 
     private final OrderRepository orderRepository;
 
-    public OrderServiceWithCRUD(OrderRepository orderRepository) {
+    public OrderServiceUsingCRUDRepository(OrderRepository orderRepository) {
         super(orderRepository);
         this.orderRepository = orderRepository;
     }

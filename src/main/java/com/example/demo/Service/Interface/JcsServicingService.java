@@ -1,4 +1,4 @@
-package com.example.demo.Service.JcsServiceService;
+package com.example.demo.Service.Interface;
 
 import com.example.demo.Domain.JcsServicing;
 

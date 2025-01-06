@@ -1,17 +1,18 @@
-package com.example.demo.Service.JcsServiceService;
+package com.example.demo.Service.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.JcsServicing;
-import com.example.demo.Repository.JcsServicingRepository;
+import com.example.demo.Repository.CRUDRepository.JcsServicingRepository;
+import com.example.demo.Service.Interface.JcsServicingService;
 
 import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
-public class JcsServicingServiceWithCRUD implements JcsServicingService {
+public class JcsServicingServiceUsingCRUDRepository implements JcsServicingService {
 
     private JcsServicingRepository jcsServicingRepository;
 
-    public JcsServicingServiceWithCRUD(JcsServicingRepository jcsServicingRepository) {
+    public JcsServicingServiceUsingCRUDRepository(JcsServicingRepository jcsServicingRepository) {
         this.jcsServicingRepository = jcsServicingRepository;
     }
 

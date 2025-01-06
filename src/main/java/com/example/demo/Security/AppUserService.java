@@ -1,9 +1,9 @@
 package com.example.demo.Security;
 
 import com.example.demo.Domain.AuthorityEntity;
-import com.example.demo.Repository.AuthorityEntityRepository;
+import com.example.demo.Repository.CRUDRepository.AuthorityEntityRepository;
 import com.example.demo.Domain.UserEntity;
-import com.example.demo.Repository.UserEntityRepository;
+import com.example.demo.Repository.CRUDRepository.UserEntityRepository;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 import org.springframework.context.annotation.Bean;
