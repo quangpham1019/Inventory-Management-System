@@ -1,4 +1,5 @@
 package com.example.demo.Controller;
+import com.example.demo.Domain.Order;
 import com.example.demo.Security.AppUser;
 import com.example.demo.Domain.Service;
 import com.example.demo.Service.JcsServiceService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class InventoryController {
 
+    private Order order;
     private PartService partService;
     private ProductService productService;
     private JcsServiceService jcsServiceService;
@@ -22,10 +24,11 @@ public class InventoryController {
         return appUser;
     }
 
-    public InventoryController(PartService partService, ProductService productService, JcsServiceService jcsServiceService){
+    public InventoryController(PartService partService, ProductService productService, JcsServiceService jcsServiceService, Order order){
         this.partService=partService;
         this.productService=productService;
         this.jcsServiceService = jcsServiceService;
+        this.order = order;
     }
 
     @GetMapping("")
@@ -79,6 +82,12 @@ public class InventoryController {
 
     @GetMapping("/deleteService")
     public String deleteService(@RequestParam int serviceId) {
+        Service service = jcsServiceService.findById(serviceId);
+        if (order.getOrderItemSet()
+                .stream()
+                .anyMatch(orderItem -> orderItem.getItem().equals(service))) {
+            return "error/error_item_in_order";
+        }
         jcsServiceService.deleteById(serviceId);
         return "redirect:/";
     }
