@@ -15,4 +15,5 @@ public interface ProductService extends CommonService<Product, Long> {
     void removeProduct(long id);
     void associatePartToProduct(Product product, long partId);
     void disassociatePartFromProduct(Product product, long partId);
+    void adjustProductQuantity(Product curProduct);
 }
