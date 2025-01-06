@@ -38,9 +38,8 @@ public class ProductController {
     public String showFormAddPart(Model model) {
         curProduct = new Product();
         model.addAttribute("product", curProduct);
-        model.addAttribute("parts", partService.findAll());
-
-        filterAvailableParts(model, curProduct);
+        model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
+        model.addAttribute("associatedParts", curProduct.getParts());
 
         return "form/product_form";
     }
@@ -51,8 +50,8 @@ public class ProductController {
 
         if(bindingResult.hasErrors()){
 
-            filterAvailableParts(model, product);
-            model.addAttribute("parts", partService.findAll());
+            model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
+            model.addAttribute("associatedParts", curProduct.getParts());
 
             return "form/product_form";
         }
@@ -81,9 +80,8 @@ public class ProductController {
         curProduct = productService.findById((long) productId);
 
         model.addAttribute("product", curProduct);
-        model.addAttribute("parts", partService.findAll());
-
-        filterAvailableParts(model, curProduct);
+        model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
+        model.addAttribute("associatedParts", curProduct.getParts());
 
         return "form/product_form";
     }
@@ -112,7 +110,6 @@ public class ProductController {
         model.addAttribute("product", curProduct);
         model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
         model.addAttribute("associatedParts", curProduct.getParts());
-//        filterAvailableParts(model, curProduct);
 
         return "form/product_form";
     }
@@ -128,19 +125,9 @@ public class ProductController {
         partService.save(curPart);
 
         model.addAttribute("product", curProduct);
-        filterAvailableParts(model, curProduct);
+        model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
+        model.addAttribute("associatedParts", curProduct.getParts());
 
         return "form/product_form";
-    }
-
-    public void filterAvailableParts(Model model, Product product) {
-        List<Part> availableParts = new ArrayList<>();
-
-        for(Part p: partService.findAll()){
-            if(!product.getParts().contains(p)) availableParts.add(p);
-        }
-
-        model.addAttribute("availableParts", availableParts);
-        model.addAttribute("associatedParts", product.getParts());
     }
 }
