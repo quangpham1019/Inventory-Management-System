@@ -138,7 +138,7 @@ public class UserController {
     @GetMapping("/orderList")
     public String getOrderList(Model model,
                                @Param("orderKeyword") String orderKeyword,
-                               @ModelAttribute String filterCriteria) {
+                               @Param("filterCriteria") String filterCriteria) {
             List<Order> orderFromRepos = orderService.findAllBy(filterCriteria, orderKeyword);
 
             model.addAttribute("orderFromRepos", orderFromRepos);

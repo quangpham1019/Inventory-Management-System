@@ -9,27 +9,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OrderServiceWithCRUD implements OrderService {
+public class OrderServiceWithCRUD extends CommonServiceWithCRUD<Order, Long> implements OrderService {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public OrderServiceWithCRUD(OrderRepository orderRepository) {
+        super(orderRepository);
         this.orderRepository = orderRepository;
     }
 
     @Override
     public List<Order> findAllBy(String filterCriteria, String orderKeyword) {
-        switch (filterCriteria){
-            case "paymentMethod":
-                return orderRepository.findAllByPaymentMethod(PaymentMethod.valueOf(orderKeyword));
-            case "customer":
-                return orderRepository.findAllByCustomer_LastName(orderKeyword);
-        }
-        return orderRepository.findAll();
-    }
-
-    @Override
-    public void save(Order order) {
-        orderRepository.save(order);
+        return switch (filterCriteria) {
+            case "paymentMethod" -> orderRepository.findAllByPaymentMethod(PaymentMethod.valueOf(orderKeyword));
+            case "customer" -> orderRepository.findAllByCustomer_LastName(orderKeyword);
+            default -> (List<Order>) orderRepository.findAll();
+        };
     }
 }
