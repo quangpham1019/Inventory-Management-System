@@ -1,20 +1,13 @@
 package com.example.demo.Controller;
 import com.example.demo.Security.AppUser;
-import com.example.demo.Domain.Part;
-import com.example.demo.Domain.Product;
 import com.example.demo.Domain.Service;
 import com.example.demo.Service.JcsServiceService;
 import com.example.demo.Service.PartService;
 import com.example.demo.Service.ProductService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @Controller

@@ -18,8 +18,9 @@ import java.util.Set;
 @ValidPartInventory
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="part_type",discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorValue("0")
 @Table(name="Parts")
-public class Part extends Item implements Serializable {
+public class Part extends Item {
 
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;

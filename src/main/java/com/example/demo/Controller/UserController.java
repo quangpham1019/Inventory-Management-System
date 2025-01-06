@@ -160,7 +160,7 @@ public class UserController {
             return "redirect:/api/v1/user/sales";
         }
 
-        currentCustomer = customerService.findById(customerId);
+        currentCustomer = customerService.findById((long) customerId);
 
         order.setCustomer(currentCustomer);
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
@@ -194,7 +194,7 @@ public class UserController {
     public String getUpdateCustomerPage(@RequestParam int customerId,
                                     Model model) {
 
-        Customer updateCustomer = customerService.findById(customerId);
+        Customer updateCustomer = customerService.findById((long) customerId);
         model.addAttribute("customer", updateCustomer);
         model.addAttribute("action", "update");
         return "form/customer_form";
@@ -203,14 +203,14 @@ public class UserController {
     public String updateCustomerProcess(@RequestParam int customerId,
                                     @ModelAttribute("customer") Customer updateCustomer) {
 
-        customerService.deleteById(customerId);
+        customerService.deleteById((long) customerId);
         customerService.save(updateCustomer);
         return "redirect:/api/v1/user/manageCustomers";
     }
 
     @GetMapping("/deleteCustomer")
     public String deleteCustomer(@RequestParam int customerId) {
-        customerService.deleteById(customerId);
+        customerService.deleteById((long) customerId);
         return "redirect:/api/v1/user/manageCustomers";
     }
 
