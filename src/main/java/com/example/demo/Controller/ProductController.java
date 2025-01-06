@@ -110,7 +110,9 @@ public class ProductController {
         productService.associatePartToProduct(curProduct, partId);
 
         model.addAttribute("product", curProduct);
-        filterAvailableParts(model, curProduct);
+        model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
+        model.addAttribute("associatedParts", curProduct.getParts());
+//        filterAvailableParts(model, curProduct);
 
         return "form/product_form";
     }

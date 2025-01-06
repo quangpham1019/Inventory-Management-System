@@ -1,6 +1,7 @@
 package com.example.demo.Service.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Part;
+import com.example.demo.Domain.Product;
 import com.example.demo.Domain.Report;
 import com.example.demo.Repository.CRUDRepository.PartRepository;
 import com.example.demo.Repository.CRUDRepository.ReportRepository;
@@ -8,6 +9,7 @@ import com.example.demo.Service.Interface.PartService;
 import com.example.demo.Service.Interface.ReportService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +37,17 @@ public class PartServiceUsingCRUDRepository extends CommonServiceUsingCRUDReposi
     public boolean partInUse(long id) {
         Part part = findById(id);
         return !part.getProducts().isEmpty();
+    }
+
+    @Override
+    public List<Part> findAllPartsNotIncludedInProduct(Product product) {
+        List<Part> availableParts = new ArrayList<>();
+
+        for(Part p: findAll()){
+            if(!product.getParts().contains(p)) availableParts.add(p);
+        }
+
+        return availableParts;
     }
 
     @Service
