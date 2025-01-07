@@ -61,34 +61,11 @@ public class SalesController {
     @PostMapping("/addItemToOrder")
     public String addItemToOrder(@RequestParam int itemId) {
 
-        // create new OrderItem orderItem
-        // set Item of orderItem to part retrieved from partService.findById(partId)
-        OrderItem orderItem = new OrderItem();
         Item currentItem = itemService.findById((long) itemId);
-        orderItem.setItem(currentItem);
-        System.out.println("ADDING ITEM: " + currentItem.getName());
 
-        if (!currentItem.getClass().equals(JcsServicing.class)) {
-            Product product = productService.findById((long) itemId);
-            product.setInv(product.getInv() - 1);
-            productService.save(product);
-        }
+        itemService.adjustItemQuantity(currentItem);
+        orderService.addItemToOrder(order, currentItem);
 
-        // COMPARE orderItem with elements of order.getOrderItemSet()
-        if(!order.getOrderItemSet().contains(orderItem)) {
-            // orderItem NOT exists in the orderItemSet
-            orderItem.setQuantity(1);
-            order.getOrderItemSet().add(orderItem);
-        } else {
-            // orderItem DOES exist in the orderItemSet
-            System.out.println("duplicate item in order");
-            OrderItem orderItemInOrder = order.getOrderItemSet()
-                    .stream()
-                    .filter(o -> o.equals(orderItem))
-                    .findFirst().get();
-            orderItemInOrder.setQuantity(orderItemInOrder.getQuantity() + 1);
-        }
-        order.setTotalPrice(order.getTotalPrice() + orderItem.getItem().getPrice());
         return "redirect:/";
     }
 
