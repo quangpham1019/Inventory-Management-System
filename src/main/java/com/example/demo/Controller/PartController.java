@@ -62,8 +62,7 @@ public class PartController {
 
         return "form/inhouse_part_form";
     }
-
-    @PostMapping("/showFormAddInPart")
+    @PostMapping("/processFormAddInPart")
     public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult theBindingResult, Model model){
 
         model.addAttribute("inhousepart",part);
@@ -84,8 +83,7 @@ public class PartController {
 
         return "form/outsourced_part_form";
     }
-
-    @PostMapping("/showFormAddOutPart")
+    @PostMapping("/processFormAddOutPart")
     public String submitForm(@Valid @ModelAttribute("outsourcedpart") OutsourcedPart part, BindingResult bindingResult, Model model){
 
         model.addAttribute("outsourcedpart",part);
@@ -94,6 +92,7 @@ public class PartController {
             return "form/outsourced_part_form";
         }
 
+        System.out.println(part);
         partService.save(part);
         return "confirmation/confirmationaddpart";
     }

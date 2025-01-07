@@ -6,6 +6,7 @@ import com.example.demo.Validator.ValidProductPrice;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 

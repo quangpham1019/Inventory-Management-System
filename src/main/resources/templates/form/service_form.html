@@ -12,6 +12,8 @@
               th:object="${jcsServicing}"
               method="post" style="max-width: 600px; margin: 0 auto;">
             <div class="m-3">
+                <p><input type="hidden" th:field="*{id}"/></p>
+
                 <div class="form-group row">
                     <label class="col-4 col-form-label">Service Name: </label>
                     <div class="col-8">
