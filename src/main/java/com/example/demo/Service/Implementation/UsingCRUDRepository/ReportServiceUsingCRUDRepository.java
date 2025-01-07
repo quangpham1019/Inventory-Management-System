@@ -21,7 +21,7 @@ public class ReportServiceUsingCRUDRepository
 
     @Override
     public List<Report> findAllBy(String filterCriteria, String reportKeyword) {
-        if (filterCriteria == null || filterCriteria.isEmpty()) {filterCriteria = "";}
+        if (filterCriteria == null) filterCriteria = "";
         return switch (filterCriteria) {
             case "user" -> reportRepository.findAllByUsername(reportKeyword);
             case "customer" -> reportRepository.findAllByCustomer_LastName(reportKeyword);
