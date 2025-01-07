@@ -3,8 +3,10 @@ package com.example.demo.Controller;
 import com.example.demo.Domain.*;
 import com.example.demo.Security.AppUser;
 import com.example.demo.Service.Data.Interface.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -59,42 +61,38 @@ public class SalesController {
     }
 
     @PostMapping("/addItemToOrder")
-    public String addItemToOrder(@RequestParam int itemId) {
+    public String addItemToOrder(@RequestParam int itemId,
+                                 RedirectAttributes redirectAttributes,
+                                 HttpServletRequest request) {
 
         Item currentItem = itemService.findById((long) itemId);
 
-        itemService.adjustItemQuantity(currentItem);
+        System.out.println(request.getRequestURL().toString() + "?" + request.getQueryString());
+        System.out.println(itemId);
+        if (!itemService.adjustItemQuantityInInventory(currentItem, -1)) {
+            redirectAttributes.addFlashAttribute("itemError", itemId);
+            return "redirect:/";
+        }
         orderService.addItemToOrder(order, currentItem);
 
         return "redirect:/";
     }
 
-    @GetMapping("/changeQuantity")
-    public String changeQuantity(@RequestParam int itemId,
-                                 @RequestParam("increase") boolean increaseQuantityInOrder,
+    @GetMapping("/adjustQuantity")
+    public String adjustQuantity(@RequestParam int itemId,
+                                 @RequestParam("increase") boolean quantityInOrderIncreasing,
                                  RedirectAttributes redirectAttributes) {
-        int changeAmount = increaseQuantityInOrder? 1:-1;
-
+        
         Item itemFromRepo = itemService.findById((long) itemId);
-        if (!itemFromRepo.getClass().equals(JcsServicing.class)) {
-            Product product = productService.findById((long) itemId);
-            if(product.getInv()==0 && increaseQuantityInOrder) {
-                redirectAttributes.addFlashAttribute("itemError", itemId);
-                return "redirect:/api/v1/sales";
-            }
+        int changeOfQuantityInOrder = quantityInOrderIncreasing? 1:-1;
 
-            product.setInv(product.getInv() - changeAmount);
-            productService.save(product);
+        if (!itemService.adjustItemQuantityInInventory(itemFromRepo, -changeOfQuantityInOrder)) {
+            redirectAttributes.addFlashAttribute("itemError", itemId);
+            return "redirect:/api/v1/sales";
         }
 
-        OrderItem currentItem = order.getOrderItemSet()
-                .stream()
-                .filter(o -> o.getItem().getId() == (long)itemId)
-                .findFirst().get();
+        orderService.adjustItemQuantityInOrder(order, itemId, changeOfQuantityInOrder);
 
-        currentItem.setQuantity(currentItem.getQuantity() + changeAmount);
-        order.setTotalPrice(order.getTotalPrice() + changeAmount * currentItem.getItem().getPrice());
-        order.setOrderItemSet(order.getOrderItemSet().stream().filter(orderItem -> orderItem.getQuantity()!=0).collect(Collectors.toSet()));
         return "redirect:/api/v1/sales";
     }
 

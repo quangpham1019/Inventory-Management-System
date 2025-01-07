@@ -9,6 +9,7 @@ import com.example.demo.Service.Data.Interface.OrderService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceUsingCRUDRepository extends CommonServiceUsingCRUDRepository<Order, Long> implements OrderService {
@@ -49,5 +50,17 @@ public class OrderServiceUsingCRUDRepository extends CommonServiceUsingCRUDRepos
             orderItemInOrder.setQuantity(orderItemInOrder.getQuantity() + 1);
         }
         order.setTotalPrice(order.getTotalPrice() + orderItem.getItem().getPrice());
+    }
+
+    @Override
+    public void adjustItemQuantityInOrder(Order order, long itemId, int changeQuantity) {
+        OrderItem currentItem = order.getOrderItemSet()
+                .stream()
+                .filter(o -> o.getItem().getId() == itemId)
+                .findFirst().get();
+        currentItem.setQuantity(currentItem.getQuantity() + changeQuantity);
+        order.setTotalPrice(order.getTotalPrice() + changeQuantity * currentItem.getItem().getPrice());
+        order.setOrderItemSet(order.getOrderItemSet().stream().filter(orderItem -> orderItem.getQuantity()!=0).collect(Collectors.toSet()));
+
     }
 }

@@ -31,13 +31,19 @@ public class ItemServiceUsingCRUDRepository extends CommonServiceUsingCRUDReposi
     }
 
     @Override
-    public void adjustItemQuantity(Item item) {
-        // TODO: refactor model to accommodate different items that have inventory count
-        //      ie. parts, products, etc.
+    public boolean adjustItemQuantityInInventory(Item item, int changeQuantityInInventory) {
+        // TODO: refactor model to accommodate different type of countable items
+        //      ie. parts, products, accessories, etc.
+        boolean changeQuantityInInventoryDecreasing = changeQuantityInInventory < 0;
+
         if (!item.getClass().equals(JcsServicing.class)) {
             Product product = productService.findById(item.getId());
-            product.setInv(product.getInv() - 1);
+            if(product.getInv()==0 && changeQuantityInInventoryDecreasing) return false;
+
+            product.setInv(product.getInv() + changeQuantityInInventory);
             productService.save(product);
         }
+
+        return true;
     }
 }

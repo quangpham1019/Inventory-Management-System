@@ -31,9 +31,9 @@
             <tr th:each="orderItem : ${order.getOrderItemSet()}">
                 <td th:text="${orderItem}"></td>
                 <td >
-                    <a th:href="@{/api/v1/sales/changeQuantity(itemId=${orderItem.item.id}, increase=false)}"><button>-</button></a>
+                    <a th:href="@{/api/v1/sales/adjustQuantity(itemId=${orderItem.item.id}, increase=false)}"><button>-</button></a>
                     <span th:text="${orderItem.quantity}"></span>
-                    <a th:href="@{/api/v1/sales/changeQuantity(itemId=${orderItem.item.id}, increase=true)}"><button>+</button></a>
+                    <a th:href="@{/api/v1/sales/adjustQuantity(itemId=${orderItem.item.id}, increase=true)}"><button>+</button></a>
                 </td>
                 <td>$
                     <span th:text="${orderItem.item.price * orderItem.quantity}"></span>
