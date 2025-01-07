@@ -47,24 +47,4 @@ public class PartServiceUsingCRUDRepository extends CommonServiceUsingCRUDReposi
                 .filter(part -> !part.getProducts().contains(product))
                 .toList();
     }
-
-    @Service
-    public static class ReportServiceUsingCRUDRepository extends CommonServiceUsingCRUDRepository<Report, Long> implements ReportService {
-        private final ReportRepository reportRepository;
-
-        public ReportServiceUsingCRUDRepository(ReportRepository reportRepository) {
-            super(reportRepository);
-            this.reportRepository = reportRepository;
-        }
-
-        @Override
-        public List<Report> findAllBy(String filterCriteria, String reportKeyword) {
-            if (filterCriteria == null || filterCriteria.isEmpty()) {filterCriteria = "";}
-            return switch (filterCriteria) {
-                case "user" -> reportRepository.findAllByUsername(reportKeyword);
-                case "customer" -> reportRepository.findAllByCustomer_LastName(reportKeyword);
-                default -> reportRepository.findAll();
-            };
-        }
-    }
 }
