@@ -28,10 +28,10 @@ public class PartController {
         String partType, form;
 
         if (curPart.getClass().equals(InhousePart.class)) {
-            partType = "inhousepart";
+            partType = "inhousePart";
             form = "form/inhouse_part_form";
         } else {
-            partType = "outsourcedpart";
+            partType = "outsourcedPart";
             form = "form/outsourced_part_form";
         }
 
@@ -39,7 +39,7 @@ public class PartController {
         return form;
     }
 
-    @GetMapping("/deletepart")
+    @GetMapping("/deletePart")
     public String deletePart(@Valid @RequestParam("partID") int partId){
 
 
@@ -58,14 +58,14 @@ public class PartController {
     @GetMapping("/showFormAddInPart")
     public String showFormAddInhousePart(Model model){
 
-        model.addAttribute("inhousepart", new InhousePart());
+        model.addAttribute("inhousePart", new InhousePart());
 
         return "form/inhouse_part_form";
     }
     @PostMapping("/processFormAddInPart")
-    public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult theBindingResult, Model model){
+    public String submitForm(@Valid @ModelAttribute("inhousePart") InhousePart part, BindingResult theBindingResult, Model model){
 
-        model.addAttribute("inhousepart",part);
+        model.addAttribute("inhousePart",part);
 
         if(theBindingResult.hasErrors()){
             return "form/inhouse_part_form";
@@ -79,20 +79,19 @@ public class PartController {
     @GetMapping("/showFormAddOutPart")
     public String showFormAddOutsourcedPart(Model model){
 
-        model.addAttribute("outsourcedpart", new OutsourcedPart());
+        model.addAttribute("outsourcedPart", new OutsourcedPart());
 
         return "form/outsourced_part_form";
     }
     @PostMapping("/processFormAddOutPart")
-    public String submitForm(@Valid @ModelAttribute("outsourcedpart") OutsourcedPart part, BindingResult bindingResult, Model model){
+    public String submitForm(@Valid @ModelAttribute("outsourcedPart") OutsourcedPart part, BindingResult bindingResult, Model model){
 
-        model.addAttribute("outsourcedpart",part);
+        model.addAttribute("outsourcedPart",part);
 
         if(bindingResult.hasErrors()){
             return "form/outsourced_part_form";
         }
 
-        System.out.println(part);
         partService.save(part);
         return "confirmation/confirmationaddpart";
     }
