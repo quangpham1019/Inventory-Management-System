@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 ### for DEVELOPMENT ONLY ###
-_UtilityFunction.java
+src/main/java/com/example/demo/Utility/_UtilityFunction.java
 
 ### STS ###
 .apt_generated
