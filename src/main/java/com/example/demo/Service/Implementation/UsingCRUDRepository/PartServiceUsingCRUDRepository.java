@@ -41,13 +41,11 @@ public class PartServiceUsingCRUDRepository extends CommonServiceUsingCRUDReposi
 
     @Override
     public List<Part> findAllPartsNotIncludedInProduct(Product product) {
-        List<Part> availableParts = new ArrayList<>();
 
-        for(Part p: findAll()){
-            if(!product.getParts().contains(p)) availableParts.add(p);
-        }
-
-        return availableParts;
+        return findAll()
+                .stream()
+                .filter(part -> !part.getProducts().contains(product))
+                .toList();
     }
 
     @Service
