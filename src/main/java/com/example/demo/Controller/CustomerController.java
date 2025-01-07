@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Customer;
-import com.example.demo.Service.Interface.CustomerService;
+import com.example.demo.Service.Data.Interface.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

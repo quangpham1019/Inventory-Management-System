@@ -52,7 +52,7 @@
                     <td th:text="${tempPart.name}">1</td>
                     <td th:text="${tempPart.price}">1</td>
                     <td th:text="${tempPart.inv}">1</td>
-                    <td><a th:href="@{/associatepart(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Add</a>
+                    <td><a th:href="@{/associatePart(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Add</a>
                     </td>
                 </tr>
             </form>
@@ -73,7 +73,7 @@
                 <td th:text="${tempPart.name}">1</td>
                 <td th:text="${tempPart.price}">1</td>
                 <td th:text="${tempPart.inv}">1</td>
-                <td><a th:href="@{/removepart(partID=${tempPart.id})}"  class="btn btn-primary btn-sm mb-3">Remove</a>
+                <td><a th:href="@{/disassociatePart(partID=${tempPart.id})}"  class="btn btn-primary btn-sm mb-3">Remove</a>
                 </td>
             </tr>
             </tbody>

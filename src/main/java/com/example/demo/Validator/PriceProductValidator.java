@@ -2,8 +2,8 @@ package com.example.demo.Validator;
 
 import com.example.demo.Domain.Part;
 import com.example.demo.Domain.Product;
-import com.example.demo.Service.Interface.ProductService;
-import com.example.demo.Service.Implementation.UsingCRUDRepository.ProductServiceUsingCRUDRepository;
+import com.example.demo.Service.Data.Interface.ProductService;
+import com.example.demo.Service.Data.Implementation.UsingCRUDRepository.ProductServiceUsingCRUDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 

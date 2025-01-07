@@ -1,10 +1,9 @@
-package com.example.demo.Service.Implementation.UsingCRUDRepository;
+package com.example.demo.Service.Data.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Item;
 import com.example.demo.Domain.Order;
-import com.example.demo.Domain.Part;
 import com.example.demo.Repository.CRUDRepository.ItemRepository;
-import com.example.demo.Service.Interface.ItemService;
+import com.example.demo.Service.Data.Interface.ItemService;
 import org.springframework.stereotype.Service;
 
 @Service

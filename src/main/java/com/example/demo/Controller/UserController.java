@@ -1,10 +1,11 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Security.AppUser;
-import com.example.demo.Security.AppUserService;
+import com.example.demo.Security.UserDetailsManagerImpl;
 import com.example.demo.Security.LoginProvider;
 import com.example.demo.Domain.UserEntity;
-import com.example.demo.Repository.CRUDRepository.UserEntityRepository;
+import com.example.demo.Service.Authentication.Interface.AuthenticationHelperService;
+import com.example.demo.Service.Data.Interface.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,19 +24,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserEntityRepository userEntityRepository;
-    private final AppUserService appUserService;
+    private final UserEntityService userEntityService;
+    private final UserDetailsManagerImpl userDetailsManagerImpl;
+    private final AuthenticationHelperService authenticationHelperService;
 
     @GetMapping("/manageUsers")
     public String getManageUsersPage(Model model) {
-        List<UserEntity> users = (List<UserEntity>)userEntityRepository.findAll();
-        model.addAttribute("users", users);
+
+        model.addAttribute("users", userEntityService.findAll());
         return "menu pages/users";
     }
 
     @GetMapping("/addUser")
-    public String getNewUserForm(Model model,
+    public String getAddUserForm(Model model,
                                  @ModelAttribute("error") Exception e) {
+
         model.addAttribute("updateUser", new UserEntity());
         model.addAttribute("oldUsername", "");
         model.addAttribute("action", "add");
@@ -43,35 +46,27 @@ public class UserController {
         return "form/user_form";
     }
 
-    @PostMapping("/processUser")
-    public String processNewEmployee(@ModelAttribute(name = "user") UserEntity newUser) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        var userToAdd = AppUser.builder()
-                .username(newUser.getUsername())
-                .name(newUser.getName())
-                .email(newUser.getEmail())
-                .provider(LoginProvider.APP)
-                .password(passwordEncoder.encode(newUser.getPassword()))
-                .authorities(List.of(new SimpleGrantedAuthority("USER")))
-                .build();
+    @PostMapping("/addUser")
+    public String addNewUser(@ModelAttribute(name = "user") UserEntity newUser) {
 
-        appUserService.createUser(userToAdd);
+        AppUser userToAdd = authenticationHelperService.mapUserEntityToAppUser(newUser);
+        userDetailsManagerImpl.createUser(userToAdd);
         return "confirmation/user_add_success";
     }
 
     @GetMapping("/updateUser")
-    public String getUpdateUser(@RequestParam String username, Model model) {
+    public String getUpdateUserForm(@RequestParam String username, Model model) {
 
-        UserEntity user = userEntityRepository.findById(username).orElse(null);
+        UserEntity user = userEntityService.findById(username);
+
         model.addAttribute("updateUser", user);
-        assert user != null;
         model.addAttribute("oldUsername", user.getUsername());
         model.addAttribute("action", "update");
         return "form/user_form";
     }
 
     @PostMapping("/updateUser")
-    public String updateUserProcess(@RequestParam String USERNAME,
+    public String updateUser(@RequestParam String USERNAME,
                                     @ModelAttribute("updateUser") UserEntity updateUser,
                                     Model model,
                                     Errors errors) {
@@ -82,14 +77,14 @@ public class UserController {
         }
 
         updateUser.setUsername(USERNAME);
-        appUserService.updateUser(updateUser);
+        userDetailsManagerImpl.updateUser(updateUser);
 
         return "redirect:/api/v1/user/manageUsers";
     }
 
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam String username) {
-        appUserService.deleteUser(username);
+        userDetailsManagerImpl.deleteUser(username);
         return "redirect:/api/v1/user/manageUsers";
     }
 }

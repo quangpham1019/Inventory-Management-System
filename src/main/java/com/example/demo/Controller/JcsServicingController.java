@@ -2,7 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.JcsServicing;
 import com.example.demo.Domain.Order;
-import com.example.demo.Service.Interface.JcsServicingService;
+import com.example.demo.Service.Data.Interface.JcsServicingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +44,8 @@ public class JcsServicingController {
         jcsServicingService.save(updateJcsServicing);
         return "redirect:/";
     }
+
+//    TODO: refactor to use the correct HTTP method DELETE
     @GetMapping("/deleteJcsServicing")
     public String deleteJcsServicing(@RequestParam int serviceId) {
         JcsServicing jcsServicing = jcsServicingService.findById(serviceId);

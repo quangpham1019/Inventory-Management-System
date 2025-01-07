@@ -1,21 +1,17 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Order;
-import com.example.demo.Domain.Part;
 import com.example.demo.Domain.Product;
-import com.example.demo.Service.Interface.ItemService;
-import com.example.demo.Service.Interface.PartService;
-import com.example.demo.Service.Interface.ProductService;
+import com.example.demo.Service.Data.Interface.ItemService;
+import com.example.demo.Service.Data.Interface.PartService;
+import com.example.demo.Service.Data.Interface.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -48,7 +44,6 @@ public class ProductController {
     @PostMapping("/processFormAddProduct")
     public String submitForm(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
         model.addAttribute("product", product);
-        System.out.println(product);
 
         if(bindingResult.hasErrors()){
 
@@ -96,7 +91,7 @@ public class ProductController {
     // TODO: use js to manipulate adding/removing associate parts on frontend
     //      receive a list of associatedParts in backend
     //      process the list and add associated parts accordingly
-    @GetMapping("/associatepart")
+    @GetMapping("/associatePart")
     public String associatePart(@Valid @RequestParam("partID") int partId, Model model){
 
         if (curProduct.getName()==null) {
@@ -111,8 +106,7 @@ public class ProductController {
 
         return "form/product_form";
     }
-
-    @GetMapping("/removepart")
+    @GetMapping("/disassociatePart")
     public String removePart(@RequestParam("partID") int partId, Model model){
 
         productService.disassociatePartFromProduct(curProduct, partId);

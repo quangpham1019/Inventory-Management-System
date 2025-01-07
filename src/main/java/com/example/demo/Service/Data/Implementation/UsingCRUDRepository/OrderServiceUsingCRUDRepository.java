@@ -1,9 +1,9 @@
-package com.example.demo.Service.Implementation.UsingCRUDRepository;
+package com.example.demo.Service.Data.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Order;
 import com.example.demo.Domain.PaymentMethod;
 import com.example.demo.Repository.CRUDRepository.OrderRepository;
-import com.example.demo.Service.Interface.OrderService;
+import com.example.demo.Service.Data.Interface.OrderService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

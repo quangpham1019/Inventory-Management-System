@@ -2,7 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.*;
 import com.example.demo.Security.AppUser;
-import com.example.demo.Service.Interface.*;
+import com.example.demo.Service.Data.Interface.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;

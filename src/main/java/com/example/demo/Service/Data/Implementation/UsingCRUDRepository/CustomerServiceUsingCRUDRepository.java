@@ -1,8 +1,8 @@
-package com.example.demo.Service.Implementation.UsingCRUDRepository;
+package com.example.demo.Service.Data.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Repository.CRUDRepository.CustomerRepository;
-import com.example.demo.Service.Interface.CustomerService;
+import com.example.demo.Service.Data.Interface.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

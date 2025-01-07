@@ -1,11 +1,9 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.*;
-import com.example.demo.Service.Implementation.UsingCRUDRepository.ItemServiceUsingCRUDRepository;
-import com.example.demo.Service.Interface.ItemService;
-import com.example.demo.Service.Interface.PartService;
+import com.example.demo.Service.Data.Interface.ItemService;
+import com.example.demo.Service.Data.Interface.PartService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

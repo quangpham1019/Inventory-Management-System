@@ -1,11 +1,11 @@
 package com.example.demo.Bootstrap;
 
 import com.example.demo.Domain.*;
-import com.example.demo.Service.Interface.CustomerService;
-import com.example.demo.Service.Interface.JcsServicingService;
-import com.example.demo.Service.Interface.PartService;
-import com.example.demo.Service.Interface.ProductService;
-import com.example.demo.Service.Interface.ReportService;
+import com.example.demo.Service.Data.Interface.CustomerService;
+import com.example.demo.Service.Data.Interface.JcsServicingService;
+import com.example.demo.Service.Data.Interface.PartService;
+import com.example.demo.Service.Data.Interface.ProductService;
+import com.example.demo.Service.Data.Interface.ReportService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
-package com.example.demo.Service.Implementation.UsingCRUDRepository;
+package com.example.demo.Service.Data.Implementation.UsingCRUDRepository;
 
-import com.example.demo.Service.Interface.CommonService;
+import com.example.demo.Service.Data.Interface.CommonService;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -3,13 +3,12 @@ package com.example.demo.UnitTest;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Report;
 import com.example.demo.Repository.CRUDRepository.ReportRepository;
-import com.example.demo.Service.Implementation.UsingCRUDRepository.ReportServiceUsingCRUDRepository;
-import com.example.demo.Service.Interface.ReportService;
+import com.example.demo.Service.Data.Implementation.UsingCRUDRepository.ReportServiceUsingCRUDRepository;
+import com.example.demo.Service.Data.Interface.ReportService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.List;

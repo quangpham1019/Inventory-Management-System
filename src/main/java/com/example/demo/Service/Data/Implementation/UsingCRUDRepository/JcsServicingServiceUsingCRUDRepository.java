@@ -1,8 +1,8 @@
-package com.example.demo.Service.Implementation.UsingCRUDRepository;
+package com.example.demo.Service.Data.Implementation.UsingCRUDRepository;
 
 import com.example.demo.Domain.JcsServicing;
 import com.example.demo.Repository.CRUDRepository.JcsServicingRepository;
-import com.example.demo.Service.Interface.JcsServicingService;
+import com.example.demo.Service.Data.Interface.JcsServicingService;
 
 import java.util.List;
 import java.util.Optional;

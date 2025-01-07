@@ -35,7 +35,7 @@ import java.util.concurrent.Executor;
 @Service
 @Value
 @NonFinal
-public class AppUserService implements UserDetailsManager {
+public class UserDetailsManagerImpl implements UserDetailsManager {
 
     PasswordEncoder passwordEncoder;
 

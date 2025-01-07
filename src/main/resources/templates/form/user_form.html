@@ -11,7 +11,7 @@
     </div>
 
     <form th:with="baseURL='/api/v1/user'"
-          th:action="@{${action == 'add' ? baseURL+'/processUser':baseURL +'/updateUser'}(USERNAME=${oldUsername == '' ? updateUser.username : oldUsername })}"
+          th:action="@{${action == 'add' ? baseURL+'/addUser':baseURL +'/updateUser'}(USERNAME=${oldUsername == '' ? updateUser.username : oldUsername })}"
           th:object="${updateUser}"
           method="post" style="max-width: 600px; margin: 0 auto;">
       <div class="m-3">

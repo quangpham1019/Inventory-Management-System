@@ -1,4 +1,4 @@
-package com.example.demo.Service.Interface;
+package com.example.demo.Service.Data.Interface;
 
 import com.example.demo.Domain.Customer;
 
