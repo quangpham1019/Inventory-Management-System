@@ -45,11 +45,10 @@ public class CustomerController {
         model.addAttribute("action", "update");
         return "form/customer_form";
     }
-    @PostMapping("/updateCustomer")
-    public String updateCustomerProcess(@RequestParam int customerId,
-                                        @ModelAttribute("customer") Customer updateCustomer) {
 
-        customerService.deleteById((long) customerId);
+    @PostMapping("/updateCustomer")
+    public String updateCustomerProcess(@ModelAttribute("customer") Customer updateCustomer) {
+
         customerService.save(updateCustomer);
         return "redirect:/api/v1/customer/manageCustomers";
     }

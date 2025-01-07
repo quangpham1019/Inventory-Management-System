@@ -22,28 +22,26 @@ public class JcsServicingController {
         model.addAttribute("action", "add");
         return "form/service_form";
     }
+
     @PostMapping("/processJcsServicing")
     public String processNewService(@ModelAttribute(name = "jcsServicing") JcsServicing newJcsServicing) {
         jcsServicingService.save(newJcsServicing);
         return "redirect:/";
     }
+
     @GetMapping("/updateJcsServicing")
     public String getUpdateService(@RequestParam int serviceId, Model model) {
 
         JcsServicing updateJcsServicing = jcsServicingService.findById(serviceId);
+
         model.addAttribute("jcsServicing", updateJcsServicing);
         model.addAttribute("action", "update");
+
         return "form/service_form";
     }
     @PostMapping("/updateJcsServicing")
-    public String updateJcsServicingProcess(@RequestParam int serviceId,
-                                            @ModelAttribute("jcsServicing") JcsServicing updateJcsServicing) {
-
-        JcsServicing jcsServicing = jcsServicingService.findById(serviceId);
-        jcsServicing.setDuration(updateJcsServicing.getDuration());
-        jcsServicing.setName(updateJcsServicing.getName());
-        jcsServicing.setPrice(updateJcsServicing.getPrice());
-        jcsServicingService.save(jcsServicing);
+    public String updateJcsServicingProcess(@ModelAttribute("jcsServicing") JcsServicing updateJcsServicing) {
+        jcsServicingService.save(updateJcsServicing);
         return "redirect:/";
     }
     @GetMapping("/deleteJcsServicing")

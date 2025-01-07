@@ -37,6 +37,7 @@ public class ProductController {
     @GetMapping("/showFormAddProduct")
     public String showFormAddPart(Model model) {
         curProduct = new Product();
+
         model.addAttribute("product", curProduct);
         model.addAttribute("availableParts", partService.findAllPartsNotIncludedInProduct(curProduct));
         model.addAttribute("associatedParts", curProduct.getParts());
@@ -47,6 +48,7 @@ public class ProductController {
     @PostMapping("/processFormAddProduct")
     public String submitForm(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
         model.addAttribute("product", product);
+        System.out.println(product);
 
         if(bindingResult.hasErrors()){
 
