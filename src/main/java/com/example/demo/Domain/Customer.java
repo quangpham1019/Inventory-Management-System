@@ -1,6 +1,5 @@
 package com.example.demo.Domain;
 
-import com.example.demo.Utility.UtilityFunction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +8,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.Set;
 
 @Entity
