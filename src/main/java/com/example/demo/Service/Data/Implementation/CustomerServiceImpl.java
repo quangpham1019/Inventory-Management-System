@@ -1,0 +1,30 @@
+package com.example.demo.Service.Data.Implementation;
+
+import com.example.demo.Domain.Customer;
+import com.example.demo.Repository.CustomerRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CustomerServiceImpl extends CommonServiceImpl<Customer, Long> implements com.example.demo.Service.Data.CustomerService {
+
+    private final CustomerRepository customerRepository;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        super(customerRepository);
+        this.customerRepository = customerRepository;
+    }
+
+    @Override
+    public List<Customer> listAllByKeyword(String keyword) {
+        if (keyword != null) {
+            return customerRepository.search(keyword);
+        }
+        return (List<Customer>) customerRepository.findAll();
+    }
+    @Override
+    public boolean hasCustomer() {
+        return customerRepository.numCustomer()!=0;
+    }
+}

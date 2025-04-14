@@ -1,8 +1,8 @@
 package com.example.demo.Controller;
 import com.example.demo.Security.AppUser;
-import com.example.demo.Service.Data.Interface.JcsServicingService;
-import com.example.demo.Service.Data.Interface.PartService;
-import com.example.demo.Service.Data.Interface.ProductService;
+import com.example.demo.Service.Data.JcsServicingService;
+import com.example.demo.Service.Data.PartService;
+import com.example.demo.Service.Data.ProductService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

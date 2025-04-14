@@ -1,8 +1,7 @@
 package com.example.demo.Validator;
 
 import com.example.demo.Domain.*;
-import com.example.demo.Service.Data.Interface.ProductService;
-import com.example.demo.Service.Data.Implementation.UsingCRUDRepository.ProductServiceUsingCRUDRepository;
+import com.example.demo.Service.Data.Implementation.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -27,7 +26,7 @@ public class OrderEnufsValidator implements ConstraintValidator<ValidOrderEnufs,
         if (context == null) return true;
         if (context != null) myContext = context;
 
-        ProductService productService = myContext.getBean(ProductServiceUsingCRUDRepository.class);
+        com.example.demo.Service.Data.ProductService productService = myContext.getBean(ProductServiceImpl.class);
         for (OrderItem orderItem : order.getOrderItemSet()) {
             Item item = orderItem.getItem();
             if (item.getClass() != JcsServicing.class) {

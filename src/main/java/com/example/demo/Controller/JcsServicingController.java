@@ -2,7 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.JcsServicing;
 import com.example.demo.Domain.Order;
-import com.example.demo.Service.Data.Interface.JcsServicingService;
+import com.example.demo.Service.Data.JcsServicingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

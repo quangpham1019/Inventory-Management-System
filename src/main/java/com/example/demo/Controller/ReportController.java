@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Report;
-import com.example.demo.Service.Data.Interface.ReportService;
+import com.example.demo.Service.Data.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;

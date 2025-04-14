@@ -1,8 +1,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.*;
-import com.example.demo.Service.Data.Interface.ItemService;
-import com.example.demo.Service.Data.Interface.PartService;
+import com.example.demo.Service.Data.ItemService;
+import com.example.demo.Service.Data.PartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

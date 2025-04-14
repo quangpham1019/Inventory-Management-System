@@ -5,7 +5,7 @@ import com.example.demo.Security.AdminConfig;
 import com.example.demo.Security.AppUser;
 import com.example.demo.Security.UserDetailsManagerImpl;
 import com.example.demo.Security.LoginProvider;
-import com.example.demo.Service.Authentication.Interface.AuthenticationHelperService;
+import com.example.demo.Service.Authentication.AuthenticationHelperService;
 import jakarta.annotation.PostConstruct;
 import lombok.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

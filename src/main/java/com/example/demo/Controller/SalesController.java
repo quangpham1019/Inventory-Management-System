@@ -2,11 +2,10 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.*;
 import com.example.demo.Security.AppUser;
-import com.example.demo.Service.Data.Interface.*;
+import com.example.demo.Service.Data.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/v1/sales")

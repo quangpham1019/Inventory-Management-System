@@ -2,8 +2,7 @@ package com.example.demo.Validator;
 
 import com.example.demo.Domain.Part;
 import com.example.demo.Domain.Product;
-import com.example.demo.Service.Data.Interface.ProductService;
-import com.example.demo.Service.Data.Implementation.UsingCRUDRepository.ProductServiceUsingCRUDRepository;
+import com.example.demo.Service.Data.Implementation.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -31,7 +30,7 @@ public class PriceProductValidator implements ConstraintValidator<ValidProductPr
     public boolean isValid(Product product, ConstraintValidatorContext constraintValidatorContext) {
         if(context==null) return true;
         if(context!=null)myContext=context;
-        ProductService repo = myContext.getBean(ProductServiceUsingCRUDRepository.class);
+        com.example.demo.Service.Data.ProductService repo = myContext.getBean(ProductServiceImpl.class);
         double sumPartsPrice = 0;
         if (product.getId() != 0) {
             Product myProduct = repo.findById((long) product.getId());

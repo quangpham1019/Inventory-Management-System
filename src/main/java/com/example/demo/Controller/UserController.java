@@ -2,20 +2,15 @@ package com.example.demo.Controller;
 
 import com.example.demo.Security.AppUser;
 import com.example.demo.Security.UserDetailsManagerImpl;
-import com.example.demo.Security.LoginProvider;
 import com.example.demo.Domain.UserEntity;
-import com.example.demo.Service.Authentication.Interface.AuthenticationHelperService;
-import com.example.demo.Service.Data.Interface.UserEntityService;
+import com.example.demo.Service.Authentication.AuthenticationHelperService;
+import com.example.demo.Service.Data.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 // TODO: Refactor UserController into ReportController, UserController
 @PreAuthorize("hasAuthority('ADMIN')")
